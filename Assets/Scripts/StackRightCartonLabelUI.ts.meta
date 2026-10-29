@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/8d3a0a25-440f-40eb-b2cc-867eadc0cb0f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 0dd647ca-c4ce-4156-b4c0-ce694437c99e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 0dd647ca-c4ce-4156-b4c0-ce694437c99e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> b78613dd-e242-4804-bdeb-720fa9122693
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b78613dd-e242-4804-bdeb-720fa9122693>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: e19a0707-bdfd-4fbf-9575-df2a1a42745f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    detailSize: false
+    nameSize: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - nameSize: !<float> 150.000000
+      detailSize: !<float> 100.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">StackRightCartonLabelUI – printed carton labels</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float nameSize = 150 {"hint":"Name text size", "widget":"slider", "min":40, "max":300, "step":1}'
+    - '// @input float detailSize = 100 {"hint":"Detail line text size", "widget":"slider", "min":40, "max":300, "step":1}'
+    - '// @ui {"widget":"group_end"}'

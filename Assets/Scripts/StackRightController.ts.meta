@@ -1,0 +1,116 @@
+- !<AssetImportMetadata/1146acc6-832b-4c8b-a225-7e4315965d1c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ef559e87-41d9-4d97-a6f0-b40399e8ecbc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ef559e87-41d9-4d97-a6f0-b40399e8ecbc
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 15d2a16a-b830-4704-bbb5-bccbdae59556
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/15d2a16a-b830-4704-bbb5-bccbdae59556>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 26c9a12a-7239-40f8-92f8-a034e100923b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    baseMaterial: false
+    boxMesh: false
+    completionCard: false
+    counter: false
+    debugLogs: false
+    dropHeightAllowanceCm: false
+    ghost: false
+    ghostColor: false
+    ghostTag: false
+    glowColor: false
+    offViewArrow: false
+    pallet: false
+    pickList: false
+    resetButton: false
+    resetPost: false
+    shelfBay: false
+    snapDistanceCm: false
+    tipColor: false
+    tipDurationSec: false
+    tipText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pallet: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      shelfBay: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      pickList: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      ghost: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      offViewArrow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      resetPost: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      ghostTag: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      counter: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      tipText: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      completionCard: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      resetButton: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      boxMesh: !<reference.RenderMesh> 00000000-0000-0000-0000-000000000000
+      baseMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      snapDistanceCm: !<float> 15.000000
+      dropHeightAllowanceCm: !<float> 60.000000
+      tipDurationSec: !<float> 4.000000
+      ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
+      glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
+      tipColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
+      debugLogs: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">StackRightController – pallet-building trainer rules + test API</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input SceneObject pallet {"hint":"Pallet root: on the floor, origin at the centre of its footprint"}'
+    - "// @input SceneObject shelfBay {\"hint\":\"Shelf bay root: on the floor to the user's right\"}"
+    - '// @input SceneObject pickList {"hint":"PickList (stand-in for barcode scan): its 8 children are the cartons, in pick order"}'
+    - '// @input SceneObject ghost {"hint":"Ghost carton root (child of Pallet)"}'
+    - '// @input SceneObject offViewArrow {"hint":"Arrow on the pallet edge that points at the next carton when it is out of view"}'
+    - '// @input SceneObject resetPost {"hint":"Short post under the Reset button"}'
+    - "// @input AssignableType_1 ghostTag {\"hint\":\"Tag on the ghost: 'Layer N · Heavy · 14 kg'\"}"
+    - "// @input AssignableType_2 counter {\"hint\":\"'3 / 8' counter on the pallet's near edge\"}"
+    - '// @input AssignableType_3 tipText {"hint":"Red tip shown on the pallet for a few seconds after a mistake"}'
+    - "// @input AssignableType_4 completionCard {\"hint\":\"Completion card: time, mistakes, 'Wrap and label'\"}"
+    - '// @input AssignableType_5 resetButton {"hint":"Reset pallet button"}'
+    - '// @input Asset.RenderMesh boxMesh {"hint":"1 cm box mesh used for every placeholder visual"}'
+    - '// @input Asset.Material baseMaterial {"hint":"Unlit material cloned for every placeholder visual"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float snapDistanceCm = 15 {"hint":"Release within this horizontal distance (cm) of the ghost to snap", "widget":"slider", "min":5, "max":40, "step":1}'
+    - '// @input float dropHeightAllowanceCm = 60 {"hint":"Mouse-friendly allowance: how far ABOVE the ghost (cm) a release still snaps. Below, the limit is snapDistanceCm.", "widget":"slider", "min":0, "max":120, "step":1}'
+    - '// @input float tipDurationSec = 4 {"hint":"How long the red tip stays on the pallet (s)", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input vec4 ghostColor = "{0.6,1,1,0.3}" {"hint":"Ghost fill colour (pale cyan, about 30% fill)", "widget":"color"}'
+    - '// @input vec4 glowColor = "{1,1,0.55,0.35}" {"hint":"Soft glow around the next carton on the shelf", "widget":"color"}'
+    - '// @input vec4 tipColor = "{1,0.35,0.35,1}" {"hint":"Tip text colour (bright red, not dark)", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Debug</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Debug"}'
+    - '// @input bool debugLogs {"hint":"Print grab/release decisions to the log"}'
+    - '// @ui {"widget":"group_end"}'

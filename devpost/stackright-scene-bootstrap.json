@@ -1,0 +1,532 @@
+{
+ "_howto": "Rebuild the Stack Right scene: (1) VirtualScene apply phaseA, (2) RecompileTypeScriptTool, (3) VirtualScene apply phaseB, (4) save the project. Assets (Meshes/StackRightBox.mesh, Materials/StackRightUnlit.mat, GeneratedSFX/*.wav, Scripts/StackRight*.ts) already exist on disk.",
+ "phaseA": {
+  "create": [
+   {
+    "id": "$temp:world",
+    "name": "StackRightWorld",
+    "transform": {
+     "position": [
+      0,
+      -150,
+      0
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:ctrl",
+    "name": "StackRightController",
+    "parentId": "$temp:world",
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightController.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:pallet",
+    "name": "Pallet",
+    "parentId": "$temp:world",
+    "transform": {
+     "position": [
+      0,
+      0,
+      -100
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:ghost",
+    "name": "Ghost",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      0,
+      31,
+      0
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:tag",
+    "name": "GhostTag",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      0,
+      60,
+      30
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightLabelUI.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:counter",
+    "name": "Counter",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      -25,
+      20,
+      64
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightLabelUI.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:tip",
+    "name": "TipText",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      0,
+      75,
+      62
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightLabelUI.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:card",
+    "name": "CompletionCard",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      0,
+      105,
+      45
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightLabelUI.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:arrow",
+    "name": "OffViewArrow",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      35,
+      20,
+      52
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:post",
+    "name": "ResetPost",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      -70,
+      0,
+      66
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:reset",
+    "name": "ResetButton",
+    "parentId": "$temp:pallet",
+    "transform": {
+     "position": [
+      -70,
+      90,
+      66
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightResetButtonUI.ts"
+      }
+     }
+    ]
+   },
+   {
+    "id": "$temp:shelf",
+    "name": "ShelfBay",
+    "parentId": "$temp:world",
+    "transform": {
+     "position": [
+      140,
+      0,
+      -110
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:pick",
+    "name": "PickList (stand-in for barcode scan)",
+    "parentId": "$temp:shelf"
+   },
+   {
+    "id": "$temp:c0",
+    "name": "Carton_0_Water",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      116,
+      -94
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c1",
+    "name": "Carton_1_SoftDrink",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      116,
+      -38
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c2",
+    "name": "Carton_2_Tomatoes",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      116,
+      23
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c3",
+    "name": "Carton_3_Laundry",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      116,
+      89
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c4",
+    "name": "Carton_4_Pasta",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      56,
+      -78
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c5",
+    "name": "Carton_5_Bread",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      53,
+      -17
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c6",
+    "name": "Carton_6_Eggs",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      54,
+      34
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   {
+    "id": "$temp:c7",
+    "name": "Carton_7_Chips",
+    "parentId": "$temp:pick",
+    "transform": {
+     "position": [
+      0,
+      57,
+      87
+     ],
+     "rotation": [
+      0,
+      0,
+      0
+     ],
+     "scale": [
+      1,
+      1,
+      1
+     ]
+    }
+   }
+  ]
+ },
+ "phaseB": {
+  "modify": {
+   "@sceneObject:StackRightController": {
+    "components.ScriptComponent.pallet": "@sceneObject:Pallet",
+    "components.ScriptComponent.shelfBay": "@sceneObject:ShelfBay",
+    "components.ScriptComponent.pickList": "@sceneObject:PickList (stand-in for barcode scan)",
+    "components.ScriptComponent.ghost": "@sceneObject:Ghost",
+    "components.ScriptComponent.offViewArrow": "@sceneObject:OffViewArrow",
+    "components.ScriptComponent.resetPost": "@sceneObject:ResetPost",
+    "components.ScriptComponent.ghostTag": "@component:GhostTag/StackRightLabelUI",
+    "components.ScriptComponent.counter": "@component:Counter/StackRightLabelUI",
+    "components.ScriptComponent.tipText": "@component:TipText/StackRightLabelUI",
+    "components.ScriptComponent.completionCard": "@component:CompletionCard/StackRightLabelUI",
+    "components.ScriptComponent.resetButton": "@component:ResetButton/StackRightResetButtonUI",
+    "components.ScriptComponent.boxMesh": "@id:39bb4120-4cf6-4279-8fdd-db3c97161f62",
+    "components.ScriptComponent.baseMaterial": "@asset:Materials/StackRightUnlit.mat",
+    "components.ScriptComponent.debugLogs": true
+   },
+   "@sceneObject:GhostTag": {
+    "components.ScriptComponent.panelWidth": 64,
+    "components.ScriptComponent.panelHeight": 9,
+    "components.ScriptComponent.textSize": 190,
+    "components.ScriptComponent.startVisible": false
+   },
+   "@sceneObject:Counter": {
+    "components.ScriptComponent.panelWidth": 20,
+    "components.ScriptComponent.panelHeight": 8,
+    "components.ScriptComponent.textSize": 220,
+    "components.ScriptComponent.initialText": "0 / 8"
+   },
+   "@sceneObject:TipText": {
+    "components.ScriptComponent.panelWidth": 80,
+    "components.ScriptComponent.panelHeight": 10,
+    "components.ScriptComponent.textSize": 160,
+    "components.ScriptComponent.startVisible": false,
+    "components.ScriptComponent.textColor": {
+     "x": 1,
+     "y": 0.35,
+     "z": 0.35,
+     "w": 1
+    }
+   },
+   "@sceneObject:CompletionCard": {
+    "components.ScriptComponent.panelWidth": 66,
+    "components.ScriptComponent.panelHeight": 26,
+    "components.ScriptComponent.textSize": 150,
+    "components.ScriptComponent.startVisible": false
+   }
+  }
+ }
+}
