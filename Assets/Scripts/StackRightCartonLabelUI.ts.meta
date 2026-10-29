@@ -28,8 +28,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    detailSize: false
-    nameSize: false
+    labelSize: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,8 +38,7 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - nameSize: !<float> 150.000000
-      detailSize: !<float> 100.000000
+    - labelSize: !<float> 120.000000
   ScriptTypes:
     -
       {}
@@ -49,6 +47,5 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - '// @input float nameSize = 150 {"hint":"Name text size", "widget":"slider", "min":40, "max":300, "step":1}'
-    - '// @input float detailSize = 100 {"hint":"Detail line text size", "widget":"slider", "min":40, "max":300, "step":1}'
+    - '// @input float labelSize = 120 {"hint":"Label text size (about 44 = 1 cm em height)", "widget":"slider", "min":40, "max":300, "step":1}'
     - '// @ui {"widget":"group_end"}'

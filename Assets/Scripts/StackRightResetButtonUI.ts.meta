@@ -24,11 +24,15 @@
   VersionPatch: 0
   VersionPrerelease: ""
   UpdateOrder: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 56ccf423-d9be-4127-94bc-7e4135d62d8d
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    buttonHeight: false
+    buttonWidth: false
+    faceCamera: false
+    label: false
+    labelSize: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,10 +42,22 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - label: Reset pallet
+      buttonWidth: !<float> 12.000000
+      buttonHeight: !<float> 6.000000
+      labelSize: !<float> 56.000000
+      faceCamera: true
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">StackRightResetButtonUI – big pinch button that resets the pallet</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input string label = "Reset pallet" {"hint":"Button label"}'
+    - '// @input float buttonWidth = 12 {"hint":"Button width in cm (brief: about 12 cm)", "widget":"slider", "min":6, "max":30, "step":0.5}'
+    - '// @input float buttonHeight = 6 {"hint":"Button height in cm", "widget":"slider", "min":3, "max":15, "step":0.5}'
+    - '// @input float labelSize = 56 {"hint":"Label text size", "widget":"slider", "min":30, "max":120, "step":1}'
+    - '// @input bool faceCamera = true {"hint":"Turn the button every frame so it faces the user"}'
+    - '// @ui {"widget":"group_end"}'

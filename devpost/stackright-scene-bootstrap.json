@@ -1,5 +1,5 @@
 {
- "_howto": "Rebuild the Stack Right scene: (1) VirtualScene apply phaseA, (2) RecompileTypeScriptTool, (3) VirtualScene apply phaseB, (4) save the project. Assets (Meshes/StackRightBox.mesh, Materials/StackRightUnlit.mat, GeneratedSFX/*.wav, Scripts/StackRight*.ts) already exist on disk.",
+ "_howto": "Rebuild the Stack Right scene: (1) VirtualScene apply phaseA, (2) RecompileTypeScriptTool, (3) VirtualScene apply phaseB, (4) save the project. Assets (Meshes/StackRightBox.mesh, Materials/StackRightUnlit.mat, GeneratedSFX/*.wav, Scripts/StackRight*.ts) already exist on disk. If Materials/StackRightUnlit.mat has 'PassesInfo: []' (empty), delete it and recreate it from UnlitMaterialPreset (it then uses Materials/unlit.graphShader). If RecompileTypeScriptTool says 'compiler is not configured', look for a modal plugin-permission prompt in Lens Studio: the compiler is configured only after it is answered.",
  "phaseA": {
   "create": [
    {
@@ -476,6 +476,19 @@
       1
      ]
     }
+   },
+   {
+    "id": "$temp:td",
+    "name": "StackRightTestDriver (test/demo only)",
+    "parentId": "$temp:world",
+    "components": [
+     {
+      "type": "ScriptComponent",
+      "properties": {
+       "scriptAsset": "@asset:Scripts/StackRightTestDriver.ts"
+      }
+     }
+    ]
    }
   ]
  },
@@ -526,6 +539,10 @@
     "components.ScriptComponent.panelHeight": 26,
     "components.ScriptComponent.textSize": 150,
     "components.ScriptComponent.startVisible": false
+   },
+   "@sceneObject:StackRightTestDriver (test/demo only)": {
+    "components.ScriptComponent.controller": "@component:StackRightController/StackRightController",
+    "components.ScriptComponent.mode": "off"
    }
   }
  }

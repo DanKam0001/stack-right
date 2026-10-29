@@ -34,6 +34,7 @@
     counter: false
     debugLogs: false
     dropHeightAllowanceCm: false
+    eyeHeightCm: false
     ghost: false
     ghostColor: false
     ghostTag: false
@@ -73,6 +74,7 @@
       snapDistanceCm: !<float> 15.000000
       dropHeightAllowanceCm: !<float> 60.000000
       tipDurationSec: !<float> 4.000000
+      eyeHeightCm: !<float> 150.000000
       ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
       glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
       tipColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
@@ -105,6 +107,7 @@
     - '// @input float snapDistanceCm = 15 {"hint":"Release within this horizontal distance (cm) of the ghost to snap", "widget":"slider", "min":5, "max":40, "step":1}'
     - '// @input float dropHeightAllowanceCm = 60 {"hint":"Mouse-friendly allowance: how far ABOVE the ghost (cm) a release still snaps. Below, the limit is snapDistanceCm.", "widget":"slider", "min":0, "max":120, "step":1}'
     - '// @input float tipDurationSec = 4 {"hint":"How long the red tip stays on the pallet (s)", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - "// @input float eyeHeightCm = 150 {\"hint\":\"Place the floor this far below the user's eyes at start (cm). The work area root (this object's parent) is moved to camera.y - eyeHeightCm.\", \"widget\":\"slider\", \"min\":100, \"max\":200, \"step\":1}"
     - '// @input vec4 ghostColor = "{0.6,1,1,0.3}" {"hint":"Ghost fill colour (pale cyan, about 30% fill)", "widget":"color"}'
     - '// @input vec4 glowColor = "{1,1,0.55,0.35}" {"hint":"Soft glow around the next carton on the shelf", "widget":"color"}'
     - '// @input vec4 tipColor = "{1,0.35,0.35,1}" {"hint":"Tip text colour (bright red, not dark)", "widget":"color"}'

@@ -1,0 +1,66 @@
+# Stack Right self-test (StackRightTestDriver, mode=selftest), Lens Studio 5.23.2 preview, 2026-10-29
+# Drives the controller's test hooks (same code path as real SIK grab/release). Not LEAF.
+16:09:26.068 [StackRightTest] mode = selftest
+16:09:26.071 [StackRight] reset
+16:09:26.748 [StackRight] floor aligned: camera y = 0, floor y = -150
+16:09:27.084 [StackRight] reset
+16:09:27.085 [StackRight] ready. camera world pos = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -110}
+16:09:28.574 [StackRightTest] mode = selftest
+16:09:28.577 [StackRight] reset
+16:09:28.883 [StackRightTest] PASS DC1: pallet ~100 cm ahead (got 100)
+16:09:28.883 [StackRightTest] PASS DC1: pallet centred (dx 0)
+16:09:28.883 [StackRightTest] PASS DC1: pallet on floor, 150 cm below eyes
+16:09:28.883 [StackRightTest] PASS DC1: shelf ~140 cm right (got 140)
+16:09:28.883 [StackRightTest] PASS DC1: 8 cartons
+16:09:28.883 [StackRightTest] PASS DC1: all 8 cartons sit on the shelf bay
+16:09:28.884 [StackRightTest] PASS DC1: counter reads 0 / 8
+16:09:28.884 [StackRightTest] PASS DC1: first carton glows on the shelf
+16:09:28.884 [StackRightTest] PASS DC2: no ghost before grab
+16:09:28.885 [StackRight] grab Carton_0_Water (correct, ghost shown)
+16:09:28.885 [StackRightTest] PASS DC2: ghost visible after grabbing next carton
+16:09:28.885 [StackRightTest] PASS DC2: ghost sits on carton 0's slot
+16:09:28.885 [StackRightTest] PASS DC2: tag reads 'Layer 1 · Heavy · 14 kg'
+16:09:28.887 [StackRight] placed Carton_0_Water -> 1/8
+16:09:28.887 [StackRightTest] PASS DC3: carton 0 snapped (dropped 10 cm off)
+16:09:28.887 [StackRightTest] PASS DC3: snapped square onto the slot
+16:09:28.887 [StackRightTest] PASS DC3: counter reads 1 / 8
+16:09:28.887 [StackRightTest] PASS DC3: ghost hidden after placing
+16:09:28.888 [StackRight] grab Carton_1_SoftDrink (correct, ghost shown)
+16:09:28.888 [StackRightTest] PASS DC3: next ghost appears on grabbing carton 1
+16:09:28.888 [StackRightTest] PASS DC3: next tag reads 'Layer 1 · Heavy · 9 kg'
+16:09:28.889 [StackRight] placed Carton_1_SoftDrink -> 2/8
+16:09:28.889 [StackRightTest] PASS DC3: carton 1 snapped, counter 2 / 8
+16:09:28.889 [StackRight] grab Carton_2_Tomatoes (correct, ghost shown)
+16:09:28.890 [StackRight] mistake #1 (Carton_2_Tomatoes): Wrong spot. Drop it on the ghost.
+16:09:28.890 [StackRightTest] PASS DC3: drop 30 cm off the ghost (on pallet) does not snap
+16:09:29.523 [StackRight] grab Carton_2_Tomatoes (correct, ghost shown)
+16:09:29.523 [StackRight] released Carton_2_Tomatoes off the pallet: back to shelf, no mistake
+16:09:29.523 [StackRightTest] PASS DC3: release off the pallet: back to shelf, no mistake
+16:09:30.189 [StackRight] grab Carton_7_Chips (not next)
+16:09:30.189 [StackRightTest] PASS DC4: no ghost for a carton that isn't next
+16:09:30.190 [StackRight] mistake #2 (Carton_7_Chips): Chips go on top. Heavy first.
+16:09:30.190 [StackRightTest] PASS DC4: chips not placed, sliding back
+16:09:30.190 [StackRightTest] PASS DC4: red tip shows 'Chips go on top. Heavy first.'
+16:09:30.190 [StackRightTest] PASS DC4: counts one mistake
+16:09:30.855 [StackRightTest] PASS DC4: chips back at home on the shelf
+16:09:35.066 [StackRightTest] PASS DC4: tip hides after ~4 s
+16:09:35.067 [StackRight] grab Carton_2_Tomatoes (correct, ghost shown)
+16:09:35.067 [StackRight] placed Carton_2_Tomatoes -> 3/8
+16:09:35.068 [StackRight] grab Carton_3_Laundry (correct, ghost shown)
+16:09:35.068 [StackRight] placed Carton_3_Laundry -> 4/8
+16:09:35.068 [StackRight] grab Carton_4_Pasta (correct, ghost shown)
+16:09:35.069 [StackRight] placed Carton_4_Pasta -> 5/8
+16:09:35.070 [StackRight] grab Carton_5_Bread (correct, ghost shown)
+16:09:35.071 [StackRight] placed Carton_5_Bread -> 6/8
+16:09:35.071 [StackRight] grab Carton_6_Eggs (correct, ghost shown)
+16:09:35.071 [StackRight] placed Carton_6_Eggs -> 7/8
+16:09:35.072 [StackRight] grab Carton_7_Chips (correct, ghost shown)
+16:09:35.072 [StackRight] placed Carton_7_Chips -> 8/8
+16:09:35.073 [StackRightTest] PASS DC5: all 8 placed, counter 8 / 8
+16:09:35.073 [StackRightTest] PASS DC5: completion card visible
+16:09:35.074 [StackRightTest] PASS DC5: card: 'Pallet done! | Time 0:06  ·  Mistakes 2 | Wrap and label the pallet.'
+16:09:36.079 [StackRightTest] PASS DC5: card stays up
+16:09:36.080 [StackRight] reset
+16:09:36.080 [StackRightTest] PASS DC5: Reset: pallet cleared, all cartons home
+16:09:36.080 [StackRightTest] PASS DC5: Reset: counter 0 / 8, card hidden, mistakes 0
+16:09:36.080 [StackRightTest] DONE: 33 passed, 0 failed

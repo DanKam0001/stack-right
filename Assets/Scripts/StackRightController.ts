@@ -575,9 +575,10 @@ export class StackRightController extends BaseScriptComponent {
     // flat arrow on the pallet edge, pointing along local +X
     this.factory.makeBox(this.offViewArrow, "Shaft", new vec3(16, 1.5, 4), new vec3(-4, 0, 0), yellow)
     const head1 = this.factory.makeBox(this.offViewArrow, "HeadA", new vec3(10, 1.5, 3.5), new vec3(5.5, 0, -2.7), yellow).getSceneObject()
-    head1.getTransform().setLocalRotation(quat.angleAxis(0.7, vec3.up()))
+    // each head bar leans in toward the tip (+X), so the pair forms a ">" rather than a fork
+    head1.getTransform().setLocalRotation(quat.angleAxis(-0.7, vec3.up()))
     const head2 = this.factory.makeBox(this.offViewArrow, "HeadB", new vec3(10, 1.5, 3.5), new vec3(5.5, 0, 2.7), yellow).getSceneObject()
-    head2.getTransform().setLocalRotation(quat.angleAxis(-0.7, vec3.up()))
+    head2.getTransform().setLocalRotation(quat.angleAxis(0.7, vec3.up()))
     this.offViewArrow.enabled = false
   }
 

@@ -4,6 +4,7 @@
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
+    - !<own> 5e01136c-e7c9-47e6-b54d-8bf404a7584c
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -234,6 +235,21 @@
     []
   Components:
     []
+- !<SceneObject/069f216e-46eb-4f2f-99b9-72e61e4e7ee9>
+  PrefabRemaps:
+    []
+  Name: Carton_5_Bread
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 53.000000, z: -17.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/0847d2bb-a13f-4c4a-a404-169f67308f6f>
   PrefabRemaps:
     []
@@ -424,6 +440,21 @@
     - !<own> 9e373d68-993f-4c8f-83a0-6644f1d9fefd
   Components:
     []
+- !<SceneObject/102f12c7-d1bd-4469-b03a-fb1d1f262437>
+  PrefabRemaps:
+    []
+  Name: ResetButton
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -70.000000, y: 90.000000, z: 66.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e1ac1044-7017-4a2f-aae9-8055aaaf1d84
 - !<SceneObject/10f60da2-2196-40ad-9e72-8a6bc7e86f35>
   PrefabRemaps:
     []
@@ -509,6 +540,28 @@
     HasSegmentScaleCompensation: false
   Children:
     []
+  Components:
+    []
+- !<SceneObject/1bd05126-a557-4cf9-a2f9-6664eff58924>
+  PrefabRemaps:
+    []
+  Name: PickList (stand-in for barcode scan)
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8a0ef770-ee1a-4dc4-87f5-ca8da8d95792
+    - !<own> bb4f3b5c-06af-4355-a11b-a84df84dfe43
+    - !<own> 5422fac5-3e85-4379-a60e-a7a3d6104a11
+    - !<own> 6d658f3c-9506-466a-a6d9-61e44af4af09
+    - !<own> 3ed477ee-a3bb-4a6a-8f0a-91271ac050e7
+    - !<own> 069f216e-46eb-4f2f-99b9-72e61e4e7ee9
+    - !<own> 31a7937d-cedf-4724-ad07-68ffb5d2bf58
+    - !<own> c5e4a596-7d70-4f0e-ac79-108e50495e4c
   Components:
     []
 - !<RenderMeshVisual/1f969daa-5809-4500-b314-98d91ccba131>
@@ -606,6 +659,21 @@
     - !<own> d9071294-12e8-425f-98f1-bf308a02639e
   Components:
     []
+- !<SceneObject/26795445-5c07-4b57-8167-47b4cf60a60b>
+  PrefabRemaps:
+    []
+  Name: CompletionCard
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 105.000000, z: 45.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> cac75974-c889-4fd7-bc9b-404dd1b799c8
 - !<ScriptComponent/275aeb4d-77ac-4b1b-811e-907652542110>
   PrefabRemaps:
     []
@@ -706,6 +774,36 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> a7da4af4-3d84-4acd-a31e-920a56b4c5c8
+  Components:
+    []
+- !<SceneObject/30f80948-042a-469a-8b17-ddca26e3a7a5>
+  PrefabRemaps:
+    []
+  Name: Counter
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -25.000000, y: 20.000000, z: 64.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ef8c621a-8a6a-4295-a1a2-aba5d6df1e2e
+- !<SceneObject/31a7937d-cedf-4724-ad07-68ffb5d2bf58>
+  PrefabRemaps:
+    []
+  Name: Carton_6_Eggs
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 54.000000, z: 34.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<RenderMeshVisual/335c5f8b-2917-49e8-8af5-220696e9bc09>
@@ -809,6 +907,29 @@
     - !<own> 264571d0-f879-411b-8deb-ff6d9921317f
   Components:
     []
+- !<ScriptComponent/3b1084dc-d42e-49c9-b199-8c1af41fd2ae>
+  PrefabRemaps:
+    []
+  Name: StackRightLabelUI
+  Enabled: true
+  ScriptAsset: !<reference> 4e2ae7eb-0887-4922-9bb9-791a4272857c
+  ScriptInputsDefault:
+    initialText: true
+    faceCamera: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      panelWidth: !<float> 80.000000
+      panelHeight: !<float> 10.000000
+      textSize: !<float> 160.000000
+      textColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
+      initialText: ""
+      startVisible: false
+      faceCamera: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/3b4f5057-b516-4d3b-9c8d-14c81af2f505>
   PrefabRemaps:
     []
@@ -837,6 +958,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 988c408a-99dc-47e6-b7c4-efbf4bf8dc3c
+  Components:
+    []
+- !<SceneObject/3ed477ee-a3bb-4a6a-8f0a-91271ac050e7>
+  PrefabRemaps:
+    []
+  Name: Carton_4_Pasta
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 56.000000, z: -78.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/4051028a-c608-4a97-b3d5-1a3912a7c007>
@@ -944,6 +1080,21 @@
     []
   Components:
     - !<own> 5f153ad7-2baa-4fd9-a298-0dcfad86da3b
+- !<SceneObject/4ec008fd-8900-41dd-8cd1-fab25ca76045>
+  PrefabRemaps:
+    []
+  Name: ShelfBay
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 140.000000, y: 0.000000, z: -110.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 1bd05126-a557-4cf9-a2f9-6664eff58924
+  Components:
+    []
 - !<SceneObject/52ecefe4-5642-445a-ad16-52ce818076bc>
   PrefabRemaps:
     []
@@ -974,6 +1125,21 @@
     - !<own> 46b79537-a269-46f1-9483-500d7a4170d6
   Components:
     []
+- !<SceneObject/5422fac5-3e85-4379-a60e-a7a3d6104a11>
+  PrefabRemaps:
+    []
+  Name: Carton_2_Tomatoes
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 116.000000, z: 23.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/58ef319f-850e-40dd-8295-e6dc36ab4854>
   PrefabRemaps:
     []
@@ -987,6 +1153,24 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> bf2095b6-c6f8-48c8-b840-e0a6cec0dc99
+  Components:
+    []
+- !<SceneObject/5e01136c-e7c9-47e6-b54d-8bf404a7584c>
+  PrefabRemaps:
+    []
+  Name: StackRightWorld
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -150.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 6b2efdf7-f84a-411b-ad57-4a887f1df927
+    - !<own> 8d9dd2f5-28c7-4370-b98b-93be7ca9c3d7
+    - !<own> 4ec008fd-8900-41dd-8cd1-fab25ca76045
+    - !<own> 6e82fcfe-44b9-4c8e-90f2-61bdd663de32
   Components:
     []
 - !<ScriptComponent/5f153ad7-2baa-4fd9-a298-0dcfad86da3b>
@@ -1184,6 +1368,21 @@
     - !<own> ca40734c-262f-48d3-affa-9f99cd2940f7
   Components:
     []
+- !<SceneObject/6b2efdf7-f84a-411b-ad57-4a887f1df927>
+  PrefabRemaps:
+    []
+  Name: StackRightController
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 80fcbac9-21c3-4133-bd37-efd860dbe7de
 - !<SceneObject/6c1f70d7-86d0-4972-b203-29780f8798e6>
   PrefabRemaps:
     []
@@ -1199,6 +1398,21 @@
     - !<own> 0e778a10-bd57-4a2a-b20a-b6f4326e8058
   Components:
     []
+- !<SceneObject/6d658f3c-9506-466a-a6d9-61e44af4af09>
+  PrefabRemaps:
+    []
+  Name: Carton_3_Laundry
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 116.000000, z: 89.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/6dbaab8f-d98a-4f36-b836-1d7c8a0cca87>
   PrefabRemaps:
     []
@@ -1212,6 +1426,36 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 4c195c04-c397-454e-bd08-3485f37d84fe
+  Components:
+    []
+- !<SceneObject/6e82fcfe-44b9-4c8e-90f2-61bdd663de32>
+  PrefabRemaps:
+    []
+  Name: StackRightTestDriver (test/demo only)
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> c2e089b7-20c0-4076-b7d0-df3a25294e70
+- !<SceneObject/70263b36-6526-4e67-89b1-5e69308f656a>
+  PrefabRemaps:
+    []
+  Name: OffViewArrow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 35.000000, y: 20.000000, z: 52.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/7037a633-4899-4f2e-bc97-2e3f35395687>
@@ -1398,6 +1642,48 @@
     []
   Components:
     - !<own> 335c5f8b-2917-49e8-8af5-220696e9bc09
+- !<ScriptComponent/80fcbac9-21c3-4133-bd37-efd860dbe7de>
+  PrefabRemaps:
+    []
+  Name: StackRightController
+  Enabled: true
+  ScriptAsset: !<reference> ef559e87-41d9-4d97-a6f0-b40399e8ecbc
+  ScriptInputsDefault:
+    snapDistanceCm: true
+    dropHeightAllowanceCm: true
+    tipDurationSec: true
+    eyeHeightCm: true
+    ghostColor: true
+    glowColor: true
+    tipColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pallet: !<reference.SceneObject> 8d9dd2f5-28c7-4370-b98b-93be7ca9c3d7
+      shelfBay: !<reference.SceneObject> 4ec008fd-8900-41dd-8cd1-fab25ca76045
+      pickList: !<reference.SceneObject> 1bd05126-a557-4cf9-a2f9-6664eff58924
+      ghost: !<reference.SceneObject> c2befb2a-946f-4201-9aca-9f0fffa0c46b
+      offViewArrow: !<reference.SceneObject> 70263b36-6526-4e67-89b1-5e69308f656a
+      resetPost: !<reference.SceneObject> aef1c565-d68c-4970-babd-88c13cea6aa3
+      ghostTag: !<MappingBased.AssignableType_1> f7e85a89-8bf4-4a53-ab4f-c203e6fca1b3
+      counter: !<MappingBased.AssignableType_2> ef8c621a-8a6a-4295-a1a2-aba5d6df1e2e
+      tipText: !<MappingBased.AssignableType_3> 3b1084dc-d42e-49c9-b199-8c1af41fd2ae
+      completionCard: !<MappingBased.AssignableType_4> cac75974-c889-4fd7-bc9b-404dd1b799c8
+      resetButton: !<MappingBased.AssignableType_5> e1ac1044-7017-4a2f-aae9-8055aaaf1d84
+      boxMesh: !<reference.RenderMesh> 39bb4120-4cf6-4279-8fdd-db3c97161f62
+      baseMaterial: !<reference.Material> 600013cb-4115-477f-9dd3-333c64bc2fbf
+      snapDistanceCm: !<float> 15.000000
+      dropHeightAllowanceCm: !<float> 60.000000
+      tipDurationSec: !<float> 4.000000
+      eyeHeightCm: !<float> 150.000000
+      ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
+      glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
+      tipColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
+      debugLogs: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/82a4b4e8-283b-441c-8b94-9fdc50c958f2>
   PrefabRemaps:
     []
@@ -1476,6 +1762,21 @@
     - !<own> 1fc7fa3e-6910-4741-b8a7-1b6660a39a9d
   Components:
     - !<own> 28e05826-1521-46fa-a54c-80f2957ec80c
+- !<SceneObject/8a0ef770-ee1a-4dc4-87f5-ca8da8d95792>
+  PrefabRemaps:
+    []
+  Name: Carton_0_Water
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 116.000000, z: -94.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/8b877074-7eee-4be1-b669-714f8d5a1da3>
   PrefabRemaps:
     []
@@ -1527,6 +1828,28 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> b859e31c-4c76-46bd-bd6a-042228e52728
+  Components:
+    []
+- !<SceneObject/8d9dd2f5-28c7-4370-b98b-93be7ca9c3d7>
+  PrefabRemaps:
+    []
+  Name: Pallet
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -100.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> c2befb2a-946f-4201-9aca-9f0fffa0c46b
+    - !<own> aa5800a3-943c-408c-b48a-bc94b0a50813
+    - !<own> 30f80948-042a-469a-8b17-ddca26e3a7a5
+    - !<own> dfc7deb9-f375-46de-9754-331ded4f2663
+    - !<own> 26795445-5c07-4b57-8167-47b4cf60a60b
+    - !<own> 70263b36-6526-4e67-89b1-5e69308f656a
+    - !<own> aef1c565-d68c-4970-babd-88c13cea6aa3
+    - !<own> 102f12c7-d1bd-4469-b03a-fb1d1f262437
   Components:
     []
 - !<SceneObject/8fe2a532-9bf3-4cde-b598-04ce5470718d>
@@ -1760,6 +2083,21 @@
     []
   Components:
     - !<own> 11c4bb09-7c38-4023-9802-74f9f28709a9
+- !<SceneObject/aa5800a3-943c-408c-b48a-bc94b0a50813>
+  PrefabRemaps:
+    []
+  Name: GhostTag
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 60.000000, z: 30.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f7e85a89-8bf4-4a53-ab4f-c203e6fca1b3
 - !<SceneObject/abfa4c71-3560-46f0-9471-90e212f21185>
   PrefabRemaps:
     []
@@ -1773,6 +2111,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> f6687ab7-52ac-408d-a892-8a9559125450
+  Components:
+    []
+- !<SceneObject/aef1c565-d68c-4970-babd-88c13cea6aa3>
+  PrefabRemaps:
+    []
+  Name: ResetPost
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -70.000000, y: 0.000000, z: 66.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/b22d97e6-4c06-4135-af29-d26adb2b9d86>
@@ -1880,6 +2233,21 @@
     - !<own> 11ac73c9-b802-4eb6-abf5-f73054ca7e20
   Components:
     []
+- !<SceneObject/bb4f3b5c-06af-4355-a11b-a84df84dfe43>
+  PrefabRemaps:
+    []
+  Name: Carton_1_SoftDrink
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 116.000000, z: -38.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/bb75b5ea-8baf-4d8d-bcf8-49bd79873881>
   PrefabRemaps:
     []
@@ -1955,6 +2323,55 @@
     []
   Components:
     []
+- !<SceneObject/c2befb2a-946f-4201-9aca-9f0fffa0c46b>
+  PrefabRemaps:
+    []
+  Name: Ghost
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 31.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<ScriptComponent/c2e089b7-20c0-4076-b7d0-df3a25294e70>
+  PrefabRemaps:
+    []
+  Name: StackRightTestDriver
+  Enabled: true
+  ScriptAsset: !<reference> de5304f7-7b26-4e01-9bf6-70dca5f8c70e
+  ScriptInputsDefault:
+    mode: true
+    startDelaySec: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      controller: !<MappingBased.AssignableType_1> 80fcbac9-21c3-4133-bd37-efd860dbe7de
+      mode: !<string> off
+      startDelaySec: 1.500000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/c5e4a596-7d70-4f0e-ac79-108e50495e4c>
+  PrefabRemaps:
+    []
+  Name: Carton_7_Chips
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 57.000000, z: 87.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/c8e031d3-a8a1-468a-a419-427f8556de4c>
   PrefabRemaps:
     []
@@ -1998,6 +2415,30 @@
     - !<own> 0a0e1d78-8246-4f5b-ab1a-fdc51837956d
   Components:
     []
+- !<ScriptComponent/cac75974-c889-4fd7-bc9b-404dd1b799c8>
+  PrefabRemaps:
+    []
+  Name: StackRightLabelUI
+  Enabled: true
+  ScriptAsset: !<reference> 4e2ae7eb-0887-4922-9bb9-791a4272857c
+  ScriptInputsDefault:
+    textColor: true
+    initialText: true
+    faceCamera: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      panelWidth: !<float> 66.000000
+      panelHeight: !<float> 26.000000
+      textSize: !<float> 150.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      initialText: ""
+      startVisible: false
+      faceCamera: true
+  ScriptTypes:
+    "":
+      {}
 - !<Skin/ccf4d3bc-d3c2-4580-b9c5-62f164ef7eef>
   PrefabRemaps:
     []
@@ -2238,6 +2679,21 @@
     - !<own> d4a9c5e3-fe96-4824-9b20-59f5ad39eabd
   Components:
     []
+- !<SceneObject/dfc7deb9-f375-46de-9754-331ded4f2663>
+  PrefabRemaps:
+    []
+  Name: TipText
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 75.000000, z: 62.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 3b1084dc-d42e-49c9-b199-8c1af41fd2ae
 - !<RenderMeshVisual/e1031f7e-3474-489f-a529-282f7192f812>
   PrefabRemaps:
     []
@@ -2258,6 +2714,30 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/e1ac1044-7017-4a2f-aae9-8055aaaf1d84>
+  PrefabRemaps:
+    []
+  Name: StackRightResetButtonUI
+  Enabled: true
+  ScriptAsset: !<reference> 8682d018-e8b3-4654-b7e6-8b17b7182725
+  ScriptInputsDefault:
+    label: true
+    buttonWidth: true
+    buttonHeight: true
+    labelSize: true
+    faceCamera: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      label: Reset pallet
+      buttonWidth: !<float> 12.000000
+      buttonHeight: !<float> 6.000000
+      labelSize: !<float> 56.000000
+      faceCamera: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e2ba526d-75d1-466b-86a5-9cd7c42dca84>
   PrefabRemaps:
     []
@@ -2351,6 +2831,31 @@
     Fingers_length: 0.000000
     Thumb_inflate: 0.000000
     Thumb_length: 0.000000
+- !<ScriptComponent/ef8c621a-8a6a-4295-a1a2-aba5d6df1e2e>
+  PrefabRemaps:
+    []
+  Name: StackRightLabelUI
+  Enabled: true
+  ScriptAsset: !<reference> 4e2ae7eb-0887-4922-9bb9-791a4272857c
+  ScriptInputsDefault:
+    panelHeight: true
+    textColor: true
+    startVisible: true
+    faceCamera: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      panelWidth: !<float> 20.000000
+      panelHeight: !<float> 8.000000
+      textSize: !<float> 220.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      initialText: 0 / 8
+      startVisible: true
+      faceCamera: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/f0394c5d-4c44-4c65-a77c-e1c7e05ca905>
   PrefabRemaps:
     []
@@ -2573,6 +3078,30 @@
     - !<own> a7526b33-fca3-4f28-8e32-b0e9aa13c4b4
   Components:
     []
+- !<ScriptComponent/f7e85a89-8bf4-4a53-ab4f-c203e6fca1b3>
+  PrefabRemaps:
+    []
+  Name: StackRightLabelUI
+  Enabled: true
+  ScriptAsset: !<reference> 4e2ae7eb-0887-4922-9bb9-791a4272857c
+  ScriptInputsDefault:
+    textColor: true
+    initialText: true
+    faceCamera: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      panelWidth: !<float> 64.000000
+      panelHeight: !<float> 9.000000
+      textSize: !<float> 190.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      initialText: ""
+      startVisible: false
+      faceCamera: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/fcc185fc-4e88-4e9e-9c71-40bd83b1b0ed>
   PrefabRemaps:
     []

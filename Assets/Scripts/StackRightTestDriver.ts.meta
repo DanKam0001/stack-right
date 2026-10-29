@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/ac949db8-8d8c-4f58-970b-1a326598857a>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> de5304f7-7b26-4e01-9bf6-70dca5f8c70e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> de5304f7-7b26-4e01-9bf6-70dca5f8c70e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> dc116c68-6321-403d-98c3-0cf4da7da4e9
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/dc116c68-6321-403d-98c3-0cf4da7da4e9>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 2b5d545d-ba5a-4b1c-91c2-0d840568f465
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    controller: false
+    mode: false
+    startDelaySec: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - controller: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      mode: !<string> off
+      startDelaySec: 1.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">StackRightTestDriver – test/demo states (set mode to off for normal play)</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @input AssignableType_1 controller {"hint":"The StackRightController to drive"}'
+    - '// @input string mode = "off" {"hint":"off | selftest | ghost | mistake | complete", "widget":"combobox", "values":[{"label":"off", "value":"off"}, {"label":"selftest", "value":"selftest"}, {"label":"ghost", "value":"ghost"}, {"label":"mistake", "value":"mistake"}, {"label":"complete", "value":"complete"}]}'
+    - '// @input float startDelaySec = 1.5 {"hint":"Seconds to wait after start before driving"}'
