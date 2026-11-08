@@ -1,9 +1,10 @@
-// DC1: at start the pallet is on the floor about 1 m ahead at real size, and the shelf bay
-// with 8 cartons is about 1.4 m to the right.
+// DC1: pallet ~1 m ahead on the floor, shelf to the right with the next 4 cases on the lower
+// shelf (case due now nearest the pallet), height-limit outline at 180 cm, counter at 0 / 30.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
-import {findSceneObjectByName, sleep} from "Leaf.lspkg/Utils/common/Utils"
-import {getController, freshPallet} from "./StackRightLeafHelpers"
+import {sleep} from "Leaf.lspkg/Utils/common/Utils"
+import {ORDER} from "../Scripts/StackRightPickList"
+import {getController,freshPallet, queueShowsNextFour, onlyDueCaseInteractable} from "./StackRightLeafHelpers"
 
 @component
 export class StackRightDC1LayoutScenario extends Scenario {
@@ -11,35 +12,34 @@ export class StackRightDC1LayoutScenario extends Scenario {
     await sleep(1500)
     const c = getController()
     await freshPallet(c)
+
     const cam = c.getCameraWorldPosition()
     const pallet = c.getPalletWorldPosition()
-    const shelf = c.getShelfWorldPosition()
-
-    // Pallet: ~100 cm ahead (-z), roughly centred, on the floor (140-170 cm below the eyes).
-    const ahead = cam.z - pallet.z
-    expect(ahead >= 80 && ahead <= 120).toBe(true)
-    expect(Math.abs(pallet.x - cam.x) < 20).toBe(true)
-    const drop = cam.y - pallet.y
+    const ahead = new vec2(pallet.x - cam.x, pallet.z - cam.z).length
+    expect(ahead > 80 && ahead < 120).toBe(true)
+    expect(Math.abs(pallet.x - cam.x) < 10).toBe(true)
+    const drop = cam.y - c.getFloorWorldY()
     expect(drop >= 140 && drop <= 170).toBe(true)
 
-    // Shelf bay: ~140 cm to the right (+x).
+    const shelf = c.getShelfWorldPosition()
     const right = shelf.x - cam.x
     expect(right >= 120 && right <= 160).toBe(true)
 
-    // 8 cartons on the shelf, none placed, all inside the shelf bay's footprint (60 D x 240 W).
-    expect(c.getCartonCount()).toBe(8)
-    for (let i = 0; i < 8; i++) {
-      expect(c.isCartonPlaced(i)).toBe(false)
-      const p = c.getCartonWorldPosition(i)
-      expect(Math.abs(p.x - shelf.x) <= 30).toBe(true)
-      expect(Math.abs(p.z - shelf.z) <= 120).toBe(true)
-      expect(p.y > shelf.y + 35).toBe(true)
+    expect(c.getCaseCount()).toBe(30)
+    expect(queueShowsNextFour(c)).toBe(true)
+    for (let i = 0; i < 4; i++) {
+      // Bottom of each queued case on the lower shelf (40 cm).
+      const bottom = c.getCaseWorldPosition(i).y - c.getFloorWorldY() - ORDER[i].size.y / 2
+      expect(Math.abs(bottom - 40) < 1).toBe(true)
     }
+    // Case due now is the queued case closest to the pallet.
+    const d0 = c.getCaseWorldPosition(0).distance(pallet)
+    for (let i = 1; i < 4; i++) expect(c.getCaseWorldPosition(i).distance(pallet) > d0).toBe(true)
 
-    // Named scene objects exist; the stand-in pick list is obvious in the hierarchy.
-    expect(findSceneObjectByName("Pallet") != null).toBe(true)
-    expect(findSceneObjectByName("ShelfBay") != null).toBe(true)
-    expect(findSceneObjectByName("PickList (stand-in for barcode scan)") != null).toBe(true)
-    expect(c.getCounterText()).toBe("0 / 8")
+    expect(c.isHeightLimitVisible()).toBe(true)
+    expect(Math.abs(c.getHeightLimitWorldY() - c.getFloorWorldY() - 180) < 0.5).toBe(true)
+    expect(c.getCounterText()).toBe("Layer 1 · 0 / 30")
+    expect(c.isCaseGlowing(0)).toBe(true)
+    expect(onlyDueCaseInteractable(c)).toBe(true)
   }
 }

@@ -1,9 +1,10 @@
-// DC2: grabbing the correct next carton shows its ghost on the pallet with the tag
-// "Layer N · Heavy/Light · kg". A wrong carton shows no ghost.
+// DC2: grabbing the case due now shows a ghost of its size at its planned slot, with the tag
+// "Layer N · K of 30 · kg". Layer 2 (case 7) shows a turned ghost; case 15 is on layer 3.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {sleep} from "Leaf.lspkg/Utils/common/Utils"
-import {getController, freshPallet, settle} from "./StackRightLeafHelpers"
+import {ORDER} from "../Scripts/StackRightPickList"
+import {getController, freshPallet, dropOnSlot} from "./StackRightLeafHelpers"
 
 @component
 export class StackRightDC2GhostScenario extends Scenario {
@@ -12,33 +13,34 @@ export class StackRightDC2GhostScenario extends Scenario {
     const c = getController()
     await freshPallet(c)
 
+    // A case that is not due yet cannot be picked.
+    c.simulateGrab(1)
     expect(c.isGhostVisible()).toBe(false)
-    expect(c.isCartonGlowing(0)).toBe(true)
 
-    // Wrong carton grabbed: no ghost. Put it back off the pallet (no mistake).
-    c.simulateGrab(3)
-    await sleep(200)
-    expect(c.isGhostVisible()).toBe(false)
-    c.simulateRelease(3, c.getCartonHomePosition(3))
-    await settle(c)
-
-    // Correct carton grabbed: ghost on its slot, tag text.
     c.simulateGrab(0)
-    await sleep(200)
     expect(c.isGhostVisible()).toBe(true)
-    expect(c.isGhostTagVisible()).toBe(true)
-    expect(c.getGhostTagText()).toBe("Layer 1 · Heavy · 14 kg")
-    const g = c.getGhostWorldPosition()
-    expect(g.distance(c.getSlotWorldPosition(0)) < 1).toBe(true)
-    const p = c.getPalletWorldPosition()
-    expect(Math.abs(g.x - p.x) <= 58.25).toBe(true)
-    expect(Math.abs(g.z - p.z) <= 58.25).toBe(true)
+    expect(c.getGhostWorldPosition().distance(c.getSlotWorldPosition(0)) < 1).toBe(true)
+    expect(c.getGhostSize().distance(ORDER[0].size) < 0.1).toBe(true)
+    expect(c.getGhostTagText()).toBe("Layer 1 · 1 of 30 · 17 kg")
+    c.simulateRelease(0, c.getSlotWorldPosition(0))
 
-    // Releasing off the pallet hides the ghost and costs no mistake.
-    const before = c.getMistakes()
-    c.simulateRelease(0, c.getCartonHomePosition(0))
-    await settle(c)
-    expect(c.isGhostVisible()).toBe(false)
-    expect(c.getMistakes()).toBe(before)
+    for (let i = 1; i < 6; i++) dropOnSlot(c, i)
+    await sleep(100)
+
+    // Layer 2: turned 90 degrees, ghost has x and z swapped.
+    c.simulateGrab(6)
+    const s = ORDER[6].size
+    expect(c.isSlotTurned(6)).toBe(true)
+    expect(c.getGhostSize().distance(new vec3(s.z, s.y, s.x)) < 0.1).toBe(true)
+    expect(c.getGhostTagText()).toBe("Layer 2 · 7 of 30 · 14 kg")
+    c.simulateRelease(6, c.getSlotWorldPosition(6))
+
+    for (let i = 7; i < 14; i++) dropOnSlot(c, i)
+    await sleep(100)
+
+    c.simulateGrab(14)
+    expect(c.getGhostTagText()).toBe("Layer 3 · 15 of 30 · 10 kg")
+    expect(c.isSlotTurned(14)).toBe(false)
+    expect(c.getGhostSize().distance(ORDER[14].size) < 0.1).toBe(true)
   }
 }

@@ -5,6 +5,8 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
     - !<own> 5e01136c-e7c9-47e6-b54d-8bf404a7584c
+    - !<own> a70e8180-84ea-47c7-ac8b-545cd120f2bb
+    - !<own> 298ef2f3-9a95-486a-b875-0b0d0bac1c26
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -238,7 +240,7 @@
 - !<SceneObject/069f216e-46eb-4f2f-99b9-72e61e4e7ee9>
   PrefabRemaps:
     []
-  Name: Carton_5_Bread
+  Name: Case_05_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -761,6 +763,21 @@
     ring-3_end_end_end: !<reference> b93dfa60-41bd-4999-ac0f-4b2f1df2bdaf
     thumb-3_end_end_end_end: !<reference> 08e3cc22-f2e1-49fb-9ddc-145fe6547ce3
     pinky-3_end_end: !<reference> d08269e3-acd4-4156-b5b9-477ca259611d
+- !<SceneObject/298ef2f3-9a95-486a-b875-0b0d0bac1c26>
+  PrefabRemaps:
+    []
+  Name: LEAF Plugin Bridge
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> de657775-dd4f-4d51-8b62-f051a4d558a5
 - !<SceneObject/2dae2a27-8ce6-466a-8bff-622195c1b3a8>
   PrefabRemaps:
     []
@@ -794,7 +811,7 @@
 - !<SceneObject/31a7937d-cedf-4724-ad07-68ffb5d2bf58>
   PrefabRemaps:
     []
-  Name: Carton_6_Eggs
+  Name: Case_06_Water
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -920,13 +937,14 @@
     {}
   ScriptInputs:
     "":
-      panelWidth: !<float> 80.000000
-      panelHeight: !<float> 10.000000
+      panelWidth: !<float> 84.000000
+      panelHeight: !<float> 16.000000
       textSize: !<float> 160.000000
       textColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
       initialText: ""
       startVisible: false
       faceCamera: true
+      wrapText: true
   ScriptTypes:
     "":
       {}
@@ -963,7 +981,7 @@
 - !<SceneObject/3ed477ee-a3bb-4a6a-8f0a-91271ac050e7>
   PrefabRemaps:
     []
-  Name: Carton_4_Pasta
+  Name: Case_04_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1087,7 +1105,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 140.000000, y: 0.000000, z: -110.000000}
+    Position: {x: 140.000000, y: 0.000000, z: -175.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -1128,7 +1146,7 @@
 - !<SceneObject/5422fac5-3e85-4379-a60e-a7a3d6104a11>
   PrefabRemaps:
     []
-  Name: Carton_2_Tomatoes
+  Name: Case_02_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1401,7 +1419,7 @@
 - !<SceneObject/6d658f3c-9506-466a-a6d9-61e44af4af09>
   PrefabRemaps:
     []
-  Name: Carton_3_Laundry
+  Name: Case_03_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1656,6 +1674,8 @@
     ghostColor: true
     glowColor: true
     tipColor: true
+    noteColor: true
+    heightLimitColor: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1680,6 +1700,8 @@
       ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
       glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
       tipColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
+      noteColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      heightLimitColor: !<Vec4> {x: 0.850000, y: 0.950000, z: 1.000000, w: 0.700000}
       debugLogs: true
   ScriptTypes:
     "":
@@ -1765,7 +1787,7 @@
 - !<SceneObject/8a0ef770-ee1a-4dc4-87f5-ca8da8d95792>
   PrefabRemaps:
     []
-  Name: Carton_0_Water
+  Name: Case_00_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1898,6 +1920,22 @@
     - !<own> a4de4ce7-f468-4966-8a06-e29eea60c023
   Components:
     []
+- !<ScriptComponent/992e0548-ae3e-49b6-803e-40396e92919a>
+  PrefabRemaps:
+    []
+  Name: LeafIndex
+  Enabled: true
+  ScriptAsset: !<reference> 89f287f0-b610-4922-817d-f405603057e3
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/9c3a7929-faa9-4369-a85c-c75a6ab4eee7>
   PrefabRemaps:
     []
@@ -2023,6 +2061,21 @@
     - !<own> d5f63266-b1ce-419f-847b-3c9f347b3ee2
   Components:
     []
+- !<SceneObject/a70e8180-84ea-47c7-ac8b-545cd120f2bb>
+  PrefabRemaps:
+    []
+  Name: LeafIndex
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 992e0548-ae3e-49b6-803e-40396e92919a
 - !<SceneObject/a7526b33-fca3-4f28-8e32-b0e9aa13c4b4>
   PrefabRemaps:
     []
@@ -2236,7 +2289,7 @@
 - !<SceneObject/bb4f3b5c-06af-4355-a11b-a84df84dfe43>
   PrefabRemaps:
     []
-  Name: Carton_1_SoftDrink
+  Name: Case_01_Laundry
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -2360,7 +2413,7 @@
 - !<SceneObject/c5e4a596-7d70-4f0e-ac79-108e50495e4c>
   PrefabRemaps:
     []
-  Name: Carton_7_Chips
+  Name: Case_07_Water
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -2429,13 +2482,14 @@
     {}
   ScriptInputs:
     "":
-      panelWidth: !<float> 66.000000
-      panelHeight: !<float> 26.000000
+      panelWidth: !<float> 84.000000
+      panelHeight: !<float> 28.000000
       textSize: !<float> 150.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       initialText: ""
       startVisible: false
       faceCamera: true
+      wrapText: true
   ScriptTypes:
     "":
       {}
@@ -2679,6 +2733,22 @@
     - !<own> d4a9c5e3-fe96-4824-9b20-59f5ad39eabd
   Components:
     []
+- !<ScriptComponent/de657775-dd4f-4d51-8b62-f051a4d558a5>
+  PrefabRemaps:
+    []
+  Name: MessagingBridge
+  Enabled: true
+  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/dfc7deb9-f375-46de-9754-331ded4f2663>
   PrefabRemaps:
     []
@@ -2842,17 +2912,19 @@
     textColor: true
     startVisible: true
     faceCamera: true
+    wrapText: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      panelWidth: !<float> 20.000000
+      panelWidth: !<float> 46.000000
       panelHeight: !<float> 8.000000
       textSize: !<float> 220.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      initialText: 0 / 8
+      initialText: Layer 1 · 0 / 30
       startVisible: true
       faceCamera: true
+      wrapText: false
   ScriptTypes:
     "":
       {}
@@ -3088,6 +3160,7 @@
     textColor: true
     initialText: true
     faceCamera: true
+    wrapText: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -3099,6 +3172,7 @@
       initialText: ""
       startVisible: false
       faceCamera: true
+      wrapText: false
   ScriptTypes:
     "":
       {}

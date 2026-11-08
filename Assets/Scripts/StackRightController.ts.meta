@@ -39,6 +39,8 @@
     ghostColor: false
     ghostTag: false
     glowColor: false
+    heightLimitColor: false
+    noteColor: false
     offViewArrow: false
     pallet: false
     pickList: false
@@ -78,6 +80,8 @@
       ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
       glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
       tipColor: !<Vec4> {x: 1.000000, y: 0.350000, z: 0.350000, w: 1.000000}
+      noteColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      heightLimitColor: !<Vec4> {x: 0.850000, y: 0.950000, z: 1.000000, w: 0.700000}
       debugLogs: false
   ScriptTypes:
     -
@@ -89,14 +93,14 @@
     - '// @ui {"widget":"group_start", "label":"References"}'
     - '// @input SceneObject pallet {"hint":"Pallet root: on the floor, origin at the centre of its footprint"}'
     - "// @input SceneObject shelfBay {\"hint\":\"Shelf bay root: on the floor to the user's right\"}"
-    - '// @input SceneObject pickList {"hint":"PickList (stand-in for barcode scan): its 8 children are the cartons, in pick order"}'
-    - '// @input SceneObject ghost {"hint":"Ghost carton root (child of Pallet)"}'
-    - '// @input SceneObject offViewArrow {"hint":"Arrow on the pallet edge that points at the next carton when it is out of view"}'
+    - '// @input SceneObject pickList {"hint":"PickList (stand-in for barcode scan): cases are created under it at runtime, in order"}'
+    - '// @input SceneObject ghost {"hint":"Ghost case root (child of Pallet)"}'
+    - '// @input SceneObject offViewArrow {"hint":"Arrow on the pallet edge that points at the case due now when it is out of view"}'
     - '// @input SceneObject resetPost {"hint":"Short post under the Reset button"}'
-    - "// @input AssignableType_1 ghostTag {\"hint\":\"Tag on the ghost: 'Layer N · Heavy · 14 kg'\"}"
-    - "// @input AssignableType_2 counter {\"hint\":\"'3 / 8' counter on the pallet's near edge\"}"
-    - '// @input AssignableType_3 tipText {"hint":"Red tip shown on the pallet for a few seconds after a mistake"}'
-    - "// @input AssignableType_4 completionCard {\"hint\":\"Completion card: time, mistakes, 'Wrap and label'\"}"
+    - "// @input AssignableType_1 ghostTag {\"hint\":\"Tag on the ghost: 'Layer N · K of 30 · kg'\"}"
+    - "// @input AssignableType_2 counter {\"hint\":\"'Layer N · K / 30' counter on the pallet's near edge\"}"
+    - '// @input AssignableType_3 tipText {"hint":"Red tip (mistakes) / white note (layer done) shown on the pallet for a few seconds"}'
+    - "// @input AssignableType_4 completionCard {\"hint\":\"Completion card: cases, layers, height, time, mistakes, 'Wrap and label'\"}"
     - '// @input AssignableType_5 resetButton {"hint":"Reset pallet button"}'
     - '// @input Asset.RenderMesh boxMesh {"hint":"1 cm box mesh used for every placeholder visual"}'
     - '// @input Asset.Material baseMaterial {"hint":"Unlit material cloned for every placeholder visual"}'
@@ -106,11 +110,13 @@
     - '// @ui {"widget":"group_start", "label":"Settings"}'
     - '// @input float snapDistanceCm = 15 {"hint":"Release within this horizontal distance (cm) of the ghost to snap", "widget":"slider", "min":5, "max":40, "step":1}'
     - '// @input float dropHeightAllowanceCm = 60 {"hint":"Mouse-friendly allowance: how far ABOVE the ghost (cm) a release still snaps. Below, the limit is snapDistanceCm.", "widget":"slider", "min":0, "max":120, "step":1}'
-    - '// @input float tipDurationSec = 4 {"hint":"How long the red tip stays on the pallet (s)", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input float tipDurationSec = 4 {"hint":"How long the red tip / layer note stays on the pallet (s)", "widget":"slider", "min":1, "max":10, "step":0.5}'
     - "// @input float eyeHeightCm = 150 {\"hint\":\"Place the floor this far below the user's eyes at start (cm). The work area root (this object's parent) is moved to camera.y - eyeHeightCm.\", \"widget\":\"slider\", \"min\":100, \"max\":200, \"step\":1}"
     - '// @input vec4 ghostColor = "{0.6,1,1,0.3}" {"hint":"Ghost fill colour (pale cyan, about 30% fill)", "widget":"color"}'
-    - '// @input vec4 glowColor = "{1,1,0.55,0.35}" {"hint":"Soft glow around the next carton on the shelf", "widget":"color"}'
+    - '// @input vec4 glowColor = "{1,1,0.55,0.35}" {"hint":"Soft glow around the case due now on the pick face", "widget":"color"}'
     - '// @input vec4 tipColor = "{1,0.35,0.35,1}" {"hint":"Tip text colour (bright red, not dark)", "widget":"color"}'
+    - '// @input vec4 noteColor = "{1,1,1,1}" {"hint":"Layer-done note text colour", "widget":"color"}'
+    - '// @input vec4 heightLimitColor = "{0.85,0.95,1,0.7}" {"hint":"Height-limit outline colour (thin, pale)", "widget":"color"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Debug</span>"}'

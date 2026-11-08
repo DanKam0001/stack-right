@@ -45,6 +45,10 @@ export class StackRightLabelUI extends BaseScriptComponent {
   @input
   @hint("Turn the panel every frame so it faces the user's eyes")
   faceCamera: boolean = true
+
+  @input
+  @hint("Wrap long text onto more lines (otherwise it shrinks to fit one line)")
+  wrapText: boolean = false
   @ui.group_end
 
   private text: Text
@@ -70,7 +74,7 @@ export class StackRightLabelUI extends BaseScriptComponent {
     this.text.textFill.color = this.textColor
     this.text.horizontalAlignment = HorizontalAlignment.Center
     this.text.verticalAlignment = VerticalAlignment.Center
-    this.text.horizontalOverflow = HorizontalOverflow.Shrink
+    this.text.horizontalOverflow = this.wrapText ? HorizontalOverflow.Wrap : HorizontalOverflow.Shrink
     this.text.verticalOverflow = VerticalOverflow.Shrink
     const hw = this.panelWidth / 2 - 0.8
     const hh = this.panelHeight / 2 - 0.5

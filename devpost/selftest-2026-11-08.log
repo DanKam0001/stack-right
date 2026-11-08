@@ -1,0 +1,164 @@
+# Stack Right v2 self-test, Lens Studio preview, 2026-11-08 (StackRightTestDriver mode=selftest)
+# Source: C:/Users/Fatal/AppData/Local/Snap/Lens Studio/logs/LensStudioLog-2026-11-08-22-37-48-770-b5e8c.txt from byte 1488588
+I 22:54:22.272 [StackRight] floor aligned: camera y = 0, floor y = -150
+I 22:54:23.107 [StackRight] reset
+I 22:54:23.107 [StackRight] ready. 30 cases, 5 layers, stack 157 cm. camera = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -175}
+I 22:54:24.575 [StackRightTest] mode = selftest
+I 22:54:24.588 [StackRight] reset
+I 22:54:24.908 [StackRightTest] PASS DC1: pallet ~100 cm ahead (got 100)
+I 22:54:24.909 [StackRightTest] PASS DC1: pallet centred (dx 0)
+I 22:54:24.909 [StackRightTest] PASS DC1: pallet on floor, 150 cm below eyes
+I 22:54:24.909 [StackRightTest] PASS DC1: shelf ~140 cm right (got 140)
+I 22:54:24.909 [StackRightTest] PASS DC1: 30 cases in the order (got 30)
+I 22:54:24.910 [StackRightTest] PASS DC1: queue shows exactly cases 0-3
+I 22:54:24.910 [StackRightTest] PASS DC1: queue sits on the lower shelf (bottom 40 cm)
+I 22:54:24.910 [StackRightTest] PASS DC1: case due now is in the slot nearest the pallet (141 cm)
+I 22:54:24.910 [StackRightTest] PASS DC1: height-limit outline 180.0 cm above the floor, visible
+I 22:54:24.910 [StackRightTest] PASS DC1: counter reads 'Layer 1 · 0 / 30'
+I 22:54:24.911 [StackRightTest] PASS DC1: case 0 glows, only case 0 interactable
+I 22:54:24.912 [StackRightTest] PASS DC2: grabbing a later case does nothing (no ghost)
+I 22:54:24.912 [StackRightTest] PASS DC2: no ghost before grab
+I 22:54:24.913 [StackRight] grab Case_00_Laundry (ghost shown, layer 1)
+I 22:54:24.913 [StackRightTest] PASS DC2: ghost visible after grabbing case 0
+I 22:54:24.913 [StackRightTest] PASS DC2: ghost sits on case 0's planned slot
+I 22:54:24.913 [StackRightTest] PASS DC2: layer-1 ghost size = case size (38, 30, 58)
+I 22:54:24.913 [StackRightTest] PASS DC2: tag reads 'Layer 1 · 1 of 30 · 17 kg'
+I 22:54:24.917 [StackRight] placed Case_00_Laundry -> 1/30
+I 22:54:24.918 [StackRightTest] PASS DC3: case 0 snapped (dropped 10 cm off)
+I 22:54:24.918 [StackRightTest] PASS DC3: snapped square onto the slot
+I 22:54:24.918 [StackRightTest] PASS DC3: counter reads 'Layer 1 · 1 / 30'
+I 22:54:24.918 [StackRightTest] PASS DC3: ghost hidden after placing
+I 22:54:24.919 [StackRightTest] PASS DC3: queue moved up: cases 1-4 shown, 5+ hidden
+I 22:54:24.919 [StackRightTest] PASS DC3: case 1 sliding to the front slot
+I 22:54:25.515 [StackRightTest] PASS DC3: case 1 now in the front slot, case 4 at the back
+I 22:54:25.516 [StackRightTest] PASS DC3: next case (1) glows and is the only one interactable
+I 22:54:25.516 [StackRight] grab Case_01_Laundry (ghost shown, layer 1)
+I 22:54:25.518 [StackRight] mistake #1 (Case_01_Laundry): That leaves a gap. Drop it on the ghost.
+I 22:54:25.518 [StackRightTest] PASS DC4: gap drop: not placed, sliding back
+I 22:54:25.519 [StackRightTest] PASS DC4: gap drop: tip 'That leaves a gap. Drop it on the ghost.'
+I 22:54:25.519 [StackRightTest] PASS DC4: gap drop: one mistake
+I 22:54:26.126 [StackRightTest] PASS DC4: case back home on the pick face
+I 22:54:26.127 [StackRight] grab Case_01_Laundry (ghost shown, layer 1)
+I 22:54:26.128 [StackRight] mistake #2 (Case_01_Laundry): Overhang. Keep it inside the edge.
+I 22:54:26.128 [StackRightTest] PASS DC4: overhang drop: tip 'Overhang. Keep it inside the edge.'
+I 22:54:26.129 [StackRightTest] PASS DC4: overhang drop: one more mistake
+I 22:54:26.744 [StackRight] grab Case_01_Laundry (ghost shown, layer 1)
+I 22:54:26.746 [StackRight] mistake #3 (Case_01_Laundry): That leaves a gap. Drop it on the ghost.
+I 22:54:26.746 [StackRightTest] PASS DC4: drop 0.75 cm over the edge counts as gap, not overhang
+I 22:54:27.366 [StackRight] grab Case_01_Laundry (ghost shown, layer 1)
+I 22:54:27.366 [StackRight] released Case_01_Laundry off the pallet: back to the pick face, no mistake
+I 22:54:27.366 [StackRightTest] PASS DC4: off-pallet drop: back, no mistake
+I 22:54:27.991 [StackRightTest] PASS DC4: case back home after off-pallet drop
+I 22:54:32.302 [StackRightTest] PASS DC4: tip hides after ~4 s
+I 22:54:32.305 [StackRight] grab Case_01_Laundry (ghost shown, layer 1)
+I 22:54:32.307 [StackRight] placed Case_01_Laundry -> 2/30
+I 22:54:32.308 [StackRight] grab Case_02_Laundry (ghost shown, layer 1)
+I 22:54:32.311 [StackRight] placed Case_02_Laundry -> 3/30
+I 22:54:32.312 [StackRight] grab Case_03_Laundry (ghost shown, layer 1)
+I 22:54:32.313 [StackRight] placed Case_03_Laundry -> 4/30
+I 22:54:32.315 [StackRight] grab Case_04_Laundry (ghost shown, layer 1)
+I 22:54:32.316 [StackRight] placed Case_04_Laundry -> 5/30
+I 22:54:32.317 [StackRight] grab Case_05_Laundry (ghost shown, layer 1)
+I 22:54:32.319 [StackRight] placed Case_05_Laundry -> 6/30
+I 22:54:32.320 [StackRightTest] PASS DC5: layer 1 done note: 'Layer 1 done. Next layer turns 90° so the joints don't line up.'
+I 22:54:32.321 [StackRight] grab Case_06_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.322 [StackRightTest] PASS DC2: layer-2 ghost turned: size (58, 30, 38) = (58, 30, 38)
+I 22:54:32.322 [StackRightTest] PASS DC2: layer-2 tag reads 'Layer 2 · 7 of 30 · 14 kg'
+I 22:54:32.323 [StackRight] mistake #4 (Case_06_Water): Overhang. Keep it inside the edge.
+I 22:54:32.324 [StackRightTest] PASS DC4: overhang judged in the planned (turned) orientation
+I 22:54:32.928 [StackRight] grab Case_06_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.942 [StackRight] placed Case_06_Water -> 7/30
+I 22:54:32.944 [StackRight] grab Case_07_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.946 [StackRight] placed Case_07_Water -> 8/30
+I 22:54:32.947 [StackRight] grab Case_08_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.948 [StackRight] placed Case_08_Water -> 9/30
+I 22:54:32.949 [StackRight] grab Case_09_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.950 [StackRight] placed Case_09_Water -> 10/30
+I 22:54:32.951 [StackRight] grab Case_10_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.952 [StackRight] placed Case_10_Water -> 11/30
+I 22:54:32.953 [StackRight] grab Case_11_Water (ghost shown, layer 2, turned 90)
+I 22:54:32.954 [StackRight] placed Case_11_Water -> 12/30
+I 22:54:32.955 [StackRightTest] PASS DC5: layer 2 done note: 'Layer 2 done. Next layer turns 90° so the joints don't line up.'
+I 22:54:32.956 [StackRight] grab Case_12_Tomatoes (ghost shown, layer 3)
+I 22:54:32.956 [StackRight] placed Case_12_Tomatoes -> 13/30
+I 22:54:32.957 [StackRight] grab Case_13_Tomatoes (ghost shown, layer 3)
+I 22:54:32.958 [StackRight] placed Case_13_Tomatoes -> 14/30
+I 22:54:32.959 [StackRight] grab Case_14_Tomatoes (ghost shown, layer 3)
+I 22:54:32.960 [StackRightTest] PASS DC2: case 15 tag reads 'Layer 3 · 15 of 30 · 10 kg'
+I 22:54:32.960 [StackRightTest] PASS DC2: layer-3 ghost not turned
+I 22:54:32.960 [StackRight] grab Case_14_Tomatoes (ghost shown, layer 3)
+I 22:54:32.962 [StackRight] placed Case_14_Tomatoes -> 15/30
+I 22:54:32.963 [StackRight] grab Case_15_Tomatoes (ghost shown, layer 3)
+I 22:54:32.965 [StackRight] placed Case_15_Tomatoes -> 16/30
+I 22:54:32.966 [StackRight] grab Case_16_Tomatoes (ghost shown, layer 3)
+I 22:54:32.967 [StackRight] placed Case_16_Tomatoes -> 17/30
+I 22:54:32.968 [StackRight] grab Case_17_Tomatoes (ghost shown, layer 3)
+I 22:54:32.969 [StackRight] placed Case_17_Tomatoes -> 18/30
+I 22:54:32.970 [StackRight] grab Case_18_Tomatoes (ghost shown, layer 3)
+I 22:54:32.972 [StackRight] placed Case_18_Tomatoes -> 19/30
+I 22:54:32.973 [StackRight] grab Case_19_Tomatoes (ghost shown, layer 3)
+I 22:54:32.974 [StackRight] placed Case_19_Tomatoes -> 20/30
+I 22:54:32.975 [StackRightTest] PASS DC5: layer 3 done note: 'Layer 3 done. Next layer turns 90° so the joints don't line up.'
+I 22:54:32.975 [StackRight] grab Case_20_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.977 [StackRight] placed Case_20_SoftDrink -> 21/30
+I 22:54:32.978 [StackRight] grab Case_21_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.980 [StackRight] placed Case_21_SoftDrink -> 22/30
+I 22:54:32.981 [StackRight] grab Case_22_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.982 [StackRight] placed Case_22_SoftDrink -> 23/30
+I 22:54:32.983 [StackRight] grab Case_23_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.984 [StackRight] placed Case_23_SoftDrink -> 24/30
+I 22:54:32.985 [StackRight] grab Case_24_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.986 [StackRight] placed Case_24_SoftDrink -> 25/30
+I 22:54:32.987 [StackRight] grab Case_25_SoftDrink (ghost shown, layer 4, turned 90)
+I 22:54:32.988 [StackRight] placed Case_25_SoftDrink -> 26/30
+I 22:54:32.989 [StackRightTest] PASS DC5: layer 4 done note: 'Layer 4 done. Next layer turns 90° so the joints don't line up.'
+I 22:54:32.989 [StackRight] grab Case_26_Eggs (ghost shown, layer 5)
+I 22:54:32.990 [StackRight] placed Case_26_Eggs -> 27/30
+I 22:54:32.992 [StackRight] grab Case_27_Bread (ghost shown, layer 5)
+I 22:54:32.994 [StackRight] placed Case_27_Bread -> 28/30
+I 22:54:32.995 [StackRight] grab Case_28_Chips (ghost shown, layer 5)
+I 22:54:32.997 [StackRight] placed Case_28_Chips -> 29/30
+I 22:54:32.998 [StackRight] grab Case_29_Chips (ghost shown, layer 5)
+I 22:54:32.999 [StackRight] placed Case_29_Chips -> 30/30
+I 22:54:33.001 [StackRightTest] PASS DC5: no 'turns 90°' note after the last layer
+I 22:54:33.001 [StackRightTest] PASS DC3: every case snapped onto its slot with the planned rotation (0 misses)
+I 22:54:33.002 [StackRightTest] PASS DC3: queue moved up after every placement (0 misses)
+I 22:54:33.002 [StackRightTest] PASS DC5: layer 1 vs layer 2 placed 90.0° apart
+I 22:54:33.002 [StackRightTest] PASS DC5: layer 2 vs layer 3 placed 90.0° apart
+I 22:54:33.002 [StackRightTest] PASS DC5: layer 3 vs layer 4 placed 90.0° apart
+I 22:54:33.002 [StackRightTest] PASS DC5: plan turns exactly layers 2 and 4
+I 22:54:33.003 [StackRightTest] INFO joints shared by layers 1 and 2: none
+I 22:54:33.004 [StackRightTest] INFO joints shared by layers 2 and 3: x=0
+I 22:54:33.004 [StackRightTest] INFO joints shared by layers 3 and 4: x=0
+I 22:54:33.005 [StackRightTest] INFO joints shared by layers 4 and 5: x=0
+I 22:54:33.005 [StackRightTest] PASS DC6: all 30 placed, counter 'Layer 5 · 30 / 30'
+I 22:54:33.005 [StackRightTest] PASS DC6: stack top 157.0 cm (~157), under the 180 cm limit
+I 22:54:33.005 [StackRightTest] PASS DC6: completion card visible
+I 22:54:33.027 [StackRightTest] PASS DC6: card: 'Pallet done! 30 cases · 5 layers · 157 cm | Time 0:08 · Mistakes 4 | Wrap and label the pallet.'
+I 22:54:33.953 [StackRightTest] PASS DC6: card stays up
+I 22:54:33.981 [StackRight] reset
+I 22:54:33.981 [StackRightTest] PASS DC6: Reset: pallet cleared
+I 22:54:33.982 [StackRightTest] PASS DC6: Reset: order restarts, first 4 cases on the pick face
+I 22:54:33.982 [StackRightTest] PASS DC6: Reset: counter 'Layer 1 · 0 / 30', card hidden, mistakes 0
+I 22:54:33.982 [StackRightTest] PASS DC6: Reset: case 0 glows and is interactable
+I 22:54:33.982 [StackRightTest] SUMMARY per done criterion:
+I 22:54:33.982 [StackRightTest]   DC1: PASS (11 passed, 0 failed)
+I 22:54:33.983 [StackRightTest]   DC2: PASS (10 passed, 0 failed)
+I 22:54:33.983 [StackRightTest]   DC3: PASS (10 passed, 0 failed)
+I 22:54:33.983 [StackRightTest]   DC4: PASS (11 passed, 0 failed)
+I 22:54:33.983 [StackRightTest]   DC5: PASS (9 passed, 0 failed)
+I 22:54:33.983 [StackRightTest]   DC6: PASS (9 passed, 0 failed)
+I 22:54:33.983 [StackRightTest] DONE: 60 passed, 0 failed
+
+# LEAF 2.0.2 scenarios (Assets/Tests), run serially in the preview via run_leaf_scenario
+I 22:58:15.308 [  1.877s]PASSED: dc1-layout
+I 22:58:25.873 [  2.117s]PASSED: dc2-ghost-and-tag
+I 22:58:40.522 [  4.049s]PASSED: dc3-snap-queue-30
+I 22:58:59.725 [ 10.965s]PASSED: dc4-overhang-gap-offpallet
+I 22:59:11.504 [  3.486s]PASSED: dc5-layer-notes-orientation
+I 22:59:26.247 [  6.185s]PASSED: dc6-complete-and-reset
+I 22:59:50.225 [ 11.333s]PASSED: reset-reach-ik
+
+# 2026-11-08 23:05 re-run after moving the "Height limit 180 cm" label to the front-right corner (screenshot overlap fix)
+[LEAF] dc1-layout PASSED (preview camera reset to default first)
+[LEAF] dc6-complete-and-reset PASSED

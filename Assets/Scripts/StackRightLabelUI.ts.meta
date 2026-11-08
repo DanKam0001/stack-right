@@ -35,6 +35,7 @@
     startVisible: false
     textColor: false
     textSize: false
+    wrapText: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -51,6 +52,7 @@
       initialText: ""
       startVisible: true
       faceCamera: true
+      wrapText: false
   ScriptTypes:
     -
       {}
@@ -66,4 +68,5 @@
     - '// @input string initialText {"hint":"Text shown before the controller sets anything"}'
     - '// @input bool startVisible = true {"hint":"Visible when the Lens starts"}'
     - "// @input bool faceCamera = true {\"hint\":\"Turn the panel every frame so it faces the user's eyes\"}"
+    - '// @input bool wrapText {"hint":"Wrap long text onto more lines (otherwise it shrinks to fit one line)"}'
     - '// @ui {"widget":"group_end"}'
