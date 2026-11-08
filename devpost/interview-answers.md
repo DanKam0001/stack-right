@@ -7,7 +7,9 @@ The learner reviews and edits these, and the brief they produce, before approvin
 A pallet-building trainer for new warehouse pickers. I work in a supermarket distribution warehouse. The hardest
 thing in your first weeks is building a mixed pallet that won't crush or topple: heavy, solid cartons at the bottom,
 crushables like chips and eggs on top, every layer square to the pallet edges. Mostly you learn it on the job, from
-mistakes. Working name: **Stack Right**. (Learner: add your own real example here.)
+mistakes. Working name: **Stack Right**. A common one on the floor: eighty cases into a hundred-case order, the
+pallet starts to lean because an early layer went down with gaps, and every layer above it makes it worse. You
+either strip it back and restack, or it leaves the dock leaning and something gets crushed in the truck.
 
 ## 2. The spatial moment
 I'm standing next to an empty pallet on the floor, holding a carton I just grabbed from the shelf bay. A glowing
