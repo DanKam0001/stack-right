@@ -141,5 +141,5 @@ export function ghostTagText(i: number): string {
 }
 
 export function layerDoneText(layer: number): string {
-  return "Layer " + layer + " done. Next layer turns 90° so the joints don't line up."
+  return "Layer " + layer + " done.\nNext layer turns 90° so the joints don't line up."
 }

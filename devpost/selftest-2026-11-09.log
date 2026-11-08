@@ -1,0 +1,187 @@
+# 2026-11-09 08:42 re-run after hand change: completion card groups mistakes by rule (getOverhangMistakes/getGapMistakes, new DC6 check)
+# TypeScript recompile: succeeded, 0 errors
+# Self-test driver (StackRightTestDriver mode=selftest), preview
+I 08:42:03.727 [StackRightTest] mode = selftest
+I 08:42:04.033 [StackRightTest] PASS DC1: pallet ~100 cm ahead (got 100)
+I 08:42:04.033 [StackRightTest] PASS DC1: pallet centred (dx 0)
+I 08:42:04.033 [StackRightTest] PASS DC1: pallet on floor, 150 cm below eyes
+I 08:42:04.033 [StackRightTest] PASS DC1: shelf ~140 cm right (got 140)
+I 08:42:04.033 [StackRightTest] PASS DC1: 30 cases in the order (got 30)
+I 08:42:04.034 [StackRightTest] PASS DC1: queue shows exactly cases 0-3
+I 08:42:04.034 [StackRightTest] PASS DC1: queue sits on the lower shelf (bottom 40 cm)
+I 08:42:04.034 [StackRightTest] PASS DC1: case due now is in the slot nearest the pallet (141 cm)
+I 08:42:04.034 [StackRightTest] PASS DC1: height-limit outline 180.0 cm above the floor, visible
+I 08:42:04.034 [StackRightTest] PASS DC1: counter reads 'Layer 1 · 0 / 30'
+I 08:42:04.034 [StackRightTest] PASS DC1: case 0 glows, only case 0 interactable
+I 08:42:04.035 [StackRightTest] PASS DC2: grabbing a later case does nothing (no ghost)
+I 08:42:04.035 [StackRightTest] PASS DC2: no ghost before grab
+I 08:42:04.035 [StackRightTest] PASS DC2: ghost visible after grabbing case 0
+I 08:42:04.035 [StackRightTest] PASS DC2: ghost sits on case 0's planned slot
+I 08:42:04.036 [StackRightTest] PASS DC2: layer-1 ghost size = case size (38, 30, 58)
+I 08:42:04.036 [StackRightTest] PASS DC2: tag reads 'Layer 1 · 1 of 30 · 17 kg'
+I 08:42:04.038 [StackRightTest] PASS DC3: case 0 snapped (dropped 10 cm off)
+I 08:42:04.038 [StackRightTest] PASS DC3: snapped square onto the slot
+I 08:42:04.038 [StackRightTest] PASS DC3: counter reads 'Layer 1 · 1 / 30'
+I 08:42:04.039 [StackRightTest] PASS DC3: ghost hidden after placing
+I 08:42:04.039 [StackRightTest] PASS DC3: queue moved up: cases 1-4 shown, 5+ hidden
+I 08:42:04.039 [StackRightTest] PASS DC3: case 1 sliding to the front slot
+I 08:42:04.714 [StackRightTest] PASS DC3: case 1 now in the front slot, case 4 at the back
+I 08:42:04.715 [StackRightTest] PASS DC3: next case (1) glows and is the only one interactable
+I 08:42:04.717 [StackRightTest] PASS DC4: gap drop: not placed, sliding back
+I 08:42:04.717 [StackRightTest] PASS DC4: gap drop: tip 'That leaves a gap. Drop it on the ghost.'
+I 08:42:04.717 [StackRightTest] PASS DC4: gap drop: one mistake
+I 08:42:05.395 [StackRightTest] PASS DC4: case back home on the pick face
+I 08:42:05.396 [StackRightTest] PASS DC4: overhang drop: tip 'Overhang. Keep it inside the edge.'
+I 08:42:05.396 [StackRightTest] PASS DC4: overhang drop: one more mistake
+I 08:42:06.073 [StackRightTest] PASS DC4: drop 0.75 cm over the edge counts as gap, not overhang
+I 08:42:06.759 [StackRightTest] PASS DC4: off-pallet drop: back, no mistake
+I 08:42:07.445 [StackRightTest] PASS DC4: case back home after off-pallet drop
+I 08:42:11.771 [StackRightTest] PASS DC4: tip hides after ~4 s
+I 08:42:11.785 [StackRightTest] PASS DC5: layer 1 done note: 'Layer 1 done. Next layer turns 90° so the joints don't line up.'
+I 08:42:11.787 [StackRightTest] PASS DC2: layer-2 ghost turned: size (58, 30, 38) = (58, 30, 38)
+I 08:42:11.787 [StackRightTest] PASS DC2: layer-2 tag reads 'Layer 2 · 7 of 30 · 14 kg'
+I 08:42:11.788 [StackRightTest] PASS DC4: overhang judged in the planned (turned) orientation
+I 08:42:12.500 [StackRightTest] PASS DC5: layer 2 done note: 'Layer 2 done. Next layer turns 90° so the joints don't line up.'
+I 08:42:12.503 [StackRightTest] PASS DC2: case 15 tag reads 'Layer 3 · 15 of 30 · 10 kg'
+I 08:42:12.503 [StackRightTest] PASS DC2: layer-3 ghost not turned
+I 08:42:12.511 [StackRightTest] PASS DC5: layer 3 done note: 'Layer 3 done. Next layer turns 90° so the joints don't line up.'
+I 08:42:12.518 [StackRightTest] PASS DC5: layer 4 done note: 'Layer 4 done. Next layer turns 90° so the joints don't line up.'
+I 08:42:12.523 [StackRightTest] PASS DC5: no 'turns 90°' note after the last layer
+I 08:42:12.524 [StackRightTest] PASS DC3: every case snapped onto its slot with the planned rotation (0 misses)
+I 08:42:12.524 [StackRightTest] PASS DC3: queue moved up after every placement (0 misses)
+I 08:42:12.524 [StackRightTest] PASS DC5: layer 1 vs layer 2 placed 90.0° apart
+I 08:42:12.524 [StackRightTest] PASS DC5: layer 2 vs layer 3 placed 90.0° apart
+I 08:42:12.524 [StackRightTest] PASS DC5: layer 3 vs layer 4 placed 90.0° apart
+I 08:42:12.524 [StackRightTest] PASS DC5: plan turns exactly layers 2 and 4
+I 08:42:12.525 [StackRightTest] INFO joints shared by layers 1 and 2: none
+I 08:42:12.525 [StackRightTest] INFO joints shared by layers 2 and 3: x=0
+I 08:42:12.525 [StackRightTest] INFO joints shared by layers 3 and 4: x=0
+I 08:42:12.525 [StackRightTest] INFO joints shared by layers 4 and 5: x=0
+I 08:42:12.526 [StackRightTest] PASS DC6: all 30 placed, counter 'Layer 5 · 30 / 30'
+I 08:42:12.526 [StackRightTest] PASS DC6: stack top 157.0 cm (~157), under the 180 cm limit
+I 08:42:12.526 [StackRightTest] PASS DC6: completion card visible
+I 08:42:12.526 [StackRightTest] PASS DC6: card: 'Pallet done! 30 cases · 5 layers · 157 cm | Time 0:08 · Mistakes 4 (2 overhang · 2 gap) | Wrap and label the pallet.'
+I 08:42:12.526 [StackRightTest] PASS DC6: card groups mistakes by rule (2 overhang, 2 gap)
+I 08:42:13.498 [StackRightTest] PASS DC6: card stays up
+I 08:42:13.499 [StackRightTest] PASS DC6: Reset: pallet cleared
+I 08:42:13.500 [StackRightTest] PASS DC6: Reset: order restarts, first 4 cases on the pick face
+I 08:42:13.500 [StackRightTest] PASS DC6: Reset: counter 'Layer 1 · 0 / 30', card hidden, mistakes 0
+I 08:42:13.500 [StackRightTest] PASS DC6: Reset: case 0 glows and is interactable
+I 08:42:13.500 [StackRightTest] SUMMARY per done criterion:
+I 08:42:13.500 [StackRightTest]   DC1: PASS (11 passed, 0 failed)
+I 08:42:13.500 [StackRightTest]   DC2: PASS (10 passed, 0 failed)
+I 08:42:13.500 [StackRightTest]   DC3: PASS (10 passed, 0 failed)
+I 08:42:13.500 [StackRightTest]   DC4: PASS (11 passed, 0 failed)
+I 08:42:13.500 [StackRightTest]   DC5: PASS (9 passed, 0 failed)
+I 08:42:13.500 [StackRightTest]   DC6: PASS (10 passed, 0 failed)
+I 08:42:13.501 [StackRightTest] DONE: 61 passed, 0 failed
+
+# LEAF 2.0.2 scenarios (Assets/Tests), run serially in the preview via run_leaf_scenario
+I 08:42:51.144 [  1.816s]PASSED: dc1-layout
+I 08:43:01.206 [  2.057s]PASSED: dc2-ghost-and-tag
+I 08:43:10.978 [  3.763s]PASSED: dc3-snap-queue-30
+I 08:43:27.633 [ 10.880s]PASSED: dc4-overhang-gap-offpallet
+I 08:43:38.017 [  3.034s]PASSED: dc5-layer-notes-orientation
+I 08:43:48.377 [  3.491s]FAILED: dc6-complete-and-reset - AssertionError: Expected: "true" - Received: "false"
+I 08:44:17.740 [  5.045s]PASSED: dc6-complete-and-reset
+I 08:44:30.384 [  6.712s]PASSED: reset-reach-ik
+# dc6 first failure: stale assertion expected card text 'Mistakes 1\n'; new card reads 'Mistakes 1 (1 gap)\n'.
+# Fixed the regex in Assets/Tests/StackRightDC6CompleteResetScenario.ts line 32 (test only, no game change), re-run PASSED.
+# TOTALS: self-test 61 passed / 0 failed (DC1 11/0, DC2 10/0, DC3 10/0, DC4 11/0, DC5 9/0, DC6 10/0); LEAF 7/7 passed after the test fix
+
+## Hand-check (2026-11-09 08:48-08:57)
+# Mouse: InjectPreviewGesture touch start/move/end and taps on the pick-face cases (several coordinates) produced
+#   NO "[StackRight] grab" line: injected input does not reach the SIK MouseInteractor in this preview. NOT verified by mouse.
+#   PreviewInteractTool not used (it auto-installs AiPreviewAgent packages that broke the TS compile earlier).
+# Fallback: test-only driver mode "paced" (hooks, but in real time, with pauses):
+I 08:54:57.757 [StackRight] grab Case_00_Laundry (ghost shown, layer 1)
+I 08:55:06.862 [StackRightTest] paced: holding case 1 over its ghost
+I 08:55:12.918 [StackRight] placed Case_01_Laundry -> 2/30
+I 08:55:21.936 [StackRight] placed Case_02_Laundry -> 3/30
+I 08:55:24.938 [StackRight] mistake #1 (Case_03_Laundry): That leaves a gap. Drop it on the ghost.
+I 08:55:33.035 [StackRightTest] paced: card 'Pallet done! 30 cases · 5 layers · 157 cm | Time 0:35 · Mistakes 1 (1 gap) | Wrap and label the pallet.'
+PASS timer: Time 0:35 matches the 35.3 s real span (first grab 08:54:57.7 -> finish 08:55:33.0)
+PASS card: mistake breakdown "(1 gap)" shown
+PASS gap tip: red "That leaves a gap. Drop it on the ghost." visible (screenshot v3-gap-tip.png)
+NOT VERIFIED: mouse grab/drag/snap feel (injected mouse never registered a grab)
+# HAND-CHECK TOTALS: 3 passed, 0 failed, 1 not verified
+
+# ==== 2026-11-09 09:29-09:31 re-run after demo-video changes (TipText 96x16 cm, size 200, shrink-to-fit; demo mode added) ====
+# Self-test (driver mode selftest, preview refresh 09:29:14):
+I 09:29:18.850 [StackRightTest] PASS DC1: pallet ~100 cm ahead (got 100)
+I 09:29:18.851 [StackRightTest] PASS DC1: pallet centred (dx 0)
+I 09:29:18.851 [StackRightTest] PASS DC1: pallet on floor, 150 cm below eyes
+I 09:29:18.851 [StackRightTest] PASS DC1: shelf ~140 cm right (got 140)
+I 09:29:18.851 [StackRightTest] PASS DC1: 30 cases in the order (got 30)
+I 09:29:18.851 [StackRightTest] PASS DC1: queue shows exactly cases 0-3
+I 09:29:18.851 [StackRightTest] PASS DC1: queue sits on the lower shelf (bottom 40 cm)
+I 09:29:18.852 [StackRightTest] PASS DC1: case due now is in the slot nearest the pallet (141 cm)
+I 09:29:18.852 [StackRightTest] PASS DC1: height-limit outline 180.0 cm above the floor, visible
+I 09:29:18.852 [StackRightTest] PASS DC1: counter reads 'Layer 1 · 0 / 30'
+I 09:29:18.852 [StackRightTest] PASS DC1: case 0 glows, only case 0 interactable
+I 09:29:18.852 [StackRightTest] PASS DC2: grabbing a later case does nothing (no ghost)
+I 09:29:18.853 [StackRightTest] PASS DC2: no ghost before grab
+I 09:29:18.853 [StackRightTest] PASS DC2: ghost visible after grabbing case 0
+I 09:29:18.853 [StackRightTest] PASS DC2: ghost sits on case 0's planned slot
+I 09:29:18.853 [StackRightTest] PASS DC2: layer-1 ghost size = case size (38, 30, 58)
+I 09:29:18.853 [StackRightTest] PASS DC2: tag reads 'Layer 1 · 1 of 30 · 17 kg'
+I 09:29:18.856 [StackRightTest] PASS DC3: case 0 snapped (dropped 10 cm off)
+I 09:29:18.856 [StackRightTest] PASS DC3: snapped square onto the slot
+I 09:29:18.856 [StackRightTest] PASS DC3: counter reads 'Layer 1 · 1 / 30'
+I 09:29:18.856 [StackRightTest] PASS DC3: ghost hidden after placing
+I 09:29:18.856 [StackRightTest] PASS DC3: queue moved up: cases 1-4 shown, 5+ hidden
+I 09:29:18.857 [StackRightTest] PASS DC3: case 1 sliding to the front slot
+I 09:29:19.556 [StackRightTest] PASS DC3: case 1 now in the front slot, case 4 at the back
+I 09:29:19.557 [StackRightTest] PASS DC3: next case (1) glows and is the only one interactable
+I 09:29:19.559 [StackRightTest] PASS DC4: gap drop: not placed, sliding back
+I 09:29:19.559 [StackRightTest] PASS DC4: gap drop: tip 'That leaves a gap. | Drop it on the ghost.'
+I 09:29:19.559 [StackRightTest] PASS DC4: gap drop: one mistake
+I 09:29:20.194 [StackRightTest] PASS DC4: case back home on the pick face
+I 09:29:20.196 [StackRightTest] PASS DC4: overhang drop: tip 'Overhang. | Keep it inside the edge.'
+I 09:29:20.196 [StackRightTest] PASS DC4: overhang drop: one more mistake
+I 09:29:20.920 [StackRightTest] PASS DC4: drop 0.75 cm over the edge counts as gap, not overhang
+I 09:29:21.607 [StackRightTest] PASS DC4: off-pallet drop: back, no mistake
+I 09:29:22.236 [StackRightTest] PASS DC4: case back home after off-pallet drop
+I 09:29:26.591 [StackRightTest] PASS DC4: tip hides after ~4 s
+I 09:29:26.638 [StackRightTest] PASS DC5: layer 1 done note: 'Layer 1 done. | Next layer turns 90° so the joints don't line up.'
+I 09:29:26.639 [StackRightTest] PASS DC2: layer-2 ghost turned: size (58, 30, 38) = (58, 30, 38)
+I 09:29:26.640 [StackRightTest] PASS DC2: layer-2 tag reads 'Layer 2 · 7 of 30 · 14 kg'
+I 09:29:26.682 [StackRightTest] PASS DC4: overhang judged in the planned (turned) orientation
+I 09:29:27.329 [StackRightTest] PASS DC5: layer 2 done note: 'Layer 2 done. | Next layer turns 90° so the joints don't line up.'
+I 09:29:27.333 [StackRightTest] PASS DC2: case 15 tag reads 'Layer 3 · 15 of 30 · 10 kg'
+I 09:29:27.333 [StackRightTest] PASS DC2: layer-3 ghost not turned
+I 09:29:27.425 [StackRightTest] PASS DC5: layer 3 done note: 'Layer 3 done. | Next layer turns 90° so the joints don't line up.'
+I 09:29:27.491 [StackRightTest] PASS DC5: layer 4 done note: 'Layer 4 done. | Next layer turns 90° so the joints don't line up.'
+I 09:29:27.569 [StackRightTest] PASS DC5: no 'turns 90°' note after the last layer
+I 09:29:27.569 [StackRightTest] PASS DC3: every case snapped onto its slot with the planned rotation (0 misses)
+I 09:29:27.569 [StackRightTest] PASS DC3: queue moved up after every placement (0 misses)
+I 09:29:27.569 [StackRightTest] PASS DC5: layer 1 vs layer 2 placed 90.0° apart
+I 09:29:27.569 [StackRightTest] PASS DC5: layer 2 vs layer 3 placed 90.0° apart
+I 09:29:27.569 [StackRightTest] PASS DC5: layer 3 vs layer 4 placed 90.0° apart
+I 09:29:27.569 [StackRightTest] PASS DC5: plan turns exactly layers 2 and 4
+I 09:29:27.571 [StackRightTest] PASS DC6: all 30 placed, counter 'Layer 5 · 30 / 30'
+I 09:29:27.571 [StackRightTest] PASS DC6: stack top 157.0 cm (~157), under the 180 cm limit
+I 09:29:27.572 [StackRightTest] PASS DC6: completion card visible
+I 09:29:27.572 [StackRightTest] PASS DC6: card: 'Pallet done! 30 cases · 5 layers · 157 cm | Time 0:08 · Mistakes 4 (2 overhang · 2 gap) | Wrap and label the pallet.'
+I 09:29:27.572 [StackRightTest] PASS DC6: card groups mistakes by rule (2 overhang, 2 gap)
+I 09:29:28.394 [StackRightTest] PASS DC6: card stays up
+I 09:29:28.396 [StackRightTest] PASS DC6: Reset: pallet cleared
+I 09:29:28.396 [StackRightTest] PASS DC6: Reset: order restarts, first 4 cases on the pick face
+I 09:29:28.396 [StackRightTest] PASS DC6: Reset: counter 'Layer 1 · 0 / 30', card hidden, mistakes 0
+I 09:29:28.396 [StackRightTest] PASS DC6: Reset: case 0 glows and is interactable
+I 09:29:28.396 [StackRightTest]   DC1: PASS (11 passed, 0 failed)
+I 09:29:28.397 [StackRightTest]   DC2: PASS (10 passed, 0 failed)
+I 09:29:28.397 [StackRightTest]   DC3: PASS (10 passed, 0 failed)
+I 09:29:28.397 [StackRightTest]   DC4: PASS (11 passed, 0 failed)
+I 09:29:28.397 [StackRightTest]   DC5: PASS (9 passed, 0 failed)
+I 09:29:28.397 [StackRightTest]   DC6: PASS (10 passed, 0 failed)
+I 09:29:28.397 [StackRightTest] DONE: 61 passed, 0 failed
+# LEAF scenarios (preview, run_leaf_scenario, mode off):
+PASS LEAF dc1-layout: succeeded
+PASS LEAF dc2-ghost-and-tag: succeeded
+PASS LEAF dc3-snap-queue-30: succeeded
+PASS LEAF dc4-overhang-gap-offpallet: succeeded
+PASS LEAF dc5-layer-notes-orientation: succeeded
+PASS LEAF dc6-complete-and-reset: succeeded
+PASS LEAF reset-reach-ik: succeeded
+# TOTALS: self-test 61 passed, 0 failed; LEAF 7/7 succeeded. Scene saved with driver mode "off".

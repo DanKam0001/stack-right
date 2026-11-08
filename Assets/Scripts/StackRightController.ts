@@ -46,8 +46,9 @@ const SHELF_TOP_Y = 40
 const QUEUE_FRONT_Z = 90 // slot nearest the pallet (and the user)
 const QUEUE_PITCH_Z = -60 // each later queue slot is further along the shelf
 
-export const TIP_OVERHANG = "Overhang. Keep it inside the edge."
-export const TIP_GAP = "That leaves a gap. Drop it on the ghost."
+// Two lines (break at the sentence) so the tip stays narrower than the pallet in view.
+export const TIP_OVERHANG = "Overhang.\nKeep it inside the edge."
+export const TIP_GAP = "That leaves a gap.\nDrop it on the ghost."
 
 interface CaseState {
   index: number
@@ -178,6 +179,8 @@ export class StackRightController extends BaseScriptComponent {
   private nextIndex = 0
   private placedCount = 0
   private mistakes = 0
+  private overhangMistakes = 0
+  private gapMistakes = 0
   private complete = false
   private grabbedIndex = -1
   private startTime = -1
@@ -241,6 +244,8 @@ export class StackRightController extends BaseScriptComponent {
   // =====================================================================================
   getPlacedCount(): number { return this.placedCount }
   getMistakes(): number { return this.mistakes }
+  getOverhangMistakes(): number { return this.overhangMistakes }
+  getGapMistakes(): number { return this.gapMistakes }
   /** Index into the order of the case due now (30 when complete). */
   getNextIndex(): number { return this.nextIndex }
   isComplete(): boolean { return this.complete }
@@ -325,6 +330,8 @@ export class StackRightController extends BaseScriptComponent {
     this.nextIndex = 0
     this.placedCount = 0
     this.mistakes = 0
+    this.overhangMistakes = 0
+    this.gapMistakes = 0
     this.complete = false
     this.grabbedIndex = -1
     this.startTime = -1
@@ -419,9 +426,11 @@ export class StackRightController extends BaseScriptComponent {
 
   private mistake(c: CaseState, kind: string, tip: string): void {
     this.mistakes++
+    if (kind === "overhang") this.overhangMistakes++
+    else if (kind === "gap") this.gapMistakes++
     this.showTip(kind, tip, this.tipColor)
     this.play("mistake")
-    this.log("mistake #" + this.mistakes + " (" + c.so.name + "): " + tip)
+    this.log("mistake #" + this.mistakes + " (" + c.so.name + "): " + tip.replace(/\n/g, " "))
     this.sendHome(c)
   }
 
@@ -441,6 +450,14 @@ export class StackRightController extends BaseScriptComponent {
     this.tipText.setVisible(false)
   }
 
+  // " (2 overhang · 1 gap)" so the learner sees which rule they broke; empty when there were none.
+  private mistakeBreakdown(): string {
+    const parts: string[] = []
+    if (this.overhangMistakes > 0) parts.push(this.overhangMistakes + " overhang")
+    if (this.gapMistakes > 0) parts.push(this.gapMistakes + " gap")
+    return parts.length > 0 ? " (" + parts.join(" · ") + ")" : ""
+  }
+
   private finish(): void {
     this.complete = true
     this.finishTime = getTime()
@@ -450,7 +467,7 @@ export class StackRightController extends BaseScriptComponent {
     const time = mm + ":" + (ss < 10 ? "0" : "") + ss
     const height = Math.round(this.stackTop())
     this.completionString = "Pallet done! " + this.cases.length + " cases · " + LAYER_COUNT + " layers · " + height + " cm\n" +
-      "Time " + time + " · Mistakes " + this.mistakes + "\nWrap and label the pallet."
+      "Time " + time + " · Mistakes " + this.mistakes + this.mistakeBreakdown() + "\nWrap and label the pallet."
     this.completionCard.setText(this.completionString)
     this.completionCard.sceneObject.getTransform().setLocalPosition(new vec3(0, this.stackTop() + 24, 20))
     this.completionCard.setVisible(true)

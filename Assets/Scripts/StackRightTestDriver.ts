@@ -7,8 +7,13 @@
 //   mode "overhang"  - case 1 dropped hanging over the pallet edge: red overhang tip showing
 //   mode "layerdone" - layer 1 finished: white "Layer 1 done" note showing
 //   mode "complete"  - all 30 placed: completion card showing
+//   mode "paced"     - real-time run with pauses, for screenshots
+//   mode "demo"      - scripted run for the demo video: every case carried along an arc from the
+//                      pick face to its drop point, one overhang and one gap mistake, Reset at the
+//                      end; prints "[DEMO] <beat>" at the start of each beat
 // Expects: the StackRightController component. Must not: change game rules.
-import {StackRightController} from "./StackRightController"
+import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
+import {StackRightController, TIP_GAP, TIP_OVERHANG} from "./StackRightController"
 import {ORDER, PLAN, ghostTagText, layerDoneText, plannedSize, footprint, HEIGHT_LIMIT_CM, STACK_HEIGHT_CM, LAYER_COUNT} from "./StackRightPickList"
 
 @component
@@ -20,7 +25,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
   controller: StackRightController
 
   @input
-  @hint("off | selftest | ghost | overhang | layerdone | complete")
+  @hint("off | selftest | ghost | overhang | layerdone | complete | paced | demo")
   @widget(new ComboBoxWidget([
     new ComboBoxItem("off", "off"),
     new ComboBoxItem("selftest", "selftest"),
@@ -28,12 +33,26 @@ export class StackRightTestDriver extends BaseScriptComponent {
     new ComboBoxItem("overhang", "overhang"),
     new ComboBoxItem("layerdone", "layerdone"),
     new ComboBoxItem("complete", "complete"),
+    new ComboBoxItem("paced", "paced"),
+    new ComboBoxItem("demo", "demo"),
   ]))
   mode: string = "off"
 
   @input
   @hint("Seconds to wait after start before driving")
   startDelaySec: number = 1.5
+
+  @input
+  @hint("demo only: hold the camera at a fixed recording viewpoint (device tracking off for the run)")
+  demoCamera: boolean = true
+
+  @input
+  @hint("demo only: camera eye, pallet-local cm (x right, y up from the floor, z toward the user)")
+  demoEye: vec3 = new vec3(-60, 165, 480)
+
+  @input
+  @hint("demo only: point the camera looks at, pallet-local cm")
+  demoLookAt: vec3 = new vec3(57, 72, -40)
 
   private passed = 0
   private failed = 0
@@ -68,7 +87,168 @@ export class StackRightTestDriver extends BaseScriptComponent {
       for (let i = 0; i < 6; i++) this.dropOnSlot(i)
     } else if (this.mode === "complete") {
       for (let i = 0; i < ORDER.length; i++) this.dropOnSlot(i)
+    } else if (this.mode === "demo") {
+      await this.demo()
+    } else if (this.mode === "paced") {
+      // Real-time run: 3 cases held over their ghost then dropped, with pauses, one gap drop, then the rest.
+      c.tipDurationSec = 120
+      for (let i = 0; i < 3; i++) {
+        c.simulateGrab(i)
+        c.pickList.getChild(i).getTransform().setWorldPosition(c.getSlotWorldPosition(i).add(new vec3(0, 30, 0)))
+        print("[StackRightTest] paced: holding case " + i + " over its ghost")
+        await this.wait(6)
+        c.simulateRelease(i, c.getSlotWorldPosition(i).add(new vec3(0, 5, 0)))
+        await this.wait(3)
+      }
+      c.simulateGrab(3)
+      c.simulateRelease(3, this.palletPoint(0, 45, 10))
+      print("[StackRightTest] paced: gap drop, tip '" + c.getTipText().replace(/\n/g, " | ") + "'")
+      await this.wait(8)
+      await this.settle()
+      const last = ORDER.length - 1
+      for (let i = 3; i < last; i++) this.dropOnSlot(i)
+      c.simulateGrab(last)
+      c.pickList.getChild(last).getTransform().setWorldPosition(c.getSlotWorldPosition(last).add(new vec3(0, 30, 0)))
+      print("[StackRightTest] paced: holding case " + last + " over its ghost (layer 5)")
+      await this.wait(8)
+      c.simulateRelease(last, c.getSlotWorldPosition(last).add(new vec3(0, 5, 0)))
+      print("[StackRightTest] paced: card '" + c.getCompletionText().split("\n").join(" | ") + "'")
     }
+  }
+
+  // ---------------------------------------------------------------------------------------
+  // Demo: the scripted run recorded for the demo video. Every grab and release goes through the
+  // controller's test hooks, so the rules are the real ones; only the carry in between is animated.
+  // ---------------------------------------------------------------------------------------
+  private async demo(): Promise<void> {
+    const c = this.controller
+    c.reset()
+    if (this.demoCamera) this.setDemoCamera()
+    const layerCases = (layer: number): number[] => {
+      const out: number[] = []
+      for (let i = 0; i < PLAN.length; i++) if (PLAN[i].layer === layer) out.push(i)
+      return out
+    }
+
+    this.beat("intro")
+    await this.wait(4)
+
+    this.beat("case1")
+    await this.demoPlace(0, 3, 1.5, 0.4)
+    await this.wait(1.5)
+
+    // Case 2 hangs ~15 cm over the side edge nearest the pick face, in the near row.
+    this.beat("overhang")
+    await this.settle()
+    const fp = footprint(ORDER[1], PLAN[1].turned)
+    const deckY = PLAN[1].center.y + 3
+    c.simulateGrab(1)
+    await this.carry(1, this.palletPoint(58.25 + 15 - fp.x / 2, deckY, PLAN[3].center.z), 2.5)
+    c.simulateRelease(1, this.caseWorld(1))
+    await this.wait(3.5)
+
+    // Case 2 dropped on the near-left slot, well inside the edge but far from its own ghost.
+    this.beat("gap")
+    await this.settle()
+    c.simulateGrab(1)
+    await this.carry(1, this.palletPoint(PLAN[3].center.x, deckY, PLAN[3].center.z), 2.5)
+    c.simulateRelease(1, this.caseWorld(1))
+    await this.wait(3.5)
+
+    this.beat("case2")
+    await this.settle()
+    await this.demoPlace(1, 2, 0.3, 0.3)
+
+    this.beat("layer1")
+    for (const i of layerCases(1).slice(2)) await this.demoPlaceTimed(i, 1.4)
+    await this.wait(3.5)
+
+    this.beat("layer2turn")
+    const l2 = layerCases(2)
+    await this.demoPlace(l2[0], 3, 1.5, 0.4)
+    for (const i of l2.slice(1)) await this.demoPlaceTimed(i, 0.9)
+
+    this.beat("fast")
+    for (const i of layerCases(3).concat(layerCases(4))) await this.demoPlaceTimed(i, 0.5)
+
+    this.beat("layer5")
+    for (const i of layerCases(5)) await this.demoPlaceTimed(i, 1.4)
+
+    this.beat("complete")
+    print("[DEMO] card '" + c.getCompletionText().replace(/\n/g, " | ") + "'")
+    await this.wait(7)
+
+    this.beat("reset")
+    c.pressReset()
+    await this.wait(3)
+
+    this.beat("end")
+  }
+
+  private beat(name: string): void {
+    print("[DEMO] " + name)
+  }
+
+  /** Fixed recording viewpoint: device tracking off for this run only (the next preview start restores it). */
+  private setDemoCamera(): void {
+    const camSo = WorldCameraFinderProvider.getInstance().getComponent().getSceneObject()
+    const tracking = camSo.getComponent("Component.DeviceTracking")
+    if (tracking) tracking.enabled = false
+    const eye = this.palletPoint(this.demoEye.x, this.demoEye.y, this.demoEye.z)
+    const look = this.palletPoint(this.demoLookAt.x, this.demoLookAt.y, this.demoLookAt.z)
+    const t = camSo.getTransform()
+    t.setWorldPosition(eye)
+    t.setWorldRotation(quat.lookAt(eye.sub(look).normalize(), vec3.up())) // camera looks down its -Z
+    print("[DEMO] camera eye " + this.v(eye) + " looking at " + this.v(look))
+  }
+
+  /** Grab, carry to just above the ghost, hover, lower and release onto the slot (snaps). */
+  private async demoPlace(i: number, carrySec: number, hoverSec: number, lowerSec: number): Promise<void> {
+    const c = this.controller
+    const slot = c.getSlotWorldPosition(i)
+    c.simulateGrab(i)
+    // Hover high enough that the held case does not cover the ghost tag; quick placements stay low.
+    const lift = hoverSec > 0 ? 45 : 25
+    await this.carry(i, slot.add(new vec3(0, lift, 0)), carrySec)
+    if (hoverSec > 0) await this.wait(hoverSec)
+    await this.carry(i, slot.add(new vec3(0, 3, 0)), lowerSec, false)
+    c.simulateRelease(i, this.caseWorld(i))
+  }
+
+  /** One case in a fixed total time: 70% carry, 15% lower, 15% rest. */
+  private async demoPlaceTimed(i: number, totalSec: number): Promise<void> {
+    await this.demoPlace(i, totalSec * 0.7, 0, totalSec * 0.15)
+    await this.wait(totalSec * 0.15)
+  }
+
+  private caseWorld(i: number): vec3 {
+    return this.controller.pickList.getChild(i).getTransform().getWorldPosition()
+  }
+
+  /**
+   * Moves held case i to `to` over `sec`, eased in/out. With `arc`, the path rises to about 30 cm
+   * above the stack top (bottom of the case), so the ghost below stays visible during the carry.
+   */
+  private carry(i: number, to: vec3, sec: number, arc: boolean = true): Promise<void> {
+    const t = this.controller.pickList.getChild(i).getTransform()
+    const from = t.getWorldPosition()
+    const peak = Math.max(this.controller.getFloorWorldY() + this.controller.getStackTopCm() + 30 + ORDER[i].size.y / 2,
+      Math.max(from.y, to.y) + 10)
+    const ctrlY = arc ? 2 * peak - (from.y + to.y) / 2 : (from.y + to.y) / 2 // quadratic: midpoint reaches peak
+    const start = getTime()
+    return new Promise((resolve) => {
+      const ev = this.createEvent("UpdateEvent")
+      ev.bind(() => {
+        const u = sec > 0 ? Math.min(1, (getTime() - start) / sec) : 1
+        const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2 // ease in/out cubic
+        const y = (1 - e) * (1 - e) * from.y + 2 * (1 - e) * e * ctrlY + e * e * to.y
+        t.setWorldPosition(new vec3(from.x + (to.x - from.x) * e, y, from.z + (to.z - from.z) * e))
+        if (u >= 1) {
+          this.removeEvent(ev)
+          resolve()
+        }
+      })
+    })
   }
 
   // ---------------------------------------------------------------------------------------
@@ -138,13 +318,13 @@ export class StackRightTestDriver extends BaseScriptComponent {
     c.simulateGrab(1)
     c.simulateRelease(1, this.palletPoint(0, 45, 10)) // 39 cm from the ghost, fully inside the edge
     this.check("DC4", "gap drop: not placed, sliding back", !c.isCasePlaced(1) && c.isCaseReturning(1))
-    this.check("DC4", "gap drop: tip '" + c.getTipText() + "'", c.isTipVisible() && c.getTipKind() === "gap" && c.getTipText() === "That leaves a gap. Drop it on the ghost.")
+    this.check("DC4", "gap drop: tip '" + c.getTipText().replace(/\n/g, " | ") + "'", c.isTipVisible() && c.getTipKind() === "gap" && c.getTipText() === TIP_GAP)
     this.check("DC4", "gap drop: one mistake", c.getMistakes() === m + 1)
     await this.settle()
     this.check("DC4", "case back home on the pick face", c.getCaseWorldPosition(1).distance(c.getCaseHomePosition(1)) < 0.5)
     c.simulateGrab(1)
     c.simulateRelease(1, this.palletPoint(48, 45, -29)) // 38 cm wide case centred 48 cm out: 9 cm over the edge
-    this.check("DC4", "overhang drop: tip '" + c.getTipText() + "'", c.isTipVisible() && c.getTipKind() === "overhang" && c.getTipText() === "Overhang. Keep it inside the edge.")
+    this.check("DC4", "overhang drop: tip '" + c.getTipText().replace(/\n/g, " | ") + "'", c.isTipVisible() && c.getTipKind() === "overhang" && c.getTipText() === TIP_OVERHANG)
     this.check("DC4", "overhang drop: one more mistake", c.getMistakes() === m + 2 && !c.isCasePlaced(1))
     await this.settle()
     c.simulateGrab(1)
@@ -187,7 +367,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
       if (i + 1 < N && !this.queueOk(i + 1)) queueFails++
       const lastOfLayer = i === N - 1 || PLAN[i + 1].layer !== layer
       if (lastOfLayer && layer < LAYER_COUNT) {
-        this.check("DC5", "layer " + layer + " done note: '" + c.getTipText() + "'",
+        this.check("DC5", "layer " + layer + " done note: '" + c.getTipText().replace(/\n/g, " | ") + "'",
           c.isTipVisible() && c.getTipKind() === "layer" && c.getTipText() === layerDoneText(layer))
       }
       if (lastOfLayer && layer === LAYER_COUNT) {
@@ -215,7 +395,11 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC6", "completion card visible", c.isCompletionVisible())
     this.check("DC6", "card: '" + card.replace(/\n/g, " | ") + "'",
       card.indexOf("Pallet done! 30 cases · 5 layers · 157 cm\n") === 0 && /\nTime \d+:\d\d · Mistakes /.test(card) &&
-      card.indexOf("Mistakes " + c.getMistakes() + "\n") >= 0 && card.indexOf("\nWrap and label the pallet.") >= 0)
+      card.indexOf("Mistakes " + c.getMistakes()) >= 0 && card.indexOf("\nWrap and label the pallet.") >= 0)
+    this.check("DC6", "card groups mistakes by rule (" + c.getOverhangMistakes() + " overhang, " + c.getGapMistakes() + " gap)",
+      c.getOverhangMistakes() + c.getGapMistakes() === c.getMistakes() &&
+      (c.getOverhangMistakes() === 0 || card.indexOf(c.getOverhangMistakes() + " overhang") >= 0) &&
+      (c.getGapMistakes() === 0 || card.indexOf(c.getGapMistakes() + " gap") >= 0))
     await this.wait(1)
     this.check("DC6", "card stays up", c.isCompletionVisible())
     c.pressReset()

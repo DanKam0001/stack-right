@@ -29,7 +29,7 @@ export class StackRightDC6CompleteResetScenario extends Scenario {
     expect(c.isCompletionVisible()).toBe(true)
     const card = c.getCompletionText()
     expect(card.indexOf("Pallet done! 30 cases · 5 layers · " + Math.round(STACK_HEIGHT_CM) + " cm\n") === 0).toBe(true)
-    expect(/\nTime \d+:\d\d · Mistakes 1\n/.test(card)).toBe(true)
+    expect(/\nTime \d+:\d\d · Mistakes 1 \(1 gap\)\n/.test(card)).toBe(true)
     expect(card.indexOf("Wrap and label the pallet.") > 0).toBe(true)
 
     await sleep(1000)

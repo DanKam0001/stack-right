@@ -29,6 +29,9 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     controller: false
+    demoCamera: false
+    demoEye: false
+    demoLookAt: false
     mode: false
     startDelaySec: false
   ScriptTypesHidden:
@@ -43,6 +46,9 @@
     - controller: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       mode: !<string> off
       startDelaySec: 1.500000
+      demoCamera: true
+      demoEye: !<Vec3> {x: -60.000000, y: 165.000000, z: 180.000000}
+      demoLookAt: !<Vec3> {x: 70.000000, y: 85.000000, z: -40.000000}
   ScriptTypes:
     -
       {}
@@ -50,5 +56,8 @@
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">StackRightTestDriver – test/demo states (set mode to off for normal play)</span>"}'
     - '// @ui {"widget":"separator"}'
     - '// @input AssignableType_1 controller {"hint":"The StackRightController to drive"}'
-    - '// @input string mode = "off" {"hint":"off | selftest | ghost | overhang | layerdone | complete", "widget":"combobox", "values":[{"label":"off", "value":"off"}, {"label":"selftest", "value":"selftest"}, {"label":"ghost", "value":"ghost"}, {"label":"overhang", "value":"overhang"}, {"label":"layerdone", "value":"layerdone"}, {"label":"complete", "value":"complete"}]}'
+    - '// @input string mode = "off" {"hint":"off | selftest | ghost | overhang | layerdone | complete | paced | demo", "widget":"combobox", "values":[{"label":"off", "value":"off"}, {"label":"selftest", "value":"selftest"}, {"label":"ghost", "value":"ghost"}, {"label":"overhang", "value":"overhang"}, {"label":"layerdone", "value":"layerdone"}, {"label":"complete", "value":"complete"}, {"label":"paced", "value":"paced"}, {"label":"demo", "value":"demo"}]}'
     - '// @input float startDelaySec = 1.5 {"hint":"Seconds to wait after start before driving"}'
+    - '// @input bool demoCamera = true {"hint":"demo only: hold the camera at a fixed recording viewpoint (device tracking off for the run)"}'
+    - '// @input vec3 demoEye = {-60,165,480} {"hint":"demo only: camera eye, pallet-local cm (x right, y up from the floor, z toward the user)"}'
+    - '// @input vec3 demoLookAt = {57,72,-40} {"hint":"demo only: point the camera looks at, pallet-local cm"}'
