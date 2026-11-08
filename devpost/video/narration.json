@@ -1,0 +1,11 @@
+[
+  ["intro", "A supermarket store order is a hundred-plus cases. The warehouse system already sends them heaviest first. What it never tells a new picker is where each case goes. Get layer one wrong, and eighty cases later, the pallet leans."],
+  ["case1", "This is Stack Right, a pallet trainer for Specs. Grab the case that's glowing, and a ghost shows exactly where it goes, at real size, on the pallet in front of you. The tag gives the layer, the count, and the weight. Drop it near the ghost, and it snaps square."],
+  ["overhang", "Hang it over the edge, and it slides back with the reason."],
+  ["gap", "Leave a gap, and it tells you that too."],
+  ["layer1", "Every mistake is counted, by rule. The next case lights up as soon as the last one lands, so there's only ever one thing to do."],
+  ["layer2turn", "Layer two turns ninety degrees, so the joints don't line up. That interlock is what stops a pallet splitting. And the plan isn't hand-placed. It's computed from the case sizes."],
+  ["built", "I pick orders in a warehouse, so I built this from my own shifts. Clad's plan-lens skill turned my answers into a design brief. I corrected its premise, because real orders already come heaviest first. Then Clad built the lens through the Lens Studio M C P, with sixty-one self-test checks and seven Leaf scenarios."],
+  ["complete", "Thirty cases, five layers, a hundred and fifty-seven centimetres, under the height line. Time, and mistakes by rule."],
+  ["close", "Real orders are three times this size. Stack Right lets a new picker build them right, before they touch real stock. It's built and tested in the Lens Studio preview. Next is a real pair of Specs."]
+]

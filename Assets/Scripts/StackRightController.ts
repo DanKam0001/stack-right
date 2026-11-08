@@ -469,7 +469,10 @@ export class StackRightController extends BaseScriptComponent {
     this.completionString = "Pallet done! " + this.cases.length + " cases · " + LAYER_COUNT + " layers · " + height + " cm\n" +
       "Time " + time + " · Mistakes " + this.mistakes + this.mistakeBreakdown() + "\nWrap and label the pallet."
     this.completionCard.setText(this.completionString)
-    this.completionCard.sceneObject.getTransform().setLocalPosition(new vec3(0, this.stackTop() + 24, 20))
+    // Above the 180 cm line, not across it, and larger so it reads from where the picker stands.
+    const cardT = this.completionCard.sceneObject.getTransform()
+    cardT.setLocalPosition(new vec3(0, Math.max(this.stackTop() + 24, HEIGHT_LIMIT_CM + 30), 20))
+    cardT.setLocalScale(new vec3(1.5, 1.5, 1.5))
     this.completionCard.setVisible(true)
     this.hideTip()
     this.arrowVisible = false
