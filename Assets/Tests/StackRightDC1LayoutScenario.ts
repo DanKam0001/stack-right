@@ -1,5 +1,5 @@
 // DC1: pallet ~1 m ahead on the floor, shelf to the right with the next 4 cases on the lower
-// shelf (case due now nearest the pallet), height-limit outline at 180 cm, counter at 0 / 30.
+// shelf (case due now nearest the pallet), height-limit outline at 180 cm, counter at 0 / 31.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {sleep} from "Leaf.lspkg/Utils/common/Utils"
@@ -25,12 +25,16 @@ export class StackRightDC1LayoutScenario extends Scenario {
     const right = shelf.x - cam.x
     expect(right >= 120 && right <= 160).toBe(true)
 
-    expect(c.getCaseCount()).toBe(30)
+    expect(c.getCaseCount()).toBe(31)
     expect(queueShowsNextFour(c)).toBe(true)
     for (let i = 0; i < 4; i++) {
       // Bottom of each queued case on the lower shelf (40 cm).
       const bottom = c.getCaseWorldPosition(i).y - c.getFloorWorldY() - ORDER[i].size.y / 2
       expect(Math.abs(bottom - 40) < 1).toBe(true)
+      // Front-aligned on the 120 cm deep board: pallet-facing side 2 cm behind the front edge (shelf x - 30).
+      const front = c.getCaseWorldPosition(i).x - ORDER[i].size.x / 2 - shelf.x
+      expect(Math.abs(front + 28) < 1).toBe(true)
+      expect(front + ORDER[i].size.x <= 90).toBe(true)
     }
     // Case due now is the queued case closest to the pallet.
     const d0 = c.getCaseWorldPosition(0).distance(pallet)
@@ -38,7 +42,7 @@ export class StackRightDC1LayoutScenario extends Scenario {
 
     expect(c.isHeightLimitVisible()).toBe(true)
     expect(Math.abs(c.getHeightLimitWorldY() - c.getFloorWorldY() - 180) < 0.5).toBe(true)
-    expect(c.getCounterText()).toBe("Layer 1 · 0 / 30")
+    expect(c.getCounterText()).toBe("Layer 1 · 0 / 31")
     expect(c.isCaseGlowing(0)).toBe(true)
     expect(onlyDueCaseInteractable(c)).toBe(true)
   }

@@ -1,5 +1,5 @@
 // DC3: dropping on the ghost snaps the case into its slot with the planned rotation, updates the
-// counter, and the queue moves up (cases slide to their new home slots). Full 30-case run.
+// counter, and the queue moves up (cases slide to their new home slots). Full 31-case run.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {sleep} from "Leaf.lspkg/Utils/common/Utils"
@@ -20,7 +20,7 @@ export class StackRightDC3SnapQueueScenario extends Scenario {
     expect(c.getPlacedCount()).toBe(placedBefore + 1)
     expect(c.getCaseWorldPosition(0).distance(c.getSlotWorldPosition(0)) < 0.5).toBe(true)
     expect(angleDeg(c.getCaseWorldRotation(0), c.getSlotWorldRotation(0)) < 1).toBe(true)
-    expect(c.getCounterText()).toBe("Layer 1 · 1 / 30")
+    expect(c.getCounterText()).toBe("Layer 1 · 1 / 31")
     expect(c.isGhostVisible()).toBe(false)
 
     // Queue shift: case 1 slides from slot 1 to the front slot, case 4 enters at the back.
@@ -34,13 +34,13 @@ export class StackRightDC3SnapQueueScenario extends Scenario {
     expect(c.isCaseGlowing(1)).toBe(true)
 
     // Remaining 29 cases, each checked for snap, rotation, counter and queue.
-    for (let i = 1; i < 30; i++) {
+    for (let i = 1; i < 31; i++) {
       dropOnSlot(c, i)
       expect(c.isCasePlaced(i)).toBe(true)
       expect(c.getCaseWorldPosition(i).distance(c.getSlotWorldPosition(i)) < 0.5).toBe(true)
       expect(angleDeg(c.getCaseWorldRotation(i), c.getSlotWorldRotation(i)) < 1).toBe(true)
       const layerShown = PLAN[Math.min(i + 1, 29)].layer
-      expect(c.getCounterText()).toBe("Layer " + layerShown + " · " + (i + 1) + " / 30")
+      expect(c.getCounterText()).toBe("Layer " + layerShown + " · " + (i + 1) + " / 31")
       expect(queueShowsNextFour(c)).toBe(true)
       await sleep(30)
     }

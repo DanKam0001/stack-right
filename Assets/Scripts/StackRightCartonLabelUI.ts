@@ -18,7 +18,9 @@ export class StackRightCartonLabelUI extends BaseScriptComponent {
 
   @ui.group_end
 
-  setup(name: string, detail: string, size: vec3): void {
+  /** ink: text colour; white by default, dark on the palest cartons so the print stays readable. */
+  setup(name: string, detail: string, size: vec3, ink: vec4 = new vec4(1, 1, 1, 1)): void {
+    this.ink = ink
     const hx = size.x / 2, hy = size.y / 2, hz = size.z / 2
     const off = 0.3
     // -X face (seen from the pallet side while on the shelf): +Z normal rotated to -X
@@ -29,6 +31,8 @@ export class StackRightCartonLabelUI extends BaseScriptComponent {
     this.face("LabelTop", name, detail, new vec3(0, hy + off, 0), quat.angleAxis(-Math.PI / 2, vec3.right()), size.x, size.z)
   }
 
+  private ink: vec4 = new vec4(1, 1, 1, 1)
+
   private face(objName: string, name: string, detail: string, pos: vec3, rot: quat, w: number, h: number): void {
     const so = global.scene.createSceneObject(objName)
     so.setParent(this.sceneObject)
@@ -38,7 +42,7 @@ export class StackRightCartonLabelUI extends BaseScriptComponent {
     t.text = name + "\n" + detail
     t.size = this.labelSize
     t.depthTest = true
-    t.textFill.color = new vec4(1, 1, 1, 1)
+    t.textFill.color = this.ink
     t.horizontalAlignment = HorizontalAlignment.Center
     t.verticalAlignment = VerticalAlignment.Center
     t.horizontalOverflow = HorizontalOverflow.Shrink

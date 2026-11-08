@@ -97,8 +97,8 @@
     - '// @input SceneObject ghost {"hint":"Ghost case root (child of Pallet)"}'
     - '// @input SceneObject offViewArrow {"hint":"Arrow on the pallet edge that points at the case due now when it is out of view"}'
     - '// @input SceneObject resetPost {"hint":"Short post under the Reset button"}'
-    - "// @input AssignableType_1 ghostTag {\"hint\":\"Tag on the ghost: 'Layer N · K of 30 · kg'\"}"
-    - "// @input AssignableType_2 counter {\"hint\":\"'Layer N · K / 30' counter on the pallet's near edge\"}"
+    - "// @input AssignableType_1 ghostTag {\"hint\":\"Tag on the ghost: 'Layer N · K of 31 · kg'\"}"
+    - "// @input AssignableType_2 counter {\"hint\":\"'Layer N · K / 31' counter on the pallet's near edge\"}"
     - '// @input AssignableType_3 tipText {"hint":"Red tip (mistakes) / white note (layer done) shown on the pallet for a few seconds"}'
     - "// @input AssignableType_4 completionCard {\"hint\":\"Completion card: cases, layers, height, time, mistakes, 'Wrap and label'\"}"
     - '// @input AssignableType_5 resetButton {"hint":"Reset pallet button"}'

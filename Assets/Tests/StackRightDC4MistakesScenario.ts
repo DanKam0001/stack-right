@@ -26,7 +26,7 @@ export class StackRightDC4MistakesScenario extends Scenario {
     await settle(c)
     expect(c.getCaseWorldPosition(1).distance(c.getCaseHomePosition(1)) < 1).toBe(true)
 
-    // Overhang: 38 x 58 case centred at x 48 hangs 48 + 19 - 58.25 = 8.75 cm over the right edge.
+    // Overhang: 55 x 37 sack centred at x 48 hangs 48 + 27.5 - 58.25 = 17.25 cm over the right edge.
     m = c.getMistakes()
     dropAt(c, 1, 48, 45, -29)
     expect(c.isCasePlaced(1)).toBe(false)
@@ -34,8 +34,8 @@ export class StackRightDC4MistakesScenario extends Scenario {
     expect(c.getTipText()).toBe(TIP_OVERHANG)
     await settle(c)
 
-    // Within the 2 cm tolerance (0.75 cm over) counts as a gap, not an overhang.
-    dropAt(c, 1, 40, 45, 10)
+    // Within the 2 cm tolerance (31.5 + 27.5 = 59: 0.75 cm over) counts as a gap, not an overhang.
+    dropAt(c, 1, 31.5, 45, 10)
     expect(c.getTipText()).toBe(TIP_GAP)
     await settle(c)
 
@@ -47,11 +47,12 @@ export class StackRightDC4MistakesScenario extends Scenario {
     await settle(c)
     expect(c.getCaseWorldPosition(1).distance(c.getCaseHomePosition(1)) < 1).toBe(true)
 
-    // Overhang is judged in the planned orientation: a turned layer-2 case (58 wide) at x 35.
-    for (let i = 1; i < 6; i++) dropOnSlot(c, i)
+    // Overhang is judged in the planned orientation: a turned layer-3 water case (58 wide turned,
+    // 38 unturned) at x 35 hangs 35 + 29 - 58.25 = 5.75 cm over; unturned it would fit.
+    for (let i = 1; i < 12; i++) dropOnSlot(c, i)
     await settle(c)
     m = c.getMistakes()
-    dropAt(c, 6, 35, 80, 0)
+    dropAt(c, 12, 35, 80, 0)
     expect(c.getMistakes()).toBe(m + 1)
     expect(c.getTipText()).toBe(TIP_OVERHANG)
     await settle(c)

@@ -28,10 +28,11 @@ def secs(hms: str) -> float:
 t0 = secs((HERE / start_txt).read_text().strip().split()[-1])
 B = {}
 for line in (HERE / beats_log).read_text(encoding="utf-8").splitlines():
-    m = re.match(r"(\d\d:\d\d:\d\d\.\d+) \[DEMO\] (\w+)\s*$", line)
+    m = re.search(r"(\d\d:\d\d:\d\d\.\d+)\s+\[DEMO\] (\w+)\s*$", line)
     if m and m.group(2) not in B:
         B[m.group(2)] = secs(m.group(1)) - t0
-need = ["intro", "case1", "overhang", "gap", "case2", "layer1", "layer2turn", "fast", "layer5", "complete", "reset", "end"]
+need = ["intro", "case1", "overhang", "gap", "case2", "layer1", "layer2", "layer3mixed", "fast", "layer5", "complete", "reset", "end"]
+TESTS = "Tested: 76 self-test checks, 7 LEAF scenarios"
 missing = [b for b in need if b not in B]
 if missing:
     raise SystemExit(f"beats missing from {beats_log}: {missing}")
@@ -88,6 +89,8 @@ def label_filters(labels, w=1920):
             pos, size = "x=(w-text_w)/2:y=h*0.36", 96
         elif where == "sub":
             pos, size = "x=(w-text_w)/2:y=h*0.36+130", 44
+        elif where == "bl":
+            pos, size = "x=64:y=h-320", 46
         else:  # top-left lower-third style label
             pos, size = "x=64:y=56", 46
         fs.append(f"drawtext=fontfile='{FONT}':textfile='{tfp}':fontsize={size}:fontcolor=white:"
@@ -152,15 +155,17 @@ def main():
                 labels=[("Rule 1: no overhang", 2.4, 6.0, "tl")]),
         segment("gap", [lambda p: part(p, b["gap"], b["case2"], 1.0, TIP)], "gap", vo_at=1.6, tail=0.2,
                 labels=[("Rule 2: no gaps", 2.4, 6.0, "tl")]),
-        segment("layer1", [lambda p: part(p, b["case2"], b["layer2turn"], 1.0, WIDE)], "layer1", vo_at=0.6),
-        segment("layer2turn", [lambda p: part(p, b["layer2turn"], b["fast"], 1.0, WIDE)], "layer2turn", vo_at=0.3,
-                labels=[("Rule 3: turn alternate layers (interlock)", 0.5, 7.0, "tl")]),
+        segment("layer1", [lambda p: part(p, b["case2"], b["layer2"], 1.0, WIDE)], "layer1", vo_at=0.6),
+        segment("layer2", [lambda p: part(p, b["layer2"], b["layer3mixed"], 1.0, WIDE)], "layer2", vo_at=0.3),
+        segment("layer3mixed", [lambda p: part(p, b["layer3mixed"], b["fast"], 1.0, WIDE)], "layer3mixed", vo_at=0.3,
+                labels=[("Rule 3: big cases first, small ones fill the strip", 0.5, 7.5, "tl"),
+                        ("Rule 4: turn the layer so joints cross", 7.5, 13.0, "tl")]),
         segment("built", [lambda p: part(p, b["fast"], b["complete"], 0.8, WIDE)], "built", vo_at=0.3,
                 labels=[("Brief: CLAD plan-lens, corrected by a real picker", 3.0, 10.5, "tl"),
                         ("Built: CLAD + Lens Studio MCP", 10.5, 15.0, "tl"),
-                        ("Tested: 61 self-test checks, 7 LEAF scenarios", 15.0, 21.0, "tl")]),
+                        (TESTS, 15.0, 21.0, "tl")]),
         segment("complete", [lambda p: part(p, b["complete"], b["reset"], 1.0, CARD)], "complete", vo_at=0.6,
-                labels=[("Scored: time + mistakes by rule", 0.6, 7.5, "tl")]),
+                labels=[("Scored: time + mistakes by rule", 0.6, 7.5, "bl")]),
         segment("close", [lambda p: still(p, b["complete"] + 4.0, 3.0, FULL, zoom=0.0, dim=True)], "close", vo_at=0.4, tail=1.2,
                 labels=[("Stack Right", 0.0, 99, "title"), ("Built with CLAD + the Lens Studio MCP", 0.0, 99, "sub")]),
     ]

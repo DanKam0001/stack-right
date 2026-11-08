@@ -1,10 +1,11 @@
 // StackRightController.ts
 // Stack Right: pallet-building trainer. Owns ALL game state (case due now, placed count,
-// mistakes, timer, pick-face queue) and the rules: ghost on grab (turned on layers 2 and 4),
+// mistakes, timer, pick-face queue) and the rules: ghost on grab (turned on the turned layers),
 // snap within 15 cm with the planned rotation, dropped on the pallet but off the ghost ->
 // slide back + red "overhang" / "gap" tip + mistake, released off the pallet -> slide back
 // (no mistake), "layer done" note, completion card, reset, glow on the case due now,
-// off-view arrow + chime, height-limit outline.
+// off-view arrow + chime, height-limit outline. Also builds the scenery: pallet, shelf bay and a
+// ride-on electric pallet jack with its forks in the pallet (no physics, no rules).
 //
 // Expects (@input): the authored Pallet, ShelfBay, PickList root (cases are created at runtime
 // under it; any authored children are reused for the first ones), Ghost, OffViewArrow, ResetPost
@@ -26,7 +27,7 @@ import {
   ORDER, PLAN, CaseSpec, PALLET_SIZE_CM, PALLET_DECK_Y, HEIGHT_LIMIT_CM, LAYER_COUNT, STACK_HEIGHT_CM,
   footprint, plannedSize, ghostTagText, layerDoneText, isLastOfLayer,
 } from "./StackRightPickList"
-import {BoxFactory} from "./StackRightGeometry"
+import {BoxFactory, ShapeMeshes} from "./StackRightGeometry"
 import {StackRightLabelUI} from "./StackRightLabelUI"
 import {StackRightResetButtonUI} from "./StackRightResetButtonUI"
 import {StackRightCartonLabelUI} from "./StackRightCartonLabelUI"
@@ -43,8 +44,12 @@ const OVERHANG_TOLERANCE_CM = 2
 const QUEUE_SIZE = 4
 /** Lower shelf of the bay (ShelfBay-local): top of the board, and the 4 queue slots along it. */
 const SHELF_TOP_Y = 40
-const QUEUE_FRONT_Z = 90 // slot nearest the pallet (and the user)
-const QUEUE_PITCH_Z = -60 // each later queue slot is further along the shelf
+const QUEUE_FRONT_Z = 93 // slot nearest the pallet (and the user)
+const QUEUE_PITCH_Z = -62 // each later queue slot is further along the shelf (deepest case is 58)
+/** Shelf boards run from the front edge (facing the pallet) back 120 cm, so the 112 cm carton fits. */
+const SHELF_FRONT_X = -30
+const SHELF_DEPTH_X = 120
+const SHELF_LENGTH_Z = 280
 
 // Two lines (break at the sentence) so the tip stays narrower than the pallet in view.
 export const TIP_OVERHANG = "Overhang.\nKeep it inside the edge."
@@ -63,8 +68,8 @@ interface CaseState {
   hovered: boolean
   interactable: Interactable
   manip: InteractableManipulation
-  bodyMat: Material
-  bodyColor: vec4
+  bodyMats: Material[] // lightened on hover; the shrink-wrap is not in here
+  bodyColors: vec4[]
   glow: SceneObject
   glowMat: Material
 }
@@ -95,10 +100,10 @@ export class StackRightController extends BaseScriptComponent {
   @hint("Short post under the Reset button")
   resetPost: SceneObject
   @input
-  @hint("Tag on the ghost: 'Layer N · K of 30 · kg'")
+  @hint("Tag on the ghost: 'Layer N · K of 31 · kg'")
   ghostTag: StackRightLabelUI
   @input
-  @hint("'Layer N · K / 30' counter on the pallet's near edge")
+  @hint("'Layer N · K / 31' counter on the pallet's near edge")
   counter: StackRightLabelUI
   @input
   @hint("Red tip (mistakes) / white note (layer done) shown on the pallet for a few seconds")
@@ -210,6 +215,7 @@ export class StackRightController extends BaseScriptComponent {
     this.palletT = this.pallet.getTransform()
     this.alignFloorToCamera()
     this.buildPalletVisual()
+    this.buildPalletJackVisual()
     this.buildShelfVisual()
     this.buildResetPostVisual()
     this.buildHeightLimit()
@@ -246,7 +252,7 @@ export class StackRightController extends BaseScriptComponent {
   getMistakes(): number { return this.mistakes }
   getOverhangMistakes(): number { return this.overhangMistakes }
   getGapMistakes(): number { return this.gapMistakes }
-  /** Index into the order of the case due now (30 when complete). */
+  /** Index into the order of the case due now (ORDER.length when complete). */
   getNextIndex(): number { return this.nextIndex }
   isComplete(): boolean { return this.complete }
   isGhostVisible(): boolean { return this.ghost.enabled }
@@ -325,7 +331,7 @@ export class StackRightController extends BaseScriptComponent {
       c.returning = false
       c.hovered = false
       c.so.getTransform().setWorldRotation(quat.quatIdentity())
-      c.bodyMat.mainPass.baseColor = c.bodyColor
+      this.tint(c, 0)
     }
     this.nextIndex = 0
     this.placedCount = 0
@@ -409,7 +415,7 @@ export class StackRightController extends BaseScriptComponent {
     t.setWorldRotation(this.plannedRotation(i))
     c.placed = true
     c.returning = false
-    c.bodyMat.mainPass.baseColor = c.bodyColor
+    this.tint(c, 0)
     this.placedCount++
     this.nextIndex++
     this.play("snap")
@@ -520,7 +526,8 @@ export class StackRightController extends BaseScriptComponent {
 
   /** World position of queue slot q (0 = due now, nearest the pallet) on the lower shelf. */
   private queueHome(q: number, spec: CaseSpec): vec3 {
-    const local = new vec3(0, SHELF_TOP_Y + spec.size.y / 2, QUEUE_FRONT_Z + q * QUEUE_PITCH_Z)
+    // front-aligned: every case's pallet-facing side sits 2 cm behind the shelf's front edge
+    const local = new vec3(SHELF_FRONT_X + 2 + spec.size.x / 2, SHELF_TOP_Y + spec.size.y / 2, QUEUE_FRONT_Z + q * QUEUE_PITCH_Z)
     return this.shelfBay.getTransform().getWorldTransform().multiplyPoint(local)
   }
 
@@ -588,9 +595,15 @@ export class StackRightController extends BaseScriptComponent {
     const c = this.cases[i]
     if (!c || c.placed) return
     c.hovered = on
-    const k = on ? 0.4 : 0
-    const col = c.bodyColor
-    c.bodyMat.mainPass.baseColor = new vec4(col.x + (1 - col.x) * k, col.y + (1 - col.y) * k, col.z + (1 - col.z) * k, 1)
+    this.tint(c, on ? 0.4 : 0)
+  }
+
+  /** Every body material of the case at its colour lightened by k (0 = own colour). */
+  private tint(c: CaseState, k: number): void {
+    c.bodyMats.forEach((m, j) => {
+      const col = c.bodyColors[j]
+      m.mainPass.baseColor = new vec4(col.x + (1 - col.x) * k, col.y + (1 - col.y) * k, col.z + (1 - col.z) * k, col.w)
+    })
   }
 
   // =====================================================================================
@@ -695,14 +708,128 @@ export class StackRightController extends BaseScriptComponent {
     const post = new vec4(0.45, 0.65, 1.0, 1)
     const beam = new vec4(1.0, 0.62, 0.25, 1)
     const board = new vec4(0.85, 0.88, 0.95, 1)
-    // 240 W (along z) x 60 D (along x); shelf tops at 40 and 100 cm
-    for (const x of [-28, 28]) for (const z of [-118, 118]) {
+    // SHELF_LENGTH_Z W (along z) x SHELF_DEPTH_X D (along x, front edge facing the pallet);
+    // shelf tops at 40 and 100 cm. Posts sit outside the 4 queue slots, so no case pokes through.
+    const x0 = SHELF_FRONT_X, x1 = SHELF_FRONT_X + SHELF_DEPTH_X, hz = SHELF_LENGTH_Z / 2
+    for (const x of [x0 + 2, x1 - 2]) for (const z of [-hz + 2, hz - 2]) {
       this.factory.makeBox(v, "Post", new vec3(4, 150, 4), new vec3(x, 75, z), post)
     }
     for (const top of [SHELF_TOP_Y, 100]) {
-      this.factory.makeBox(v, "Board", new vec3(60, 3, 240), new vec3(0, top - 1.5, 0), board)
-      this.factory.makeBox(v, "Beam", new vec3(3, 6, 240), new vec3(-31.5, top - 3, 0), beam)
+      this.factory.makeBox(v, "Board", new vec3(SHELF_DEPTH_X, 3, SHELF_LENGTH_Z), new vec3((x0 + x1) / 2, top - 1.5, 0), board)
+      this.factory.makeBox(v, "Beam", new vec3(3, 6, SHELF_LENGTH_Z), new vec3(x0 - 1.5, top - 3, 0), beam)
+      this.factory.makeBox(v, "BeamBack", new vec3(3, 6, SHELF_LENGTH_Z), new vec3(x1 + 1.5, top - 3, 0), beam)
     }
+  }
+
+  /**
+   * Ride-on electric pallet jack, parked with its forks in the pallet openings (scenery only: no
+   * collider, not grabbable, no rules). Power unit on the far side (-z) of the pallet so it never
+   * covers the pick face (+x), the ghost or the labels/Reset button on the near side (+z).
+   */
+  private buildPalletJackVisual(): void {
+    const v = global.scene.createSceneObject("PalletJackVisual")
+    v.setParent(this.pallet)
+    const yellow = new vec4(1.0, 0.86, 0.15, 1)
+    const orange = new vec4(1.0, 0.55, 0.12, 1)
+    const steel = new vec4(0.82, 0.85, 0.92, 1)
+    const grip = new vec4(0.62, 0.66, 0.75, 1)
+    const S = PALLET_SIZE_CM.x
+    const back = -S / 2 - 2 // face of the power unit toward the pallet
+    // two forks in the pallet openings (between the bearers), under the deck boards, with load wheels at the tips
+    for (const x of [-26.6, 26.6]) {
+      const len = S - 8 + 2
+      this.factory.makeBox(v, "Fork", new vec3(16, 7, len), new vec3(x, 6.5, back + len / 2), steel)
+      this.factory.makeBox(v, "LoadWheel", new vec3(10, 6, 9), new vec3(x, 3, back + len - 6), grip)
+    }
+    // power unit (80 x 120 x 60): orange chassis, yellow body, orange warning band, light lid
+    const pz = back - 30
+    this.factory.makeBox(v, "ForkCarriage", new vec3(78, 22, 4), new vec3(0, 11, back - 2), orange)
+    this.factory.makeBox(v, "Chassis", new vec3(84, 22, 62), new vec3(0, 11, pz), orange)
+    this.factory.makeBox(v, "Body", new vec3(80, 96, 60), new vec3(0, 70, pz), yellow)
+    this.factory.makeBox(v, "Band", new vec3(81, 7, 61), new vec3(0, 96, pz), orange)
+    this.factory.makeBox(v, "Lid", new vec3(82, 3, 62), new vec3(0, 119.5, pz), new vec4(1.0, 0.95, 0.55, 1))
+    this.factory.makeBox(v, "Beacon", new vec3(8, 8, 8), new vec3(-30, 125, pz - 18), orange)
+    for (const x of [-43, 43]) this.factory.makeBox(v, "DriveWheel", new vec3(6, 20, 20), new vec3(x, 10, pz), grip)
+    // operator platform behind the power unit, with side guards and a rail
+    const oz = back - 60 - 22
+    this.factory.makeBox(v, "Platform", new vec3(72, 9, 44), new vec3(0, 6, oz), orange)
+    this.factory.makeBox(v, "TreadPlate", new vec3(66, 1, 38), new vec3(0, 11, oz), steel)
+    for (const x of [-36, 36]) {
+      this.factory.makeBox(v, "GuardPost", new vec3(4, 100, 4), new vec3(x, 60, oz - 18), yellow)
+      this.factory.makeBox(v, "GuardSide", new vec3(4, 4, 40), new vec3(x, 108, oz), yellow)
+    }
+    this.factory.makeBox(v, "GuardRail", new vec3(76, 4, 4), new vec3(0, 108, oz - 18), yellow)
+    // tiller: a column rising from the lid, leaning back toward the operator, with a handle bar
+    const tiller = global.scene.createSceneObject("Tiller")
+    tiller.setParent(v)
+    tiller.getTransform().setLocalPosition(new vec3(18, 121, pz - 22))
+    tiller.getTransform().setLocalRotation(quat.angleAxis(-0.45, vec3.right()))
+    this.factory.makeBox(tiller, "Column", new vec3(6, 34, 6), new vec3(0, 17, 0), grip)
+    this.factory.makeBox(tiller, "Head", new vec3(22, 8, 12), new vec3(0, 36, 0), orange)
+    this.factory.makeBox(tiller, "Handle", new vec3(40, 4, 4), new vec3(0, 38, -6), steel)
+  }
+
+  /**
+   * The visual of one case, by shape, inside its bounding size (the ghost wire and the collider
+   * use that box). Returns the materials to lighten on hover with their own colours.
+   */
+  private buildCaseVisual(so: SceneObject, spec: CaseSpec, bodyColor: vec4): {mats: Material[], colors: vec4[]} {
+    const s = spec.size
+    const mats: Material[] = []
+    const colors: vec4[] = []
+    const mesh = (parent: SceneObject, name: string, m: RenderMesh, mat: Material, pos: vec3, scale: vec3): void => {
+      const o = global.scene.createSceneObject(name)
+      o.setParent(parent)
+      o.getTransform().setLocalPosition(pos)
+      o.getTransform().setLocalScale(scale)
+      const rmv = o.createComponent("Component.RenderMeshVisual") as RenderMeshVisual
+      rmv.mesh = m
+      rmv.mainMaterial = mat
+    }
+    const mat = (c: vec4, hover: boolean): Material => {
+      const m = this.factory.makeMaterial(c, false)
+      if (hover) { mats.push(m); colors.push(c) }
+      return m
+    }
+    const lighter = (c: vec4, k: number): vec4 => new vec4(c.x + (1 - c.x) * k, c.y + (1 - c.y) * k, c.z + (1 - c.z) * k, 1)
+
+    const root = global.scene.createSceneObject("Body")
+    root.setParent(so)
+    if (spec.shape === "sack") {
+      // Unlit material, so the soft form comes from three nested pillows, lighter toward the top
+      // (fake light from above), plus flat stitched seams at both ends.
+      const pillow = ShapeMeshes.pillowMesh()
+      mesh(root, "Bag", pillow, mat(bodyColor, true), vec3.zero(), s)
+      mesh(root, "BagMid", pillow, mat(lighter(bodyColor, 0.25), true), new vec3(0, s.y * 0.05, 0), new vec3(s.x * 0.86, s.y, s.z * 0.84))
+      mesh(root, "BagTop", pillow, mat(lighter(bodyColor, 0.5), true), new vec3(0, s.y * 0.09, 0), new vec3(s.x * 0.6, s.y, s.z * 0.58))
+      const seam = mat(lighter(bodyColor, 0.6), true)
+      for (const sx of [-1, 1]) {
+        this.factory.makeBox(root, "Seam", new vec3(3.5, 2.2, s.z * 0.9), new vec3(sx * (s.x / 2 - 1.5), 0, 0), bodyColor, false, seam)
+      }
+    } else if (spec.shape === "tray") {
+      // Cardboard tray with a 4 cm lip, a grid of tins, a printed label card and faint shrink-wrap.
+      const card = mat(new vec4(1.0, 0.8, 0.52, 1), true)
+      const lip = 4, wall = 0.8, base = 1
+      const y0 = -s.y / 2
+      const box = (name: string, size: vec3, pos: vec3, m: Material): void => {
+        this.factory.makeBox(root, name, size, pos, bodyColor, false, m)
+      }
+      box("TrayBase", new vec3(s.x, base, s.z), new vec3(0, y0 + base / 2, 0), card)
+      for (const sz of [-1, 1]) box("TrayWall", new vec3(s.x, lip, wall), new vec3(0, y0 + lip / 2, sz * (s.z - wall) / 2), card)
+      for (const sx of [-1, 1]) box("TrayWall", new vec3(wall, lip, s.z - 2 * wall), new vec3(sx * (s.x - wall) / 2, y0 + lip / 2, 0), card)
+      const tinH = s.y - base - 1.4
+      const tins = ShapeMeshes.tinMeshes(6, 4, s.x - 2 * wall, s.z - 2 * wall, tinH)
+      mesh(root, "Tins", tins[0], mat(bodyColor, true), new vec3(0, y0 + base, 0), vec3.one())
+      mesh(root, "TinLids", tins[1], mat(new vec4(0.88, 0.9, 0.97, 1), true), new vec3(0, y0 + base, 0), vec3.one())
+      // label card on the tray's near side, under the printed front label
+      box("LabelCard", new vec3(s.x * 0.8, s.y - 3, 0.4), new vec3(0, 0, s.z / 2 + 0.25), mat(lighter(bodyColor, 0.15), true))
+      box("TopCard", new vec3(s.x * 0.8, 0.4, s.z * 0.5), new vec3(0, s.y / 2 - 0.3, 0), mat(lighter(bodyColor, 0.15), true))
+      this.factory.makeBox(root, "ShrinkWrap", new vec3(s.x + 0.4, s.y + 0.4, s.z + 0.4), vec3.zero(), new vec4(0.92, 0.97, 1.0, 0.13), true)
+    } else {
+      // carton and the 112 cm long carton: a plain box
+      this.factory.makeBox(root, "Box", s, vec3.zero(), bodyColor, false, mat(bodyColor, true))
+    }
+    return {mats, colors}
   }
 
   private buildResetPostVisual(): void {
@@ -773,10 +900,15 @@ export class StackRightController extends BaseScriptComponent {
       const k = (slot.row + slot.col) % 2 === 0 ? 0 : 0.3
       const bodyColor = new vec4(spec.color.x + (1 - spec.color.x) * k, spec.color.y + (1 - spec.color.y) * k,
         spec.color.z + (1 - spec.color.z) * k, 1)
-      const body = this.factory.makeBox(so, "Body", spec.size, vec3.zero(), bodyColor)
+      const body = this.buildCaseVisual(so, spec, bodyColor)
       const glowRmv = this.factory.makeBox(so, "Glow", spec.size.add(new vec3(5, 5, 5)), vec3.zero(), this.glowColor, true)
       const labels = so.createComponent(StackRightCartonLabelUI.getTypeName()) as StackRightCartonLabelUI
-      labels.setup(spec.name, spec.kg + " kg · " + (spec.fragile ? "FRAGILE" : "HEAVY"), spec.size)
+      // a sack's soft top bulges a little above its nominal height: lift the top label clear of it
+      const labelSize = spec.shape === "sack" ? new vec3(spec.size.x, spec.size.y * 1.2, spec.size.z) : spec.size
+      // white print on the stronger colours, dark print on the palest (bread, towels, chips) so it stays readable
+      const luma = 0.299 * spec.color.x + 0.587 * spec.color.y + 0.114 * spec.color.z
+      const ink = luma > 0.78 ? new vec4(0.16, 0.2, 0.32, 1) : new vec4(1, 1, 1, 1)
+      labels.setup(spec.name, spec.kg + " kg · " + (spec.fragile ? "FRAGILE" : "HEAVY"), labelSize, ink)
 
       const col = so.createComponent("Physics.ColliderComponent") as ColliderComponent
       const shape = Shape.createBoxShape()
@@ -792,8 +924,8 @@ export class StackRightController extends BaseScriptComponent {
         home: so.getTransform().getWorldPosition(),
         placed: false, grabbed: false, returning: false, returnFrom: vec3.zero(), returnT: 0, hovered: false,
         interactable, manip,
-        bodyMat: body.mainMaterial,
-        bodyColor,
+        bodyMats: body.mats,
+        bodyColors: body.colors,
         glow: glowRmv.getSceneObject(),
         glowMat: glowRmv.mainMaterial,
       })

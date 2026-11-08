@@ -1,0 +1,147 @@
+1
+00:00:01,200 --> 00:00:04,529
+A supermarket store order is a hundred-plus cases.
+
+2
+00:00:04,579 --> 00:00:08,247
+The warehouse system already sends them heaviest first.
+
+3
+00:00:08,297 --> 00:00:12,099
+What it never tells a new picker is where each case goes.
+
+4
+00:00:12,149 --> 00:00:16,290
+Get layer one wrong, and eighty cases later, the pallet leans.
+
+5
+00:00:17,240 --> 00:00:20,375
+This is Stack Right, a pallet trainer for Specs.
+
+6
+00:00:20,425 --> 00:00:22,100
+You're on the pallet jack.
+
+7
+00:00:22,150 --> 00:00:26,414
+Grab whatever's glowing, and a ghost shows exactly where it goes,
+
+8
+00:00:26,464 --> 00:00:27,276
+at real size.
+
+9
+00:00:27,326 --> 00:00:30,660
+The tag gives the layer, the count, and the weight.
+
+10
+00:00:30,710 --> 00:00:33,580
+Drop it near the ghost, and it snaps square.
+
+11
+00:00:35,930 --> 00:00:38,990
+Hang it over the edge, and it slides back with the reason.
+
+12
+00:00:42,000 --> 00:00:44,410
+Leave a gap, and it tells you that too.
+
+13
+00:00:47,070 --> 00:00:49,183
+Every mistake is counted, by rule.
+
+14
+00:00:49,233 --> 00:00:52,556
+The next one lights up as soon as the last one lands,
+
+15
+00:00:52,606 --> 00:00:54,910
+so there's only ever one thing to do.
+
+16
+00:00:58,800 --> 00:01:00,452
+Real freight isn't tidy.
+
+17
+00:01:00,502 --> 00:01:04,140
+Sacks, cartons, trays of tins, and the odd long one.
+
+18
+00:01:05,190 --> 00:01:06,839
+Layer three mixes sizes.
+
+19
+00:01:06,889 --> 00:01:08,892
+The big water cases go first,
+
+20
+00:01:08,942 --> 00:01:11,795
+and the juice fills the strip they leave.
+
+21
+00:01:11,845 --> 00:01:16,326
+It's turned ninety degrees, so the joints cross the layer below.
+
+22
+00:01:16,376 --> 00:01:18,167
+None of it is hand-placed.
+
+23
+00:01:18,217 --> 00:01:21,070
+The plan is computed from the case sizes.
+
+24
+00:01:22,120 --> 00:01:26,161
+I pick orders in a warehouse, so I built this from my own shifts.
+
+25
+00:01:26,211 --> 00:01:29,999
+Clad's plan-lens skill turned my answers into a design brief.
+
+26
+00:01:30,049 --> 00:01:31,510
+I corrected its premise,
+
+27
+00:01:31,560 --> 00:01:34,530
+because real orders already come heaviest first.
+
+28
+00:01:34,580 --> 00:01:37,992
+Then Clad built the lens through the Lens Studio M C P,
+
+29
+00:01:38,042 --> 00:01:41,390
+tested by a self-test driver and seven Leaf scenarios.
+
+30
+00:01:42,740 --> 00:01:47,308
+Thirty-one items, five layers, a hundred and twenty-seven centimetres,
+
+31
+00:01:47,358 --> 00:01:48,759
+under the height line.
+
+32
+00:01:48,809 --> 00:01:50,540
+Time, and mistakes by rule.
+
+33
+00:01:51,690 --> 00:01:54,049
+Real orders are three times this size.
+
+34
+00:01:54,099 --> 00:01:57,028
+Stack Right lets a new picker build them right,
+
+35
+00:01:57,078 --> 00:01:58,866
+before they touch real stock.
+
+36
+00:01:58,916 --> 00:02:01,972
+It's built and tested in the Lens Studio preview.
+
+37
+00:02:02,022 --> 00:02:03,810
+Next is a real pair of Specs.

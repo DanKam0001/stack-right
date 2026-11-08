@@ -266,3 +266,34 @@ PASS LEAF dc5-layer-notes-orientation: succeeded
 PASS LEAF dc6-complete-and-reset: succeeded
 PASS LEAF reset-reach-ik: succeeded
 # TOTALS: self-test 61 passed, 0 failed; LEAF 7/7 succeeded.
+
+=== 2026-11-09 run_shapes_v6: realistic 31-case order (sacks, trays, 112 cm towel, ride-on jack) ===
+Self-test (mode selftest, Preview):
+  DC1: PASS (11 passed, 0 failed)
+  DC2: PASS (15 passed, 0 failed)
+  DC3: PASS (10 passed, 0 failed)
+  DC4: PASS (11 passed, 0 failed)
+  DC5: PASS (19 passed, 0 failed)
+  DC6: PASS (10 passed, 0 failed)
+  DONE: 76 passed, 0 failed
+Plan (generated, printed by the self-test):
+  layer 1, top 29 cm: 3 rows of 2 PetFood sacks 55x37
+  layer 2, top 59 cm: 2 rows of 3 Laundry 38x58
+  layer 3 (turned), top 84 cm: 2 rows of 2 Water 58x38 + 1 row of 4 Juice 29x38
+  layer 4 (turned), top 97 cm: 2 rows of 3 Tomatoes trays 38x57
+  layer 5, top 127 cm: Bread 56x45 x2 | PaperTowel 112x25 | Chips 56x45 x2
+  no overlaps, all inside the pallet, every layer level, layers 3 and 5 mixed, joints of layers 2-5 cross the layer below (none aligned)
+LEAF (Preview, mode off):
+  dc1-layout                    succeeded
+  dc2-ghost-and-tag             succeeded
+  dc3-snap-queue-30             succeeded
+  dc4-overhang-gap-offpallet    succeeded
+  dc5-layer-notes-orientation   succeeded
+  dc6-complete-and-reset        succeeded
+  reset-reach-ik                succeeded
+  LEAF: 7/7 succeeded
+
+=== 2026-11-09 10:35 run_shapes_v6 re-run after label-contrast fix (dark print on the palest cartons: bread, paper towel, chips) ===
+Self-test (StackRightTestDriver mode selftest, Preview 2): DC1 11/11, DC2 15/15, DC3 10/10, DC4 11/11, DC5 19/19, DC6 10/10 -> DONE: 76 passed, 0 failed
+Plan unchanged (L1 sacks 3x2, L2 laundry 2x3, L3 turned water 2+2 + juice row of 4, L4 turned trays 2x3, L5 bread x2 | towel 112 | chips x2; top 127 cm; all joints cross)
+LEAF (mode off, preview): dc1-layout succeeded, dc2-ghost-and-tag succeeded, dc3-snap-queue-30 succeeded, dc4-overhang-gap-offpallet succeeded, dc5-layer-notes-orientation succeeded, dc6-complete-and-reset succeeded, reset-reach-ik succeeded -> 7/7
