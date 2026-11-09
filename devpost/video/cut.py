@@ -31,8 +31,8 @@ for line in (HERE / beats_log).read_text(encoding="utf-8").splitlines():
     m = re.search(r"(\d\d:\d\d:\d\d\.\d+)\s+\[DEMO\] (\w+)\s*$", line)
     if m and m.group(2) not in B:
         B[m.group(2)] = secs(m.group(1)) - t0
-need = ["intro", "case1", "overhang", "gap", "case2", "layer1", "layer2", "layer3mixed", "fast", "layer5", "complete", "reset", "end"]
-TESTS = "Tested: 76 self-test checks, 7 LEAF scenarios"
+need = ["intro", "case1", "overhang", "gap", "case2", "layer1", "layer2", "layer3mixed", "fast", "hill", "level", "layer5", "complete", "reset", "end"]
+TESTS = "Tested: 88 self-test checks, 7 LEAF scenarios"
 missing = [b for b in need if b not in B]
 if missing:
     raise SystemExit(f"beats missing from {beats_log}: {missing}")
@@ -160,10 +160,12 @@ def main():
         segment("layer3mixed", [lambda p: part(p, b["layer3mixed"], b["fast"], 1.0, WIDE)], "layer3mixed", vo_at=0.3,
                 labels=[("Rule 3: big cases first, small ones fill the strip", 0.5, 7.5, "tl"),
                         ("Rule 4: turn the layer so joints cross", 7.5, 13.0, "tl")]),
-        segment("built", [lambda p: part(p, b["fast"], b["complete"], 0.8, WIDE)], "built", vo_at=0.3,
+        segment("hill", [lambda p: part(p, b["fast"], b["layer5"], 1.0, WIDE)], "hill", vo_at=0.3,
+                labels=[("Rule 5: a step is fine at the back, fill it back to level", 0.5, 9.0, "tl")]),
+        segment("built", [lambda p: part(p, b["layer5"], b["complete"] - 0.3, 0.8, WIDE)], "built", vo_at=0.3,
                 labels=[("Brief: CLAD plan-lens, corrected by a real picker", 3.0, 10.5, "tl"),
                         ("Built: CLAD + Lens Studio MCP", 10.5, 15.0, "tl"),
-                        (TESTS, 15.0, 21.0, "tl")]),
+                        (TESTS, 15.0, 21.0, "bl")]),
         segment("complete", [lambda p: part(p, b["complete"], b["reset"], 1.0, CARD)], "complete", vo_at=0.6,
                 labels=[("Scored: time + mistakes by rule", 0.6, 7.5, "bl")]),
         segment("close", [lambda p: still(p, b["complete"] + 4.0, 3.0, FULL, zoom=0.0, dim=True)], "close", vo_at=0.4, tail=1.2,

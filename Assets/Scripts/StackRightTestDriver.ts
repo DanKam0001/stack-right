@@ -2,12 +2,14 @@
 // TEST/DEMO ONLY. Drives the controller through its test hooks (simulateGrab / simulateRelease /
 // pressReset, the same code path as real SIK grabs) a moment after the Lens starts.
 //   mode "off"       - does nothing (normal play)
-//   mode "selftest"  - checks done criteria 1-6 (full 31-case run), prints "[StackRightTest] PASS/FAIL ..." lines
+//   mode "selftest"  - checks done criteria 1-6 (full 34-case run), prints "[StackRightTest] PASS/FAIL ..." lines
 //   mode "ghost"     - 18 cases placed (layers 1-2, the water and 2 juice of layer 3), case 19 held: ghost + tag
-//   mode "layer4"    - 23 cases placed (layers 1-3 + 3 trays of layer 4), case 24 held over its ghost
+//   mode "hill"      - 23 cases placed (layers 1-3 + the 3 soup at the back of layer 4): step note and the hill
+//   mode "layer4"    - 26 cases placed (layers 1-3, soup, the first tier of trays), case 27 held over its
+//                      second-tier ghost on top of a tray
 //   mode "overhang"  - case 1 dropped hanging over the pallet edge: red overhang tip showing
 //   mode "layerdone" - layer 1 finished: white "Layer 1 done" note showing
-//   mode "complete"  - all 31 placed: completion card showing
+//   mode "complete"  - all 34 placed: completion card showing
 //   mode "paced"     - real-time run with pauses, for screenshots
 //   mode "demo"      - scripted run for the demo video: every case carried along an arc from the
 //                      pick face to its drop point, one overhang and one gap mistake, Reset at the
@@ -16,8 +18,9 @@
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
 import {StackRightController, TIP_GAP, TIP_OVERHANG} from "./StackRightController"
 import {
-  ORDER, PLAN, layerDoneText, plannedSize, footprint, HEIGHT_LIMIT_CM, STACK_HEIGHT_CM, LAYER_COUNT,
+  ORDER, PLAN, layerDoneText, plannedSize, footprint, HEIGHT_LIMIT_CM, STACK_HEIGHT_CM, LAYER_COUNT, MAX_STEP_CM,
   isTurnedLayer, planOverlaps, planOutsidePallet, isLayerLevel, layerFootprintCount, alignedJoints, describePlan,
+  layerZones, layerTopCm, stepAfterCase, isStepNoteAfter, stepNoteText, unsupportedTierSlots,
 } from "./StackRightPickList"
 
 @component
@@ -29,11 +32,12 @@ export class StackRightTestDriver extends BaseScriptComponent {
   controller: StackRightController
 
   @input
-  @hint("off | selftest | ghost | layer4 | overhang | layerdone | complete | paced | demo")
+  @hint("off | selftest | ghost | hill | layer4 | overhang | layerdone | complete | paced | demo")
   @widget(new ComboBoxWidget([
     new ComboBoxItem("off", "off"),
     new ComboBoxItem("selftest", "selftest"),
     new ComboBoxItem("ghost", "ghost"),
+    new ComboBoxItem("hill", "hill"),
     new ComboBoxItem("layer4", "layer4"),
     new ComboBoxItem("overhang", "overhang"),
     new ComboBoxItem("layerdone", "layerdone"),
@@ -73,17 +77,20 @@ export class StackRightTestDriver extends BaseScriptComponent {
   private async runMode(): Promise<void> {
     const c = this.controller
     print("[StackRightTest] mode = " + this.mode)
-    const still = ["ghost", "layer4", "overhang", "layerdone", "complete"]
+    const still = ["ghost", "hill", "layer4", "overhang", "layerdone", "complete"]
     if (this.demoCamera && still.indexOf(this.mode) >= 0) this.setDemoCamera()
     if (this.mode === "selftest") {
       await this.selfTest()
     } else if (this.mode === "ghost" || this.mode === "layer4") {
-      const held = this.mode === "ghost" ? 18 : 23
+      const held = this.mode === "ghost" ? 18 : 26
       for (let i = 0; i < held; i++) this.dropOnSlot(i)
       await this.settle()
       c.simulateGrab(held)
       // Hold the case in the air above its slot, as if carried there.
       c.pickList.getChild(held).getTransform().setWorldPosition(c.getSlotWorldPosition(held).add(new vec3(0, 45, 0)))
+    } else if (this.mode === "hill") {
+      c.stepNoteSec = 120 // demo only: keep the step note up long enough to frame a screenshot
+      for (let i = 0; i < 23; i++) this.dropOnSlot(i)
     } else if (this.mode === "overhang") {
       c.tipDurationSec = 120 // demo only: keep the tip up long enough to frame a screenshot
       this.dropOnSlot(0)
@@ -186,18 +193,27 @@ export class StackRightTestDriver extends BaseScriptComponent {
       prevKey = ORDER[i].key
     }
 
+    // Layer 4: the soup fills only the back half (a 26 cm step, the hill), then the trays bring the
+    // front up two high and the layer is level again.
     this.beat("fast")
-    for (const i of layerCases(4)) await this.demoPlaceTimed(i, 0.5)
+    const soup = layerCases(4).filter(i => ORDER[i].zone === "far")
+    const trays = layerCases(4).filter(i => ORDER[i].zone !== "far")
+    for (const i of soup) await this.demoPlaceTimed(i, 1.2)
+    this.beat("hill")
+    await this.wait(4)
+    for (const i of trays) await this.demoPlaceTimed(i, 0.8)
+    this.beat("level")
+    await this.wait(1.5)
 
     // Light and fragile on top; hover over the ghost with the 112 cm paper-towel carton.
     this.beat("layer5")
     for (const i of layerCases(5)) {
       if (ORDER[i].shape === "long") {
         print("[DEMO] layer5 paper towel")
-        await this.demoPlace(i, 1.4 * 0.7, 1.5, 1.4 * 0.15)
-        await this.wait(1.4 * 0.15)
+        await this.demoPlace(i, 2.2 * 0.7, 1.5, 2.2 * 0.15)
+        await this.wait(2.2 * 0.15)
       } else {
-        await this.demoPlaceTimed(i, 1.4)
+        await this.demoPlaceTimed(i, 2.2)
       }
     }
 
@@ -296,7 +312,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC1", "pallet centred (dx " + (pallet.x - cam.x).toFixed(0) + ")", Math.abs(pallet.x - cam.x) < 20)
     this.check("DC1", "pallet on floor, " + (cam.y - pallet.y).toFixed(0) + " cm below eyes", cam.y - pallet.y >= 140 && cam.y - pallet.y <= 170)
     this.check("DC1", "shelf ~140 cm right (got " + (shelf.x - cam.x).toFixed(0) + ")", shelf.x - cam.x >= 120 && shelf.x - cam.x <= 160)
-    this.check("DC1", N + " cases in the order (got " + c.getCaseCount() + ")", c.getCaseCount() === 31)
+    this.check("DC1", N + " cases in the order (got " + c.getCaseCount() + ")", c.getCaseCount() === 34)
     this.check("DC1", "queue shows exactly cases 0-3", this.queueOk(0))
     let lowerShelf = true
     for (let i = 0; i < 4; i++) {
@@ -314,7 +330,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
     const limitAbove = c.getHeightLimitWorldY() - c.getFloorWorldY()
     this.check("DC1", "height-limit outline " + limitAbove.toFixed(1) + " cm above the floor, visible",
       Math.abs(limitAbove - HEIGHT_LIMIT_CM) < 0.5 && c.isHeightLimitVisible())
-    this.check("DC1", "counter reads '" + c.getCounterText() + "'", c.getCounterText() === "Layer 1 · 0 / 31")
+    this.check("DC1", "counter reads '" + c.getCounterText() + "'", c.getCounterText() === "Layer 1 · 0 / " + N)
     this.check("DC1", "case 0 glows, only case 0 interactable", c.isCaseGlowing(0) && this.onlyInteractable(0))
 
     // DC2: grabbing the case due now shows its ghost in the planned slot, turned to the layer, with the tag.
@@ -325,14 +341,14 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC2", "ghost visible after grabbing case 0", c.isGhostVisible())
     this.check("DC2", "ghost sits on case 0's planned slot", c.getGhostWorldPosition().distance(c.getSlotWorldPosition(0)) < 0.5)
     this.check("DC2", "layer-1 ghost size = case size " + this.v(c.getGhostSize()), c.getGhostSize().distance(ORDER[0].size) < 0.01)
-    this.check("DC2", "tag reads '" + c.getGhostTagText() + "'", c.isGhostTagVisible() && c.getGhostTagText() === "Layer 1 · 1 of 31 · 20 kg")
+    this.check("DC2", "tag reads '" + c.getGhostTagText() + "'", c.isGhostTagVisible() && c.getGhostTagText() === "Layer 1 · 1 of 34 · 20 kg")
 
     // DC3: drop within 15 cm snaps, counter goes up, queue moves up, next case glows.
     c.simulateRelease(0, c.getSlotWorldPosition(0).add(new vec3(10, 5, 0)))
     this.check("DC3", "case 0 snapped (dropped 10 cm off)", c.isCasePlaced(0))
     this.check("DC3", "snapped square onto the slot", c.getCaseWorldPosition(0).distance(c.getSlotWorldPosition(0)) < 0.5 &&
       this.angleDeg(c.getCaseWorldRotation(0), c.getSlotWorldRotation(0)) < 0.5)
-    this.check("DC3", "counter reads '" + c.getCounterText() + "'", c.getCounterText() === "Layer 1 · 1 / 31")
+    this.check("DC3", "counter reads '" + c.getCounterText() + "'", c.getCounterText() === "Layer 1 · 1 / " + N)
     this.check("DC3", "ghost hidden after placing", !c.isGhostVisible() && !c.isGhostTagVisible())
     this.check("DC3", "queue moved up: cases 1-4 shown, 5+ hidden", this.queueOk(1))
     this.check("DC3", "case 1 sliding to the front slot", c.isCaseReturning(1) &&
@@ -369,12 +385,14 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC4", "tip hides after ~4 s", !c.isTipVisible())
 
     // DC5 + DC6: build the rest; layer notes after layers 1-4; turned layers 3 (mixed) and 4; queue shifts every time.
+    // Layer 4 is stepped: soup at the back first (step note), then trays two high in the front.
     let queueFails = 0
     let snapFails = 0
+    let maxStep = 0
     for (let i = 1; i < N; i++) {
       if (i === 6) {
         c.simulateGrab(6)
-        this.check("DC2", "layer-2 tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 2 · 7 of 31 · 17 kg")
+        this.check("DC2", "layer-2 tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 2 · 7 of 34 · 17 kg")
         this.check("DC2", "layer-2 ghost not turned", c.getGhostSize().distance(ORDER[6].size) < 0.01)
       }
       if (i === 12) {
@@ -383,7 +401,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
         const want = plannedSize(ORDER[12], true)
         this.check("DC2", "layer-3 water ghost turned: size " + this.v(c.getGhostSize()) + " = " + this.v(want),
           c.getGhostSize().distance(want) < 0.01 && c.getGhostSize().x !== ORDER[12].size.x)
-        this.check("DC2", "layer-3 tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 3 · 13 of 31 · 14 kg")
+        this.check("DC2", "layer-3 tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 3 · 13 of 34 · 14 kg")
         m = c.getMistakes()
         c.simulateRelease(12, this.palletPoint(35, 80, 0)) // turned: 35 + 29 = 64 over; unturned (35 + 19) it would fit
         this.check("DC4", "overhang judged in the planned (turned) orientation", c.getTipKind() === "overhang" && c.getMistakes() === m + 1)
@@ -392,25 +410,55 @@ export class StackRightTestDriver extends BaseScriptComponent {
       if (i === 16) {
         c.simulateGrab(16)
         const want = plannedSize(ORDER[16], true)
-        this.check("DC2", "layer-3 juice tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 3 · 17 of 31 · 12 kg")
+        this.check("DC2", "layer-3 juice tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 3 · 17 of 34 · 12 kg")
         this.check("DC2", "layer-3 juice ghost turned, other footprint: size " + this.v(c.getGhostSize()),
           c.getGhostSize().distance(want) < 0.01 && c.getGhostSize().distance(plannedSize(ORDER[12], true)) > 1)
       }
       if (i === 20) {
         c.simulateGrab(20)
-        this.check("DC2", "layer-4 tray tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 4 · 21 of 31 · 10 kg")
-        this.check("DC2", "layer-4 tray ghost turned", c.getGhostSize().distance(plannedSize(ORDER[20], true)) < 0.01)
+        const local = c.getPalletWorldTransform().inverse().multiplyPoint(c.getGhostWorldPosition())
+        this.check("DC2", "layer-4 soup tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 4 · 21 of 34 · 11 kg")
+        this.check("DC2", "layer-4 soup ghost not turned, in the back half (z " + local.z.toFixed(1) + ")",
+          c.getGhostSize().distance(ORDER[20].size) < 0.01 && local.z + ORDER[20].size.z / 2 <= 0.01)
       }
-      if (i === 28) {
-        c.simulateGrab(28)
+      if (i === 23) {
+        this.check("DC5", "step note still up until the next grab", c.getTipKind() === "step" && c.isTipVisible())
+        c.simulateGrab(23)
+        this.check("DC5", "  ... hidden after grabbing the first tray", !c.isTipVisible() && c.getTipKind() === "")
+        this.check("DC2", "layer-4 tray tag reads '" + c.getGhostTagText() + "'", c.getGhostTagText() === "Layer 4 · 24 of 34 · 10 kg")
+        this.check("DC2", "layer-4 tray ghost turned, on layer 3", c.getGhostSize().distance(plannedSize(ORDER[23], true)) < 0.01 &&
+          Math.abs(c.getGhostWorldPosition().y - 6.5 - c.getFloorWorldY() - layerTopCm(3)) < 0.5)
+      }
+      if (i === 26) {
+        // Second tier: the ghost stands on the first-tier tray below it (case 23), not on layer 3.
+        c.simulateGrab(26)
+        const below = c.getCaseWorldPosition(23)
+        const g = c.getGhostWorldPosition()
+        this.check("DC2", "second-tier tray ghost sits on top of tray 24 (bottom " + (g.y - 6.5 - c.getFloorWorldY()).toFixed(1) + " cm, tray top " +
+          (below.y + 6.5 - c.getFloorWorldY()).toFixed(1) + " cm)",
+          Math.abs((g.y - 6.5) - (below.y + 6.5)) < 0.5 && this.flatDist(g, below) < 0.5 && c.getGhostTagText() === "Layer 4 · 27 of 34 · 10 kg")
+      }
+      if (i === 31) {
+        c.simulateGrab(31)
         this.check("DC2", "paper-towel tag reads '" + c.getGhostTagText() + "', ghost 112 cm long",
-          c.getGhostTagText() === "Layer 5 · 29 of 31 · 3 kg" && Math.abs(c.getGhostSize().x - 112) < 0.01)
+          c.getGhostTagText() === "Layer 5 · 32 of 34 · 3 kg" && Math.abs(c.getGhostSize().x - 112) < 0.01)
       }
       const layer = PLAN[i].layer
       this.dropOnSlot(i)
       if (!c.isCasePlaced(i) || c.getCaseWorldPosition(i).distance(c.getSlotWorldPosition(i)) > 0.5 ||
         this.angleDeg(c.getCaseWorldRotation(i), c.getSlotWorldRotation(i)) > 0.5) snapFails++
       if (i + 1 < N && !this.queueOk(i + 1)) queueFails++
+      maxStep = Math.max(maxStep, stepAfterCase(i))
+      if (i === 22) {
+        // The hill: the soup's top is 26 cm above the front (still layer 3's top) and the step note is up.
+        const back = c.getCaseWorldPosition(22).y + ORDER[22].size.y / 2 - c.getFloorWorldY()
+        const front = layerTopCm(3)
+        this.check("DC5", "after the soup the back is " + (back - front).toFixed(1) + " cm higher than the front (26)",
+          Math.abs(back - front - 26) < 0.5 && Math.abs(stepAfterCase(22) - 26) < 0.01 && Math.abs(c.getStackTopCm() - 110) < 0.5)
+        this.check("DC5", "step note: '" + c.getTipText().replace(/\n/g, " | ") + "'",
+          c.isTipVisible() && c.getTipKind() === "step" && c.getTipText() === stepNoteText(22) && isStepNoteAfter(22) &&
+          c.getTipText().indexOf("step at the back") >= 0)
+      }
       const lastOfLayer = i === N - 1 || PLAN[i + 1].layer !== layer
       if (lastOfLayer && layer < LAYER_COUNT) {
         this.check("DC5", "layer " + layer + " done note: '" + c.getTipText().replace(/\n/g, " | ") + "'",
@@ -424,16 +472,16 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC3", "queue moved up after every placement (" + queueFails + " misses)", queueFails === 0)
 
     // Orientation: a case is 90 deg from the one below when exactly one of the two layers is turned.
-    for (const [a, b] of [[0, 6], [6, 12], [12, 20], [20, 26]]) {
+    for (const [a, b] of [[0, 6], [6, 12], [12, 20], [12, 23], [23, 29]]) {
       const ang = this.angleDeg(c.getCaseWorldRotation(a), c.getCaseWorldRotation(b))
       const want = PLAN[a].turned !== PLAN[b].turned ? 90 : 0
       this.check("DC5", "layer " + PLAN[a].layer + " vs layer " + PLAN[b].layer + " placed " + ang.toFixed(1) + "° apart (want " + want + ")", Math.abs(ang - want) < 0.5)
     }
     let allTurned = true
-    for (let i = 0; i < N; i++) if (PLAN[i].turned !== (PLAN[i].layer === 3 || PLAN[i].layer === 4)) allTurned = false
-    this.check("DC5", "plan turns exactly layers 3 and 4", allTurned && isTurnedLayer(3) && isTurnedLayer(4) && !isTurnedLayer(2))
+    for (let i = 0; i < N; i++) if (PLAN[i].turned !== (PLAN[i].layer === 3 || ORDER[i].key === "Tomatoes")) allTurned = false
+    this.check("DC5", "plan turns exactly layer 3 and the layer-4 trays", allTurned && isTurnedLayer(3) && isTurnedLayer(4) && !isTurnedLayer(2))
     this.check("DC5", "layer-done notes are per layer", layerDoneText(1) !== layerDoneText(2) && layerDoneText(2).indexOf("turns 90°") >= 0 &&
-      layerDoneText(3).indexOf("level") >= 0)
+      layerDoneText(3) === "Layer 3 done.\nHeavy soup next: back half first." && layerDoneText(4) === "Layer 4 done.\nThe front caught up: level again.")
 
     // Plan checks: generated row packing, no overlaps, inside the pallet, level layers, mixed layers, crossing joints.
     for (const line of describePlan()) print("[StackRightTest] INFO plan " + line)
@@ -446,19 +494,27 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC5", "plan: every layer finishes level", level)
     this.check("DC5", "plan: layers 3 and 5 mix footprints (" + layerFootprintCount(3) + ", " + layerFootprintCount(5) + ")",
       layerFootprintCount(3) > 1 && layerFootprintCount(5) > 1)
+    const zones = layerZones(4)
+    this.check("DC5", "plan: layer 4 has two zones (" + zones.join(", ") + ")", zones.length === 2 && zones[0] === "far" && zones[1] === "near")
+    this.check("DC5", "plan: back 26 cm higher than front after the soup; step never over " + MAX_STEP_CM + " cm (max " + maxStep + ")",
+      Math.abs(stepAfterCase(22) - 26) < 0.01 && maxStep <= MAX_STEP_CM + 0.01 && Math.abs(stepAfterCase(28)) < 0.01)
+    const unsupported = unsupportedTierSlots()
+    this.check("DC5", "plan: second-tier trays sit on first-tier trays (" + (unsupported.join(", ") || "all carried") + ")",
+      unsupported.length === 0 && PLAN[26].tier === 1 && PLAN[23].tier === 0 && Math.abs(PLAN[26].center.y - PLAN[23].center.y - 13) < 0.01)
+    this.check("DC5", "plan: layer 4 level when finished, top " + layerTopCm(4) + " cm (110)", isLayerLevel(4) && Math.abs(layerTopCm(4) - 110) < 0.01)
     for (let l = 2; l <= LAYER_COUNT; l++) {
       const aligned = alignedJoints(l)
       this.check("DC5", "plan: layer " + l + " joints cross layer " + (l - 1) + " (" + (aligned.join(", ") || "none aligned") + ")", aligned.length === 0)
     }
 
     // DC6: completion card + Reset.
-    this.check("DC6", "all 31 placed, counter '" + c.getCounterText() + "'", c.isComplete() && c.getCounterText() === "Layer 5 · 31 / 31")
-    this.check("DC6", "stack top " + c.getStackTopCm().toFixed(1) + " cm (127), under the 180 cm limit",
-      Math.abs(c.getStackTopCm() - 127) < 0.5 && Math.abs(STACK_HEIGHT_CM - 127) < 0.5 && c.getStackTopCm() < HEIGHT_LIMIT_CM)
+    this.check("DC6", "all 34 placed, counter '" + c.getCounterText() + "'", c.isComplete() && c.getCounterText() === "Layer 5 · 34 / 34")
+    this.check("DC6", "stack top " + c.getStackTopCm().toFixed(1) + " cm (140), under the 180 cm limit",
+      Math.abs(c.getStackTopCm() - 140) < 0.5 && Math.abs(STACK_HEIGHT_CM - 140) < 0.5 && c.getStackTopCm() < HEIGHT_LIMIT_CM)
     const card = c.getCompletionText()
     this.check("DC6", "completion card visible", c.isCompletionVisible())
     this.check("DC6", "card: '" + card.replace(/\n/g, " | ") + "'",
-      card.indexOf("Pallet done! 31 cases · 5 layers · 127 cm\n") === 0 && /\nTime \d+:\d\d · Mistakes /.test(card) &&
+      card.indexOf("Pallet done! 34 cases · 5 layers · 140 cm\n") === 0 && /\nTime \d+:\d\d · Mistakes /.test(card) &&
       card.indexOf("Mistakes " + c.getMistakes()) >= 0 && card.indexOf("\nWrap and label the pallet.") >= 0)
     this.check("DC6", "card groups mistakes by rule (" + c.getOverhangMistakes() + " overhang, " + c.getGapMistakes() + " gap)",
       c.getOverhangMistakes() + c.getGapMistakes() === c.getMistakes() &&
@@ -472,7 +528,7 @@ export class StackRightTestDriver extends BaseScriptComponent {
     this.check("DC6", "Reset: pallet cleared", allClear)
     this.check("DC6", "Reset: order restarts, first 4 cases on the pick face", this.queueOk(0) && c.getNextIndex() === 0)
     this.check("DC6", "Reset: counter '" + c.getCounterText() + "', card hidden, mistakes 0",
-      c.getCounterText() === "Layer 1 · 0 / 31" && !c.isCompletionVisible() && c.getMistakes() === 0)
+      c.getCounterText() === "Layer 1 · 0 / " + N && !c.isCompletionVisible() && c.getMistakes() === 0)
     this.check("DC6", "Reset: case 0 glows and is interactable", c.isCaseGlowing(0) && this.onlyInteractable(0))
 
     print("[StackRightTest] SUMMARY per done criterion:")

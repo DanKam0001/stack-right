@@ -25,7 +25,7 @@ import {InteractableManipulation} from "SpectaclesInteractionKit.lspkg/Component
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
 import {
   ORDER, PLAN, CaseSpec, PALLET_SIZE_CM, PALLET_DECK_Y, HEIGHT_LIMIT_CM, LAYER_COUNT, STACK_HEIGHT_CM,
-  footprint, plannedSize, ghostTagText, layerDoneText, isLastOfLayer,
+  footprint, plannedSize, ghostTagText, layerDoneText, isLastOfLayer, isStepNoteAfter, stepNoteText,
 } from "./StackRightPickList"
 import {BoxFactory, ShapeMeshes} from "./StackRightGeometry"
 import {StackRightLabelUI} from "./StackRightLabelUI"
@@ -141,6 +141,11 @@ export class StackRightController extends BaseScriptComponent {
   tipDurationSec: number = 4
 
   @input
+  @hint("How long the step note (a layer left with a one-sided step) stays up (s); the next grab also hides it")
+  @widget(new SliderWidget(1, 10, 0.5))
+  stepNoteSec: number = 3.5
+
+  @input
   @hint("Place the floor this far below the user's eyes at start (cm). The work area root (this object's parent) is moved to camera.y - eyeHeightCm.")
   @widget(new SliderWidget(100, 200, 1))
   eyeHeightCm: number = 150
@@ -191,7 +196,7 @@ export class StackRightController extends BaseScriptComponent {
   private startTime = -1
   private finishTime = -1
   private tipHideAt = -1
-  private tipKind = "" // "" | "overhang" | "gap" | "layer"
+  private tipKind = "" // "" | "overhang" | "gap" | "layer" | "step"
   private ghostTagString = ""
   private tipString = ""
   private completionString = ""
@@ -365,6 +370,7 @@ export class StackRightController extends BaseScriptComponent {
     c.returning = false
     this.grabbedIndex = i
     if (this.startTime < 0) this.startTime = getTime()
+    if (this.tipKind === "step") this.hideTip()
     this.showGhostFor(i)
     this.updateGlow()
     this.log("grab " + c.so.name + " (ghost shown, layer " + PLAN[i].layer + (PLAN[i].turned ? ", turned 90" : "") + ")")
@@ -424,6 +430,9 @@ export class StackRightController extends BaseScriptComponent {
       this.finish()
     } else if (isLastOfLayer(i)) {
       this.showTip("layer", layerDoneText(PLAN[i].layer), this.noteColor)
+    } else if (isStepNoteAfter(i)) {
+      this.showTip("step", stepNoteText(i), this.noteColor, this.stepNoteSec)
+      print("[StackRight] step note")
     }
     this.layoutQueue(true)
     this.updateCounter()
@@ -440,13 +449,13 @@ export class StackRightController extends BaseScriptComponent {
     this.sendHome(c)
   }
 
-  private showTip(kind: string, msg: string, color: vec4): void {
+  private showTip(kind: string, msg: string, color: vec4, durationSec: number = this.tipDurationSec): void {
     this.tipKind = kind
     this.tipString = msg
     this.tipText.setText(msg)
     this.tipText.setTextColor(color)
     this.tipText.setVisible(true)
-    this.tipHideAt = getTime() + this.tipDurationSec
+    this.tipHideAt = getTime() + durationSec
   }
 
   private hideTip(): void {
@@ -518,10 +527,11 @@ export class StackRightController extends BaseScriptComponent {
     return PLAN[i].turned ? r.multiply(quat.angleAxis(Math.PI / 2, vec3.up())) : r
   }
 
+  /** Highest placed case top (a stepped layer's high side counts before the low side catches up). */
   private stackTop(): number {
-    if (this.placedCount === 0) return PALLET_DECK_Y
-    const k = this.placedCount - 1
-    return PLAN[k].center.y + this.cases[k].spec.size.y / 2
+    let top = PALLET_DECK_Y
+    for (let k = 0; k < this.placedCount; k++) top = Math.max(top, PLAN[k].center.y + this.cases[k].spec.size.y / 2)
+    return top
   }
 
   /** World position of queue slot q (0 = due now, nearest the pallet) on the lower shelf. */

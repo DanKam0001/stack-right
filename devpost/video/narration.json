@@ -6,7 +6,8 @@
   ["layer1", "Every mistake is counted, by rule. The next one lights up as soon as the last one lands, so there's only ever one thing to do."],
   ["layer2", "Real freight isn't tidy. Sacks, cartons, trays of tins, and the odd long one."],
   ["layer3mixed", "Layer three mixes sizes. The big water cases go first, and the juice fills the strip they leave. It's turned ninety degrees, so the joints cross the layer below. None of it is hand-placed. The plan is computed from the case sizes."],
+  ["hill", "Real layers don't always come out even. There's only enough soup for half a layer, so it goes at the back and leaves a step. The trays of tins fill the front, two high, and it's level again."],
   ["built", "I pick orders in a warehouse, so I built this from my own shifts. Clad's plan-lens skill turned my answers into a design brief. I corrected its premise, because real orders already come heaviest first. Then Clad built the lens through the Lens Studio M C P, tested by a self-test driver and seven Leaf scenarios."],
-  ["complete", "Thirty-one items, five layers, a hundred and twenty-seven centimetres, under the height line. Time, and mistakes by rule."],
+  ["complete", "Thirty-four items, five layers, a hundred and forty centimetres, under the height line. Time, and mistakes by rule."],
   ["close", "Real orders are three times this size. Stack Right lets a new picker build them right, before they touch real stock. It's built and tested in the Lens Studio preview. Next is a real pair of Specs."]
 ]

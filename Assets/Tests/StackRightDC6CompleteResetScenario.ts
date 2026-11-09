@@ -1,4 +1,4 @@
-// DC6: after case 31 the completion card shows cases, layers, height, time and mistakes and stays
+// DC6: after case 34 the completion card shows cases, layers, height, time and mistakes and stays
 // up; Reset (pinched through real SIK input) clears the pallet and restarts the order.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
@@ -14,22 +14,22 @@ export class StackRightDC6CompleteResetScenario extends Scenario {
     const c = getController()
     await freshPallet(c)
 
-    // One deliberate gap mistake, then a clean build of all 31.
+    // One deliberate gap mistake, then a clean build of all 34.
     dropOnSlot(c, 0)
     dropAt(c, 1, 0, 45, 10)
     await settle(c)
-    for (let i = 1; i < 31; i++) {
+    for (let i = 1; i < 34; i++) {
       dropOnSlot(c, i)
       await sleep(20)
     }
     expect(c.isComplete()).toBe(true)
-    expect(c.getCounterText()).toBe("Layer 5 · 31 / 31")
+    expect(c.getCounterText()).toBe("Layer 5 · 34 / 34")
     expect(Math.abs(c.getStackTopCm() - STACK_HEIGHT_CM) < 0.5).toBe(true)
-    expect(Math.round(STACK_HEIGHT_CM)).toBe(127)
+    expect(Math.round(STACK_HEIGHT_CM)).toBe(140)
     expect(c.getStackTopCm() < 180).toBe(true)
     expect(c.isCompletionVisible()).toBe(true)
     const card = c.getCompletionText()
-    expect(card.indexOf("Pallet done! 31 cases · 5 layers · " + Math.round(STACK_HEIGHT_CM) + " cm\n") === 0).toBe(true)
+    expect(card.indexOf("Pallet done! 34 cases · 5 layers · " + Math.round(STACK_HEIGHT_CM) + " cm\n") === 0).toBe(true)
     expect(/\nTime \d+:\d\d · Mistakes 1 \(1 gap\)\n/.test(card)).toBe(true)
     expect(card.indexOf("Wrap and label the pallet.") > 0).toBe(true)
 
@@ -43,8 +43,8 @@ export class StackRightDC6CompleteResetScenario extends Scenario {
     expect(c.getPlacedCount()).toBe(0)
     expect(c.getMistakes()).toBe(0)
     expect(c.getNextIndex()).toBe(0)
-    expect(c.getCounterText()).toBe("Layer 1 · 0 / 31")
-    for (let i = 0; i < 31; i++) expect(c.isCasePlaced(i)).toBe(false)
+    expect(c.getCounterText()).toBe("Layer 1 · 0 / 34")
+    for (let i = 0; i < 34; i++) expect(c.isCasePlaced(i)).toBe(false)
     expect(queueShowsNextFour(c)).toBe(true)
     expect(c.isCaseGlowing(0)).toBe(true)
     expect(onlyDueCaseInteractable(c)).toBe(true)

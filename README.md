@@ -14,19 +14,20 @@ The warehouse system already sends a picker's cases heaviest-first. What it does
 | Design brief (plan-lens, approved) | [devpost/design-brief.md](devpost/design-brief.md) |
 | Interview answers the brief was built from | [devpost/interview-answers.md](devpost/interview-answers.md) |
 | Prompts sent to CLAD | [devpost/agent-logs/](devpost/agent-logs/) (`run_*.sh` are the exact prompts, `*.jsonl` the full transcripts) |
-| Test results | [devpost/selftest-2026-11-09.log](devpost/selftest-2026-11-09.log): self-test 76/76, LEAF 7/7 |
+| Test results | [devpost/selftest-2026-11-09.log](devpost/selftest-2026-11-09.log): self-test 88/88, LEAF 7/7 |
 | LEAF scenarios | [Assets/Tests/](Assets/Tests/) (copies in [devpost/leaf-scenarios/](devpost/leaf-scenarios/)) |
 | Screenshots from the preview | [devpost/screenshots/](devpost/screenshots/) |
 
 ## What it does
 
-- **Real scale.** An Australian standard pallet (116.5 x 116.5 cm) on the floor 1 m ahead; a pick face 1.4 m to the right holding the next cases of a 31-case order. The pallet sits on the forks of a ride-on pallet jack, as it would on a real pick run (scenery only).
-- **One instruction at a time.** Grab the case due now (it glows) and a ghost appears on the pallet where it fits, turned the right way, tagged `Layer 3 · 17 of 31 · 12 kg`. Drop it within 15 cm and it snaps square.
+- **Real scale.** An Australian standard pallet (116.5 x 116.5 cm) on the floor 1 m ahead; a pick face 1.4 m to the right holding the next cases of a 34-case order. The pallet sits on the forks of a ride-on pallet jack, as it would on a real pick run (scenery only).
+- **One instruction at a time.** Grab the case due now (it glows) and a ghost appears on the pallet where it fits, turned the right way, tagged `Layer 3 · 17 of 34 · 12 kg`. Drop it within 15 cm and it snaps square.
 - **Real freight, not tidy cubes.** Pet food sacks (soft, pillow-shaped), laundry and water cartons, juice, shrink-wrapped trays of tins with the tins showing, bread, chips, and one 112 cm paper towel carton. Sizes differ inside a layer, as they do on a real order.
 - **The plan is computed, not hand-placed.** Each layer is row-packed from the case sizes: fill a row across the 116.5 cm pallet, start the next row when the next case won't fit, centre it all. Layer 3 puts the big water cases first and the juice fills the strip they leave. Layers 3 and 4 are turned 90° so the joints cross the layer below (the interlock that stops a pallet splitting); the plan is checked for overlaps, staying on the pallet, and level layers.
+- **Layers don't always come out even.** There's only enough soup for half of layer 4, and it's heavier than the tins, so it goes down first on the back half and leaves a 26 cm step. A note says so: `Not enough soup for a full layer: step at the back. The trays fill the front, two high, back to level.` The trays of tins then go on the front in two tiers until the layer is level again. The plan never lets the step get taller than one case.
 - **Mistakes say why.** Drop a case on the pallet but not on the ghost and it slides back with a red tip: `Overhang. Keep it inside the edge.` or `That leaves a gap. Drop it on the ghost.` Drop it off the pallet and it just comes back, no mistake.
 - **Layer by layer.** Finishing a layer shows what's next and why, e.g. `Layer 2 done. Next layer turns 90° so the joints cross.` or `Layer 3 done. Flat trays next: keep the top level.` A 180 cm height-limit outline stays above the pallet.
-- **A scored finish.** The completion card shows cases, layers, height (127 cm), time, and mistakes grouped by rule, then `Wrap and label the pallet.`
+- **A scored finish.** The completion card shows cases, layers, height (140 cm), time, and mistakes grouped by rule, then `Wrap and label the pallet.`
 
 ## Why glasses
 

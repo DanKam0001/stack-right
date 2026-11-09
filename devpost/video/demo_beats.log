@@ -1,92 +1,101 @@
-# t (s from record start 10:36:55.667)  log time  line
-   4.261  10:36:59.928  [StackRight] floor aligned: camera y = 0, floor y = -150
-   5.070  10:37:00.737  [StackRight] reset
-   5.070  10:37:00.737  [StackRight] ready. 31 cases, 5 layers, stack 127 cm. camera = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -175}
-   5.913  10:37:01.580  [StackRight] floor aligned: camera y = 0, floor y = -150
-   6.865  10:37:02.532  [StackRight] reset
-   6.866  10:37:02.533  [StackRight] ready. 31 cases, 5 layers, stack 127 cm. camera = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -175}
-   8.370  10:37:04.037  [StackRight] reset
-   8.370  10:37:04.037  [DEMO] camera eye (-60, 15, 380) looking at (57, -78, -140)
-   8.371  10:37:04.038  [DEMO] intro
-  12.397  10:37:08.064  [DEMO] case1
-  12.401  10:37:08.068  [StackRight] grab Case_00_PetFood (ghost shown, layer 1)
-  17.336  10:37:13.003  [StackRight] placed Case_00_PetFood -> 1/31
-  18.868  10:37:14.535  [DEMO] overhang
-  18.870  10:37:14.537  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
-  21.397  10:37:17.064  [StackRight] mistake #1 (Case_01_PetFood): Overhang. Keep it inside the edge.
-  24.919  10:37:20.586  [DEMO] gap
-  24.919  10:37:20.586  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
-  27.444  10:37:23.111  [StackRight] mistake #2 (Case_01_PetFood): That leaves a gap. Drop it on the ghost.
-  30.977  10:37:26.644  [DEMO] case2
-  30.977  10:37:26.644  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
-  33.621  10:37:29.288  [StackRight] placed Case_01_PetFood -> 2/31
-  33.621  10:37:29.288  [DEMO] layer1
-  33.622  10:37:29.289  [StackRight] grab Case_02_PetFood (ghost shown, layer 1)
-  34.850  10:37:30.517  [StackRight] placed Case_02_PetFood -> 3/31
-  35.090  10:37:30.757  [StackRight] grab Case_03_PetFood (ghost shown, layer 1)
-  36.325  10:37:31.992  [StackRight] placed Case_03_PetFood -> 4/31
-  36.554  10:37:32.221  [StackRight] grab Case_04_PetFood (ghost shown, layer 1)
-  37.782  10:37:33.449  [StackRight] placed Case_04_PetFood -> 5/31
-  38.026  10:37:33.693  [StackRight] grab Case_05_PetFood (ghost shown, layer 1)
-  39.274  10:37:34.941  [StackRight] placed Case_05_PetFood -> 6/31
-  42.992  10:37:38.659  [DEMO] layer2
-  42.992  10:37:38.659  [StackRight] grab Case_06_Laundry (ghost shown, layer 2)
-  43.787  10:37:39.454  [StackRight] placed Case_06_Laundry -> 7/31
-  43.931  10:37:39.598  [StackRight] grab Case_07_Laundry (ghost shown, layer 2)
-  44.755  10:37:40.422  [StackRight] placed Case_07_Laundry -> 8/31
-  44.903  10:37:40.570  [StackRight] grab Case_08_Laundry (ghost shown, layer 2)
-  45.727  10:37:41.394  [StackRight] placed Case_08_Laundry -> 9/31
-  45.877  10:37:41.544  [StackRight] grab Case_09_Laundry (ghost shown, layer 2)
-  46.715  10:37:42.382  [StackRight] placed Case_09_Laundry -> 10/31
-  46.879  10:37:42.546  [StackRight] grab Case_10_Laundry (ghost shown, layer 2)
-  47.680  10:37:43.347  [StackRight] placed Case_10_Laundry -> 11/31
-  47.821  10:37:43.488  [StackRight] grab Case_11_Laundry (ghost shown, layer 2)
-  48.618  10:37:44.285  [StackRight] placed Case_11_Laundry -> 12/31
-  48.771  10:37:44.438  [DEMO] layer3mixed
-  48.772  10:37:44.439  [StackRight] grab Case_12_Water (ghost shown, layer 3, turned 90)
-  53.731  10:37:49.398  [StackRight] placed Case_12_Water -> 13/31
-  53.732  10:37:49.399  [StackRight] grab Case_13_Water (ghost shown, layer 3, turned 90)
-  54.558  10:37:50.225  [StackRight] placed Case_13_Water -> 14/31
-  54.696  10:37:50.363  [StackRight] grab Case_14_Water (ghost shown, layer 3, turned 90)
-  55.469  10:37:51.136  [StackRight] placed Case_14_Water -> 15/31
-  55.618  10:37:51.285  [StackRight] grab Case_15_Water (ghost shown, layer 3, turned 90)
-  56.412  10:37:52.079  [StackRight] placed Case_15_Water -> 16/31
-  56.554  10:37:52.221  [DEMO] layer3mixed first juice
-  56.555  10:37:52.222  [StackRight] grab Case_16_Juice (ghost shown, layer 3, turned 90)
-  61.548  10:37:57.215  [StackRight] placed Case_16_Juice -> 17/31
-  61.550  10:37:57.217  [StackRight] grab Case_17_Juice (ghost shown, layer 3, turned 90)
-  62.360  10:37:58.027  [StackRight] placed Case_17_Juice -> 18/31
-  62.531  10:37:58.198  [StackRight] grab Case_18_Juice (ghost shown, layer 3, turned 90)
-  63.347  10:37:59.014  [StackRight] placed Case_18_Juice -> 19/31
-  63.540  10:37:59.207  [StackRight] grab Case_19_Juice (ghost shown, layer 3, turned 90)
-  64.356  10:38:00.023  [StackRight] placed Case_19_Juice -> 20/31
-  64.493  10:38:00.160  [DEMO] fast
-  64.494  10:38:00.161  [StackRight] grab Case_20_Tomatoes (ghost shown, layer 4, turned 90)
-  64.947  10:38:00.614  [StackRight] placed Case_20_Tomatoes -> 21/31
-  65.026  10:38:00.693  [StackRight] grab Case_21_Tomatoes (ghost shown, layer 4, turned 90)
-  65.517  10:38:01.184  [StackRight] placed Case_21_Tomatoes -> 22/31
-  65.594  10:38:01.261  [StackRight] grab Case_22_Tomatoes (ghost shown, layer 4, turned 90)
-  66.035  10:38:01.702  [StackRight] placed Case_22_Tomatoes -> 23/31
-  66.134  10:38:01.801  [StackRight] grab Case_23_Tomatoes (ghost shown, layer 4, turned 90)
-  66.667  10:38:02.334  [StackRight] placed Case_23_Tomatoes -> 24/31
-  66.799  10:38:02.466  [StackRight] grab Case_24_Tomatoes (ghost shown, layer 4, turned 90)
-  67.291  10:38:02.958  [StackRight] placed Case_24_Tomatoes -> 25/31
-  67.404  10:38:03.071  [StackRight] grab Case_25_Tomatoes (ghost shown, layer 4, turned 90)
-  67.864  10:38:03.531  [StackRight] placed Case_25_Tomatoes -> 26/31
-  67.976  10:38:03.643  [DEMO] layer5
-  67.976  10:38:03.643  [StackRight] grab Case_26_Bread (ghost shown, layer 5)
-  69.231  10:38:04.898  [StackRight] placed Case_26_Bread -> 27/31
-  69.444  10:38:05.111  [StackRight] grab Case_27_Bread (ghost shown, layer 5)
-  70.700  10:38:06.367  [StackRight] placed Case_27_Bread -> 28/31
-  70.949  10:38:06.616  [DEMO] layer5 paper towel
-  70.950  10:38:06.617  [StackRight] grab Case_28_PaperTowel (ghost shown, layer 5)
-  73.774  10:38:09.441  [StackRight] placed Case_28_PaperTowel -> 29/31
-  74.012  10:38:09.679  [StackRight] grab Case_29_Chips (ghost shown, layer 5)
-  75.252  10:38:10.919  [StackRight] placed Case_29_Chips -> 30/31
-  75.490  10:38:11.157  [StackRight] grab Case_30_Chips (ghost shown, layer 5)
-  76.750  10:38:12.417  [StackRight] placed Case_30_Chips -> 31/31
-  76.991  10:38:12.658  [DEMO] complete
-  76.992  10:38:12.659  [DEMO] card 'Pallet done! 31 cases · 5 layers · 127 cm | Time 1:04 · Mistakes 2 (1 overhang · 1 gap) | Wrap and label the pallet.'
-  84.026  10:38:19.693  [DEMO] reset
-  84.028  10:38:19.695  [StackRight] reset
-  87.068  10:38:22.735  [DEMO] end
+# t (s from record start 15:51:17.475)  log time  line
+   3.947  15:51:21.422  [StackRight] floor aligned: camera y = 0, floor y = -150
+   4.771  15:51:22.246  [StackRight] reset
+   4.771  15:51:22.246  [StackRight] ready. 34 cases, 5 layers, stack 140 cm. camera = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -175}
+   5.602  15:51:23.077  [StackRight] floor aligned: camera y = 0, floor y = -150
+   6.555  15:51:24.030  [StackRight] reset
+   6.556  15:51:24.031  [StackRight] ready. 34 cases, 5 layers, stack 140 cm. camera = {x: 0, y: 0, z: 0} pallet = {x: 0, y: -150, z: -100} shelf = {x: 140, y: -150, z: -175}
+   8.035  15:51:25.510  [StackRight] reset
+   8.036  15:51:25.511  [DEMO] camera eye (-60, 15, 380) looking at (57, -78, -140)
+   8.036  15:51:25.511  [DEMO] intro
+  12.047  15:51:29.522  [DEMO] case1
+  12.051  15:51:29.526  [StackRight] grab Case_00_PetFood (ghost shown, layer 1)
+  17.013  15:51:34.488  [StackRight] placed Case_00_PetFood -> 1/34
+  18.547  15:51:36.022  [DEMO] overhang
+  18.550  15:51:36.025  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
+  21.066  15:51:38.541  [StackRight] mistake #1 (Case_01_PetFood): Overhang. Keep it inside the edge.
+  24.583  15:51:42.058  [DEMO] gap
+  24.584  15:51:42.059  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
+  27.100  15:51:44.575  [StackRight] mistake #2 (Case_01_PetFood): That leaves a gap. Drop it on the ghost.
+  30.635  15:51:48.110  [DEMO] case2
+  30.635  15:51:48.110  [StackRight] grab Case_01_PetFood (ghost shown, layer 1)
+  33.287  15:51:50.762  [StackRight] placed Case_01_PetFood -> 2/34
+  33.288  15:51:50.763  [DEMO] layer1
+  33.288  15:51:50.763  [StackRight] grab Case_02_PetFood (ghost shown, layer 1)
+  34.511  15:51:51.986  [StackRight] placed Case_02_PetFood -> 3/34
+  34.721  15:51:52.196  [StackRight] grab Case_03_PetFood (ghost shown, layer 1)
+  35.958  15:51:53.433  [StackRight] placed Case_03_PetFood -> 4/34
+  36.191  15:51:53.666  [StackRight] grab Case_04_PetFood (ghost shown, layer 1)
+  37.417  15:51:54.892  [StackRight] placed Case_04_PetFood -> 5/34
+  37.630  15:51:55.105  [StackRight] grab Case_05_PetFood (ghost shown, layer 1)
+  38.855  15:51:56.330  [StackRight] placed Case_05_PetFood -> 6/34
+  42.625  15:52:00.100  [DEMO] layer2
+  42.626  15:52:00.101  [StackRight] grab Case_06_Laundry (ghost shown, layer 2)
+  43.441  15:52:00.916  [StackRight] placed Case_06_Laundry -> 7/34
+  43.604  15:52:01.079  [StackRight] grab Case_07_Laundry (ghost shown, layer 2)
+  44.407  15:52:01.882  [StackRight] placed Case_07_Laundry -> 8/34
+  44.545  15:52:02.020  [StackRight] grab Case_08_Laundry (ghost shown, layer 2)
+  45.359  15:52:02.834  [StackRight] placed Case_08_Laundry -> 9/34
+  45.502  15:52:02.977  [StackRight] grab Case_09_Laundry (ghost shown, layer 2)
+  46.287  15:52:03.762  [StackRight] placed Case_09_Laundry -> 10/34
+  46.422  15:52:03.897  [StackRight] grab Case_10_Laundry (ghost shown, layer 2)
+  47.230  15:52:04.705  [StackRight] placed Case_10_Laundry -> 11/34
+  47.382  15:52:04.857  [StackRight] grab Case_11_Laundry (ghost shown, layer 2)
+  48.197  15:52:05.672  [StackRight] placed Case_11_Laundry -> 12/34
+  48.345  15:52:05.820  [DEMO] layer3mixed
+  48.345  15:52:05.820  [StackRight] grab Case_12_Water (ghost shown, layer 3, turned 90)
+  53.310  15:52:10.785  [StackRight] placed Case_12_Water -> 13/34
+  53.311  15:52:10.786  [StackRight] grab Case_13_Water (ghost shown, layer 3, turned 90)
+  54.128  15:52:11.603  [StackRight] placed Case_13_Water -> 14/34
+  54.289  15:52:11.764  [StackRight] grab Case_14_Water (ghost shown, layer 3, turned 90)
+  55.087  15:52:12.562  [StackRight] placed Case_14_Water -> 15/34
+  55.240  15:52:12.715  [StackRight] grab Case_15_Water (ghost shown, layer 3, turned 90)
+  56.050  15:52:13.525  [StackRight] placed Case_15_Water -> 16/34
+  56.186  15:52:13.661  [DEMO] layer3mixed first juice
+  56.186  15:52:13.661  [StackRight] grab Case_16_Juice (ghost shown, layer 3, turned 90)
+  61.172  15:52:18.647  [StackRight] placed Case_16_Juice -> 17/34
+  61.173  15:52:18.648  [StackRight] grab Case_17_Juice (ghost shown, layer 3, turned 90)
+  61.967  15:52:19.442  [StackRight] placed Case_17_Juice -> 18/34
+  62.129  15:52:19.604  [StackRight] grab Case_18_Juice (ghost shown, layer 3, turned 90)
+  62.908  15:52:20.383  [StackRight] placed Case_18_Juice -> 19/34
+  63.049  15:52:20.524  [StackRight] grab Case_19_Juice (ghost shown, layer 3, turned 90)
+  63.860  15:52:21.335  [StackRight] placed Case_19_Juice -> 20/34
+  64.017  15:52:21.492  [DEMO] fast
+  64.018  15:52:21.493  [StackRight] grab Case_20_Soup (ghost shown, layer 4)
+  65.094  15:52:22.569  [StackRight] placed Case_20_Soup -> 21/34
+  65.305  15:52:22.780  [StackRight] grab Case_21_Soup (ghost shown, layer 4)
+  66.344  15:52:23.819  [StackRight] placed Case_21_Soup -> 22/34
+  66.546  15:52:24.021  [StackRight] grab Case_22_Soup (ghost shown, layer 4)
+  67.617  15:52:25.092  [StackRight] placed Case_22_Soup -> 23/34
+  67.617  15:52:25.092  [StackRight] step note
+  67.799  15:52:25.274  [DEMO] hill
+  71.812  15:52:29.287  [StackRight] grab Case_23_Tomatoes (ghost shown, layer 4, turned 90)
+  72.544  15:52:30.019  [StackRight] placed Case_23_Tomatoes -> 24/34
+  72.671  15:52:30.146  [StackRight] grab Case_24_Tomatoes (ghost shown, layer 4, turned 90)
+  73.362  15:52:30.837  [StackRight] placed Case_24_Tomatoes -> 25/34
+  73.519  15:52:30.994  [StackRight] grab Case_25_Tomatoes (ghost shown, layer 4, turned 90)
+  74.242  15:52:31.717  [StackRight] placed Case_25_Tomatoes -> 26/34
+  74.379  15:52:31.854  [StackRight] grab Case_26_Tomatoes (ghost shown, layer 4, turned 90)
+  75.095  15:52:32.570  [StackRight] placed Case_26_Tomatoes -> 27/34
+  75.226  15:52:32.701  [StackRight] grab Case_27_Tomatoes (ghost shown, layer 4, turned 90)
+  75.972  15:52:33.447  [StackRight] placed Case_27_Tomatoes -> 28/34
+  76.130  15:52:33.605  [StackRight] grab Case_28_Tomatoes (ghost shown, layer 4, turned 90)
+  76.816  15:52:34.291  [StackRight] placed Case_28_Tomatoes -> 29/34
+  76.943  15:52:34.418  [DEMO] level
+  78.456  15:52:35.931  [DEMO] layer5
+  78.457  15:52:35.932  [StackRight] grab Case_29_Bread (ghost shown, layer 5)
+  80.353  15:52:37.828  [StackRight] placed Case_29_Bread -> 30/34
+  80.709  15:52:38.184  [StackRight] grab Case_30_Bread (ghost shown, layer 5)
+  82.645  15:52:40.120  [StackRight] placed Case_30_Bread -> 31/34
+  83.006  15:52:40.481  [DEMO] layer5 paper towel
+  83.007  15:52:40.482  [StackRight] grab Case_31_PaperTowel (ghost shown, layer 5)
+  86.445  15:52:43.920  [StackRight] placed Case_31_PaperTowel -> 32/34
+  86.806  15:52:44.281  [StackRight] grab Case_32_Chips (ghost shown, layer 5)
+  88.717  15:52:46.192  [StackRight] placed Case_32_Chips -> 33/34
+  89.083  15:52:46.558  [StackRight] grab Case_33_Chips (ghost shown, layer 5)
+  90.967  15:52:48.442  [StackRight] placed Case_33_Chips -> 34/34
+  91.330  15:52:48.805  [DEMO] complete
+  91.331  15:52:48.806  [DEMO] card 'Pallet done! 34 cases · 5 layers · 140 cm | Time 1:19 · Mistakes 2 (1 overhang · 1 gap) | Wrap and label the pallet.'
+  98.338  15:52:55.813  [DEMO] reset
+  98.340  15:52:55.815  [StackRight] reset
+ 101.368  15:52:58.843  [DEMO] end

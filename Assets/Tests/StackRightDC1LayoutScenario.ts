@@ -1,5 +1,5 @@
 // DC1: pallet ~1 m ahead on the floor, shelf to the right with the next 4 cases on the lower
-// shelf (case due now nearest the pallet), height-limit outline at 180 cm, counter at 0 / 31.
+// shelf (case due now nearest the pallet), height-limit outline at 180 cm, counter at 0 / 34.
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {sleep} from "Leaf.lspkg/Utils/common/Utils"
@@ -25,7 +25,7 @@ export class StackRightDC1LayoutScenario extends Scenario {
     const right = shelf.x - cam.x
     expect(right >= 120 && right <= 160).toBe(true)
 
-    expect(c.getCaseCount()).toBe(31)
+    expect(c.getCaseCount()).toBe(34)
     expect(queueShowsNextFour(c)).toBe(true)
     for (let i = 0; i < 4; i++) {
       // Bottom of each queued case on the lower shelf (40 cm).
@@ -42,7 +42,7 @@ export class StackRightDC1LayoutScenario extends Scenario {
 
     expect(c.isHeightLimitVisible()).toBe(true)
     expect(Math.abs(c.getHeightLimitWorldY() - c.getFloorWorldY() - 180) < 0.5).toBe(true)
-    expect(c.getCounterText()).toBe("Layer 1 · 0 / 31")
+    expect(c.getCounterText()).toBe("Layer 1 · 0 / 34")
     expect(c.isCaseGlowing(0)).toBe(true)
     expect(onlyDueCaseInteractable(c)).toBe(true)
   }
