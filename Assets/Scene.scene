@@ -1671,6 +1671,7 @@
     snapDistanceCm: true
     dropHeightAllowanceCm: true
     tipDurationSec: true
+    stepNoteSec: true
     eyeHeightCm: true
     ghostColor: true
     glowColor: true
@@ -1697,6 +1698,7 @@
       snapDistanceCm: !<float> 15.000000
       dropHeightAllowanceCm: !<float> 60.000000
       tipDurationSec: !<float> 4.000000
+      stepNoteSec: 3.500000
       eyeHeightCm: !<float> 150.000000
       ghostColor: !<Vec4> {x: 0.600000, y: 1.000000, z: 1.000000, w: 0.300000}
       glowColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.550000, w: 0.350000}
