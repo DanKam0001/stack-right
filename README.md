@@ -10,7 +10,7 @@ The warehouse system already sends a picker's cases heaviest-first. What it does
 
 | What | Where |
 |---|---|
-| Demo video (under 3 min) | _link added at submission_ |
+| Demo video (2:19) | https://youtu.be/QHxD2DAxTls |
 | Design brief (plan-lens, approved) | [devpost/design-brief.md](devpost/design-brief.md) |
 | Interview answers the brief was built from | [devpost/interview-answers.md](devpost/interview-answers.md) |
 | Prompts sent to CLAD | [devpost/agent-logs/](devpost/agent-logs/) (`run_*.sh` are the exact prompts, `*.jsonl` the full transcripts) |
